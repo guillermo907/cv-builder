@@ -4,7 +4,7 @@ import { getSiteContent } from "@/lib/content";
 import { getRgb, themeCssVariables } from "@/lib/theme-contrast";
 import { AutoPrint } from "@/components/cv-export/auto-print";
 import { ExportToolbar } from "@/components/cv-export/export-toolbar";
-import type { CvContent, CvEducationItem, CvExperienceItem } from "@/lib/types";
+import type { CvContent, CvEducationItem, CvExperienceItem, CvProjectItem } from "@/lib/types";
 import styles from "./page.module.scss";
 
 export const dynamic = "force-dynamic";
@@ -22,6 +22,7 @@ type ExportSheetProps = {
   cv: CvContent;
   experience: CvExperienceItem[];
   education?: CvEducationItem[];
+  projects?: CvProjectItem[];
   showHeader?: boolean;
   showProfile?: boolean;
   showSidebar?: boolean;
@@ -32,6 +33,7 @@ function ExportSheet({
   cv,
   education = [],
   experience,
+  projects = [],
   showHeader = true,
   showProfile = true,
   showSidebar = true,
@@ -94,6 +96,18 @@ function ExportSheet({
               </article>
             ))}
           </section>
+          {cv.showProjects && projects.length > 0 ? (
+            <section>
+              <h2>Projects</h2>
+              {projects.map((item) => (
+                <article key={`${item.title}-${item.url}`} className={styles.projectItem}>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                  {item.url ? <span>{item.url.replace(/^https?:\/\//, "")}</span> : null}
+                </article>
+              ))}
+            </section>
+          ) : null}
         </aside>
       ) : null}
     </article>
@@ -156,6 +170,7 @@ export default async function ExportPage({ params, searchParams }: ExportPagePro
       <ExportSheet
         cv={content.cv}
         education={content.cv.education}
+        projects={content.cv.projects}
         experience={firstPageExperience}
         showSidebar
       />

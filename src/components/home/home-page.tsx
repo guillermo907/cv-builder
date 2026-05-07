@@ -76,6 +76,7 @@ export function HomePage({ content }: HomePageProps) {
           skills: "Habilidades",
           experience: "Experiencia",
           education: "Educación",
+          projects: "Proyectos",
           location: "Ubicación",
           contact: "Contacto",
           languageLabel: "Cambiar idioma",
@@ -85,6 +86,7 @@ export function HomePage({ content }: HomePageProps) {
           skills: "Skills",
           experience: "Experience",
           education: "Education",
+          projects: "Projects",
           location: "Location",
           contact: "Contact",
           languageLabel: "Change language",
@@ -189,6 +191,25 @@ export function HomePage({ content }: HomePageProps) {
               </article>
             ))}
           </div>
+
+          {localized.cv.showProjects && localized.cv.projects.length > 0 ? (
+            <>
+              <h2>{labels.projects}</h2>
+              <div className={styles.projectList}>
+                {localized.cv.projects.map((item) => (
+                  <article key={`${item.title}-${item.url}`}>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                    {item.url ? (
+                      <a href={item.url} target="_blank" rel="noreferrer">
+                        {item.url.replace(/^https?:\/\//, "")}
+                      </a>
+                    ) : null}
+                  </article>
+                ))}
+              </div>
+            </>
+          ) : null}
 
           {content.cvFileUrl ? (
             <a href={content.cvFileUrl} className={styles.downloadLink}>

@@ -111,6 +111,14 @@
         "institution": "Universidad de Guadalajara",
         "period": "2016 - 2020"
       }
+    ],
+    "showProjects": false,
+    "projects": [
+      {
+        "title": "Portfolio Websitea",
+        "url": "https://example.coasdasdasdm",
+        "description": "Modern responsive web experience showcasing selected work, UI architecture, and frontend delivery.asdasd"
+      }
     ]
   },
   "theme": {

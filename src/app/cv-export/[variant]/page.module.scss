@@ -99,7 +99,7 @@
     font-family: var(--font-display);
     font-size: 2.15rem;
     font-weight: var(--cv-weight-display);
-    letter-spacing: -0.055em;
+    letter-spacing: -0.035em;
     line-height: .92;
     margin: 0;
     max-width: 100%;
@@ -201,9 +201,14 @@
 
 .sidebar {
   display: grid;
-  gap: .9rem;
+  gap: 1.25rem;
   grid-column: 2;
   grid-row: 3 / span 2;
+}
+
+.sidebar section + section {
+  border-top: 1px solid #1112;
+  padding-top: .55rem;
 }
 
 .skills {
@@ -244,6 +249,16 @@
     overflow-wrap: anywhere;
     white-space: pre-line;
   }
+}
+
+.projectItem + .projectItem {
+  margin-top: .48rem;
+}
+
+.projectItem span {
+  color: inherit;
+  font-size: .68rem;
+  opacity: .72;
 }
 
 .page[data-format="a2"] .sheet {
@@ -409,7 +424,7 @@
 
   .sidebar {
     align-content: start;
-    gap: .75rem;
+    gap: 1.05rem;
   }
 
   .skills li {

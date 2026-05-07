@@ -17,7 +17,9 @@ function mergeContent(raw: Partial<SiteContent>): SiteContent {
       ...raw.cv,
       experience: raw.cv?.experience ?? defaultContent.cv.experience,
       education: raw.cv?.education ?? defaultContent.cv.education,
-      skills: raw.cv?.skills ?? defaultContent.cv.skills
+      skills: raw.cv?.skills ?? defaultContent.cv.skills,
+      projects: raw.cv?.projects ?? defaultContent.cv.projects,
+      showProjects: raw.cv?.showProjects ?? defaultContent.cv.showProjects
     },
     theme: {
       ...defaultContent.theme,

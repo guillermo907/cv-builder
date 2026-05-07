@@ -115,6 +115,8 @@
   padding: clamp(1.2rem, 1vw + 1rem, 2.2rem);
 
   h1 {
+    font-family: var(--font-display);
+    font-weight: var(--cv-weight-display);
     margin: 0.35rem 0 0;
     color: var(--text-strong);
     font-size: clamp(2rem, 4vw, 4rem);
@@ -445,6 +447,49 @@
     color: var(--text-soft);
     display: block;
     white-space: pre-line;
+  }
+}
+
+.skillList + h2,
+.educationList + h2 {
+  border-top: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+  margin-top: 1.55rem;
+  padding-top: 1.05rem;
+}
+
+.projectList {
+  display: grid;
+  gap: .7rem;
+
+  article {
+    border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+    border-radius: .78rem;
+    background: color-mix(in srgb, var(--panel) 56%, transparent);
+    padding: .72rem;
+  }
+
+  h3 {
+    color: var(--text-strong);
+    font-size: .96rem;
+    margin: 0;
+  }
+
+  p {
+    color: var(--text-soft);
+    font-size: .86rem;
+    line-height: 1.45;
+    margin: .3rem 0 0;
+    white-space: pre-line;
+  }
+
+  a {
+    color: var(--text-strong);
+    display: inline-block;
+    font-size: .78rem;
+    margin-top: .42rem;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--foreground) 36%, transparent);
+    text-underline-offset: .18rem;
   }
 }
 

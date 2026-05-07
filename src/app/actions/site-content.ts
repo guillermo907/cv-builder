@@ -7,7 +7,7 @@ import { getSiteContent, saveSiteContent } from "@/lib/content";
 import { deletePublicAsset, savePublicAsset } from "@/lib/storage";
 import { normalizeThemeForStorage } from "@/lib/theme-contrast";
 import { createWallpaperBuffer, extractThemeFromImageBuffer } from "@/lib/theme-image";
-import type { CvEducationItem, CvExperienceItem } from "@/lib/types";
+import type { CvEducationItem, CvExperienceItem, CvProjectItem } from "@/lib/types";
 
 export type SaveState = {
   ok: boolean;
@@ -130,6 +130,17 @@ function readEducation(formData: FormData): CvEducationItem[] {
   })).filter((item) => item.title || item.institution || item.period);
 }
 
+function readProjects(formData: FormData): CvProjectItem[] {
+  const count = Number.parseInt(getString(formData, "projectCount"), 10);
+  const safeCount = Number.isFinite(count) ? Math.max(0, Math.min(count, 12)) : 0;
+
+  return Array.from({ length: safeCount }, (_, index) => ({
+    title: getString(formData, `project.${index}.title`),
+    url: getString(formData, `project.${index}.url`),
+    description: String(formData.get(`project.${index}.description`) ?? "").trim()
+  })).filter((item) => item.title || item.url || item.description);
+}
+
 async function saveWallpaperAsset(buffer: Buffer) {
   const wallpaper = await createWallpaperBuffer(buffer);
   const assetName = `cv-wallpaper-${randomUUID()}.jpg`;
@@ -177,7 +188,9 @@ export async function saveCvContentAction(_previousState: SaveState, formData: F
         summary: String(formData.get("summary") ?? "").trim(),
         skills: splitTextarea(getString(formData, "skills")),
         experience: readExperience(formData),
-        education: readEducation(formData)
+        education: readEducation(formData),
+        showProjects: formData.get("showProjects") === "on",
+        projects: readProjects(formData)
       }
     });
 

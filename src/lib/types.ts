@@ -11,6 +11,12 @@ export type CvEducationItem = {
   period: string;
 };
 
+export type CvProjectItem = {
+  title: string;
+  url: string;
+  description: string;
+};
+
 export type CvContent = {
   fullName: string;
   headline: string;
@@ -22,6 +28,8 @@ export type CvContent = {
   skills: string[];
   experience: CvExperienceItem[];
   education: CvEducationItem[];
+  showProjects?: boolean;
+  projects: CvProjectItem[];
 };
 
 export type SiteLocale = "en" | "es";

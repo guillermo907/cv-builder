@@ -46,6 +46,14 @@ export const defaultContent: SiteContent = {
         institution: "Universidad del Valle",
         period: "2015 - 2019"
       }
+    ],
+    showProjects: false,
+    projects: [
+      {
+        title: "Portfolio Website",
+        url: "https://example.com",
+        description: "Modern responsive web experience showcasing selected work, UI architecture, and frontend delivery."
+      }
     ]
   },
   theme: {

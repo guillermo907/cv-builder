@@ -11,7 +11,7 @@ import {
   type SaveState
 } from "@/app/actions/site-content";
 import { applyThemeVariables } from "@/lib/apply-theme-variables";
-import type { CvEducationItem, CvExperienceItem, SiteContent } from "@/lib/types";
+import type { CvEducationItem, CvExperienceItem, CvProjectItem, SiteContent } from "@/lib/types";
 import { contrastGrade, contrastRatio, normalizeSiteTheme, readableTextColor } from "@/lib/theme-contrast";
 import styles from "./admin-dashboard.module.scss";
 
@@ -67,6 +67,7 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
   const [themeDraft, setThemeDraft] = useState(initialContent.theme);
   const [experienceItems, setExperienceItems] = useState(initialContent.cv.experience);
   const [educationItems, setEducationItems] = useState(initialContent.cv.education);
+  const [projectItems, setProjectItems] = useState(initialContent.cv.projects);
   const [paletteFileName, setPaletteFileName] = useState("");
   const [palettePreview, setPalettePreview] = useState("");
   const [paletteVariants, setPaletteVariants] = useState<PaletteVariantSet>({ dark: [], light: [] });
@@ -192,6 +193,27 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
 
   function removeEducationItem(index: number) {
     setEducationItems((items) => items.filter((_, itemIndex) => itemIndex !== index));
+  }
+
+  function addProjectItem() {
+    setProjectItems((items) => [
+      ...items,
+      {
+        title: "New project",
+        url: "",
+        description: ""
+      }
+    ]);
+  }
+
+  function updateProjectItem(index: number, patch: Partial<CvProjectItem>) {
+    setProjectItems((items) =>
+      items.map((item, itemIndex) => (itemIndex === index ? { ...item, ...patch } : item))
+    );
+  }
+
+  function removeProjectItem(index: number) {
+    setProjectItems((items) => items.filter((_, itemIndex) => itemIndex !== index));
   }
 
   return (
@@ -414,6 +436,33 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
             </div>
             <div className={styles.inlineActions}>
               <button type="button" onClick={addEducationItem}>Add education</button>
+            </div>
+          </details>
+
+          <details className={styles.card}>
+            <summary>Projects</summary>
+            <input type="hidden" name="projectCount" value={projectItems.length} />
+            <label className={styles.toggleField}>
+              <input name="showProjects" type="checkbox" defaultChecked={initialContent.cv.showProjects ?? false} />
+              <span>Show Projects section on homepage and generated PDF</span>
+            </label>
+            <div className={styles.itemStack}>
+              {projectItems.map((item, index) => (
+                <details key={`${item.title}-${index}`} className={styles.nestedCard} open={index === 0}>
+                  <summary>{item.title || `Project ${index + 1}`}</summary>
+                  <div className={styles.formGrid}>
+                    <label>Project name<input name={`project.${index}.title`} value={item.title} onChange={(event) => updateProjectItem(index, { title: event.target.value })} /></label>
+                    <label>Website URL<input name={`project.${index}.url`} value={item.url} onChange={(event) => updateProjectItem(index, { url: event.target.value })} /></label>
+                    <label className={styles.fullField}>Description<textarea name={`project.${index}.description`} rows={4} value={item.description} onChange={(event) => updateProjectItem(index, { description: event.target.value })} /></label>
+                    <div className={styles.dangerActions}>
+                      <button type="button" onClick={() => removeProjectItem(index)}>Remove project</button>
+                    </div>
+                  </div>
+                </details>
+              ))}
+            </div>
+            <div className={styles.inlineActions}>
+              <button type="button" onClick={addProjectItem}>Add project</button>
             </div>
           </details>
 
