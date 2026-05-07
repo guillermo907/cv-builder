@@ -1,6 +1,8 @@
 "use client";
 
 import type { SiteContent } from "@/lib/types";
+import { applyThemeVariables } from "@/lib/apply-theme-variables";
+import { normalizeSiteTheme } from "@/lib/theme-contrast";
 import Link from "next/link";
 import { useEffect, useMemo, useSyncExternalStore } from "react";
 import { ThemeModeToggle } from "./theme-mode-toggle";
@@ -11,10 +13,8 @@ type HomePageProps = {
 };
 
 type Locale = "en" | "es";
-type ThemeMode = "dark" | "light";
 
 let localeHydrated = false;
-let themeHydrated = false;
 
 function getStoredLocale(): Locale {
   if (typeof window === "undefined") return "es";
@@ -41,39 +41,21 @@ function setStoredLocale(locale: Locale) {
   window.dispatchEvent(new Event("site-locale-change"));
 }
 
-function getStoredThemeMode(): ThemeMode {
-  if (typeof window === "undefined") return "dark";
-  if (!themeHydrated) return "dark";
-  const saved = window.localStorage.getItem("auto-gdl-theme");
-  return saved === "light" || saved === "dark" ? saved : "dark";
-}
-
-function subscribeThemeMode(callback: () => void) {
-  themeHydrated = true;
-  window.setTimeout(callback, 0);
-  window.addEventListener("storage", callback);
-  window.addEventListener("auto-gdl-theme-change", callback);
-  return () => {
-    window.removeEventListener("storage", callback);
-    window.removeEventListener("auto-gdl-theme-change", callback);
-  };
-}
-
 export function HomePage({ content }: HomePageProps) {
   const locale = useSyncExternalStore<Locale>(
     subscribeLocale,
     getStoredLocale,
     () => "es",
   );
-  const themeMode = useSyncExternalStore<ThemeMode>(
-    subscribeThemeMode,
-    getStoredThemeMode,
-    () => "dark",
-  );
+  const normalizedTheme = useMemo(() => normalizeSiteTheme(content.theme), [content.theme]);
 
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
+
+  useEffect(() => {
+    applyThemeVariables(normalizedTheme);
+  }, [normalizedTheme]);
 
   const localized = useMemo(() => {
     if (locale !== "es") return content;
@@ -215,11 +197,8 @@ export function HomePage({ content }: HomePageProps) {
           ) : null}
           <div className={styles.generatedDownloads}>
             <span>Generate PDF from this page</span>
-            <a href={`/cv-export/themed?mode=${themeMode}`} target="_blank" rel="noreferrer">
-              Theme A4
-            </a>
             <a href="/cv-export/executive" target="_blank" rel="noreferrer">
-              Executive B&W
+              Generate PDF file
             </a>
           </div>
         </aside>

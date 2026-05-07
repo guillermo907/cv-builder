@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/admin";
 import { getSiteContent, saveSiteContent } from "@/lib/content";
-import { savePublicAsset } from "@/lib/storage";
+import { deletePublicAsset, savePublicAsset } from "@/lib/storage";
 import { normalizeThemeForStorage } from "@/lib/theme-contrast";
 import { createWallpaperBuffer, extractThemeFromImageBuffer } from "@/lib/theme-image";
 import type { CvEducationItem, CvExperienceItem } from "@/lib/types";
@@ -20,6 +20,14 @@ function ok(message: string): SaveState {
 
 function fail(message: string): SaveState {
   return { ok: false, message };
+}
+
+function revalidateSiteContent() {
+  revalidatePath("/", "layout");
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/cv-export/themed");
+  revalidatePath("/cv-export/executive");
 }
 
 export async function uploadCvAction(_previousState: SaveState, formData: FormData): Promise<SaveState> {
@@ -44,11 +52,35 @@ export async function uploadCvAction(_previousState: SaveState, formData: FormDa
       cvUploadedAt: new Date().toISOString()
     });
 
-    revalidatePath("/");
-    revalidatePath("/admin");
+    revalidateSiteContent();
     return ok("CV PDF uploaded and stored for homepage download.");
   } catch (error) {
     return fail(error instanceof Error ? error.message : "Could not process CV PDF.");
+  }
+}
+
+export async function removeCvPdfAction(_previousState: SaveState): Promise<SaveState> {
+  void _previousState;
+  await requireAdmin();
+
+  try {
+    const current = await getSiteContent();
+
+    if (current.cvFileUrl) {
+      await deletePublicAsset(current.cvFileUrl);
+    }
+
+    await saveSiteContent({
+      ...current,
+      sourceFileName: undefined,
+      cvFileUrl: undefined,
+      cvUploadedAt: undefined
+    });
+
+    revalidateSiteContent();
+    return ok("Attached CV PDF removed from the site.");
+  } catch (error) {
+    return fail(error instanceof Error ? error.message : "Could not remove attached CV PDF.");
   }
 }
 
@@ -63,6 +95,18 @@ function splitTextarea(value: string) {
     .filter(Boolean);
 }
 
+function splitMultilinePreservingSpacing(value: string) {
+  const lines = value
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((line) => line.trimEnd());
+
+  while (lines[0]?.trim() === "") lines.shift();
+  while (lines.at(-1)?.trim() === "") lines.pop();
+
+  return lines;
+}
+
 function readExperience(formData: FormData): CvExperienceItem[] {
   const count = Number.parseInt(getString(formData, "experienceCount"), 10);
   const safeCount = Number.isFinite(count) ? Math.max(0, Math.min(count, 12)) : 0;
@@ -71,7 +115,7 @@ function readExperience(formData: FormData): CvExperienceItem[] {
     role: getString(formData, `experience.${index}.role`),
     company: getString(formData, `experience.${index}.company`),
     period: getString(formData, `experience.${index}.period`),
-    highlights: splitTextarea(getString(formData, `experience.${index}.highlights`))
+    highlights: splitMultilinePreservingSpacing(String(formData.get(`experience.${index}.highlights`) ?? ""))
   })).filter((item) => item.role || item.company || item.period || item.highlights.length > 0);
 }
 
@@ -88,12 +132,13 @@ function readEducation(formData: FormData): CvEducationItem[] {
 
 async function saveWallpaperAsset(buffer: Buffer) {
   const wallpaper = await createWallpaperBuffer(buffer);
+  const assetName = `cv-wallpaper-${randomUUID()}.jpg`;
 
   return savePublicAsset({
     body: wallpaper,
     contentType: "image/jpeg",
-    localPath: "uploads/cv-wallpaper.jpg",
-    pathname: "assets/cv-wallpaper.jpg"
+    localPath: `uploads/${assetName}`,
+    pathname: `assets/${assetName}`
   });
 }
 
@@ -129,15 +174,14 @@ export async function saveCvContentAction(_previousState: SaveState, formData: F
         address: getString(formData, "address"),
         email: getString(formData, "email"),
         phone: getString(formData, "phone"),
-        summary: getString(formData, "summary"),
+        summary: String(formData.get("summary") ?? "").trim(),
         skills: splitTextarea(getString(formData, "skills")),
         experience: readExperience(formData),
         education: readEducation(formData)
       }
     });
 
-    revalidatePath("/");
-    revalidatePath("/admin");
+    revalidateSiteContent();
     return ok("CV sections saved.");
   } catch (error) {
     return fail(error instanceof Error ? error.message : "Could not save CV sections.");
@@ -149,13 +193,21 @@ export async function saveThemeSettingsAction(_previousState: SaveState, formDat
 
   try {
     const current = await getSiteContent();
+    const themeImage = formData.get("themeImage");
+    const hasThemeImage =
+      themeImage instanceof File &&
+      themeImage.size > 0 &&
+      themeImage.type.startsWith("image/");
+    const wallpaper = hasThemeImage
+      ? await saveWallpaperAsset(Buffer.from(await themeImage.arrayBuffer()))
+      : "";
 
     const nextTheme = normalizeThemeForStorage({
       ...current.theme,
       accent: String(formData.get("accent") ?? current.theme.accent),
       accentAlt: String(formData.get("accentAlt") ?? current.theme.accentAlt),
       background: String(formData.get("background") ?? current.theme.background),
-      backgroundImage: String(formData.get("backgroundImage") ?? current.theme.backgroundImage),
+      backgroundImage: wallpaper || String(formData.get("backgroundImage") ?? current.theme.backgroundImage),
       contrast: (String(formData.get("contrast") ?? current.theme.contrast) as typeof current.theme.contrast),
       bannerStyle: (String(formData.get("bannerStyle") ?? current.theme.bannerStyle ?? "editorial") as typeof current.theme.bannerStyle),
       light: {
@@ -163,7 +215,7 @@ export async function saveThemeSettingsAction(_previousState: SaveState, formDat
         accent: String(formData.get("lightAccent") ?? current.theme.light.accent),
         accentAlt: String(formData.get("lightAccentAlt") ?? current.theme.light.accentAlt),
         background: String(formData.get("lightBackground") ?? current.theme.light.background),
-        backgroundImage: String(formData.get("lightBackgroundImage") ?? current.theme.light.backgroundImage),
+        backgroundImage: wallpaper || String(formData.get("lightBackgroundImage") ?? current.theme.light.backgroundImage),
         contrast: (String(formData.get("lightContrast") ?? current.theme.light.contrast) as typeof current.theme.light.contrast)
       }
     });
@@ -173,8 +225,7 @@ export async function saveThemeSettingsAction(_previousState: SaveState, formDat
       theme: nextTheme
     });
 
-    revalidatePath("/");
-    revalidatePath("/admin");
+    revalidateSiteContent();
     return ok("Theme settings saved and applied.");
   } catch (error) {
     return fail(error instanceof Error ? error.message : "Could not save theme settings.");
@@ -221,8 +272,7 @@ export async function extractThemeFromImageAction(_previousState: SaveState, for
       })
     });
 
-    revalidatePath("/");
-    revalidatePath("/admin");
+    revalidateSiteContent();
     return ok("Palette extracted from image and applied to theme.");
   } catch (error) {
     return fail(error instanceof Error ? error.message : "Could not extract palette from image.");

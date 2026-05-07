@@ -43,9 +43,10 @@
 }
 
 .brand {
-  font-family: var(--font-playfair), serif;
+  font-family: var(--font-display);
   color: var(--text-strong);
   font-size: 1rem;
+  font-weight: var(--cv-weight-heading);
   letter-spacing: 0.08em;
 }
 
@@ -98,7 +99,7 @@
   h3 {
     margin: 1.15rem 0 0.55rem;
     color: var(--text-soft);
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-body);
     text-transform: uppercase;
     font-size: 0.83rem;
     letter-spacing: 0.08em;

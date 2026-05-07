@@ -1,4 +1,14 @@
 .page {
+  /*
+    Theme texture/transparency controls.
+    Defaults are intentionally "60% transparent" (40% visible), which keeps
+    wallpaper/texture present without overpowering CV readability.
+    Tweak these two values to globally rebalance the theme atmosphere.
+  */
+  --theme-wallpaper-visibility: 40%;
+  --theme-surface-visibility: 40%;
+  --theme-strong-scrim: 88%;
+  --theme-medium-scrim: 56%;
   --text-strong: var(--foreground);
   --text-base: var(--foreground);
   --text-soft: var(--muted);
@@ -29,7 +39,7 @@
   background-position: center;
   background-size: cover;
   filter: blur(34px) saturate(1.34) contrast(1.06);
-  opacity: .46;
+  opacity: var(--theme-wallpaper-visibility);
   transform: scale(1.08);
 }
 
@@ -39,10 +49,10 @@
   z-index: -1;
   content: "";
   background:
-    radial-gradient(circle at 10% 6%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 24rem),
-    radial-gradient(circle at 94% 16%, color-mix(in srgb, var(--accent-alt) 34%, transparent), transparent 26rem),
-    radial-gradient(circle at 48% 92%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 30rem),
-    linear-gradient(145deg, color-mix(in srgb, var(--background) 68%, black), color-mix(in srgb, var(--background) 48%, transparent));
+    radial-gradient(circle at 10% 6%, color-mix(in srgb, var(--accent) var(--theme-surface-visibility), transparent), transparent 24rem),
+    radial-gradient(circle at 94% 16%, color-mix(in srgb, var(--accent-alt) var(--theme-surface-visibility), transparent), transparent 26rem),
+    radial-gradient(circle at 48% 92%, color-mix(in srgb, var(--accent) var(--theme-wallpaper-visibility), transparent), transparent 30rem),
+    linear-gradient(145deg, color-mix(in srgb, var(--background) var(--theme-strong-scrim), black), color-mix(in srgb, var(--background) var(--theme-medium-scrim), transparent));
 }
 
 .nav,
@@ -70,8 +80,9 @@
   }
 
   strong {
-    font-family: var(--font-playfair), serif;
+    font-family: var(--font-display);
     font-size: 1.05rem;
+    font-weight: var(--cv-weight-heading);
   }
 }
 
@@ -114,6 +125,7 @@
     color: var(--text-base);
     max-width: 70ch;
     line-height: 1.6;
+    white-space: pre-line;
   }
 }
 
@@ -122,13 +134,13 @@
   inset: 0;
   content: "";
   background:
-    radial-gradient(circle at 78% 44%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 18rem),
+    radial-gradient(circle at 78% 44%, color-mix(in srgb, var(--accent) var(--theme-surface-visibility), transparent), transparent 18rem),
     linear-gradient(90deg, color-mix(in srgb, var(--background) 90%, black) 0%, color-mix(in srgb, var(--background) 48%, transparent) 58%, transparent 100%),
     var(--cv-wallpaper);
   background-position: center;
   background-size: cover;
   filter: blur(20px) saturate(1.28) contrast(1.06);
-  opacity: .72;
+  opacity: var(--theme-strong-scrim);
   transform: scale(1.08);
 }
 
@@ -137,8 +149,8 @@
   inset: 0;
   content: "";
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--background) 88%, black), color-mix(in srgb, var(--background) 36%, transparent)),
-    linear-gradient(0deg, color-mix(in srgb, var(--accent) 12%, transparent), color-mix(in srgb, var(--background) 14%, transparent));
+    linear-gradient(90deg, color-mix(in srgb, var(--background) var(--theme-strong-scrim), black), color-mix(in srgb, var(--background) var(--theme-surface-visibility), transparent)),
+    linear-gradient(0deg, color-mix(in srgb, var(--accent) var(--theme-wallpaper-visibility), transparent), color-mix(in srgb, var(--background) var(--theme-wallpaper-visibility), transparent));
   pointer-events: none;
   z-index: 1;
 }
@@ -161,7 +173,7 @@
   box-shadow:
     0 18px 48px rgb(0 0 0 / .28),
     inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
-  opacity: .96;
+  opacity: var(--theme-strong-scrim);
 
   img {
     width: 100%;
@@ -304,7 +316,7 @@
 .sideCard {
   border: 1px solid var(--line);
   border-radius: 1rem;
-  background: linear-gradient(140deg, color-mix(in srgb, var(--panel-strong) 88%, transparent), color-mix(in srgb, var(--panel) 78%, transparent));
+  background: linear-gradient(140deg, color-mix(in srgb, var(--panel-strong) var(--theme-strong-scrim), transparent), color-mix(in srgb, var(--panel) var(--theme-medium-scrim), transparent));
   backdrop-filter: blur(10px);
   padding: 1.15rem;
   color: var(--text-base);
@@ -348,7 +360,7 @@
   gap: .55rem 1.1rem;
   color: var(--text-strong);
   font-size: clamp(.95rem, .34vw + .86rem, 1.08rem);
-  font-weight: 620;
+  font-weight: 500;
   line-height: 1.5;
   margin: -.1rem 0 1rem;
   padding: 0 0 .85rem;
@@ -386,11 +398,16 @@
   p {
     margin: 0.2rem 0 0;
     color: var(--text-soft);
+    white-space: pre-line;
   }
 
   ul {
     margin: 0.45rem 0 0;
     padding-left: 1rem;
+  }
+
+  li {
+    white-space: pre-line;
   }
 }
 
@@ -406,6 +423,7 @@
     border: 1px solid var(--line);
     background: color-mix(in srgb, var(--panel-strong) 72%, transparent);
     border-radius: 999px;
+    font-weight: var(--cv-weight-chip);
     padding: 0.3rem 0.62rem;
     font-size: 0.84rem;
   }
@@ -426,6 +444,7 @@
     margin: 0.1rem 0 0;
     color: var(--text-soft);
     display: block;
+    white-space: pre-line;
   }
 }
 
@@ -481,7 +500,7 @@
   border-radius: 999px;
   padding: 0.45rem 0.85rem;
   font-size: 0.84rem;
-  font-weight: 750;
+  font-weight: var(--cv-weight-strong);
   color: var(--ink);
   background: var(--accent);
   box-shadow: 0 12px 28px color-mix(in srgb, var(--accent) 18%, transparent);
@@ -508,7 +527,7 @@
     border-radius: 999px;
     color: var(--text-strong);
     font-size: .8rem;
-    font-weight: 750;
+    font-weight: var(--cv-weight-strong);
     padding: .42rem .68rem;
     text-decoration: none;
   }

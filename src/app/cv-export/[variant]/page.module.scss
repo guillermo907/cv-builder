@@ -4,7 +4,9 @@
   background: #d8d8d8;
   color: #151515;
   color-scheme: light;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-body);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
 }
 
 .page[data-mode="dark"] {
@@ -38,7 +40,7 @@
     background: #fff;
     color: #111;
     cursor: pointer;
-    font: 700 .86rem Avenir Next, sans-serif;
+    font: var(--cv-weight-strong) .86rem var(--font-body);
     padding: .55rem .85rem;
     text-decoration: none;
   }
@@ -49,13 +51,27 @@
   box-shadow: 0 18px 70px rgb(0 0 0 / .2);
   display: grid;
   gap: 1.1rem 1rem;
-  grid-template-columns: 1.48fr .72fr;
+  grid-template-columns: minmax(0, 1.48fr) minmax(0, .72fr);
   margin: 0 auto;
   min-height: 297mm;
   overflow: hidden;
   padding: 16mm;
   position: relative;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
   width: 210mm;
+}
+
+.sheet + .sheet {
+  margin-top: 1rem;
+}
+
+.continuationSheet {
+  align-content: start;
+
+  .experience {
+    grid-column: 1 / -1;
+  }
 }
 
 .header,
@@ -68,11 +84,11 @@
   border-bottom: 2px solid currentColor;
   display: grid;
   gap: 1rem;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) minmax(42mm, auto);
   padding-bottom: .8rem;
 
   p {
-    font-family: Avenir Next, sans-serif;
+    font-family: var(--font-body);
     font-size: .85rem;
     letter-spacing: .08em;
     margin: 0 0 .2rem;
@@ -80,19 +96,26 @@
   }
 
   h1 {
-    font-size: 2.35rem;
-    line-height: .95;
+    font-family: var(--font-display);
+    font-size: 2.15rem;
+    font-weight: var(--cv-weight-display);
+    letter-spacing: -0.055em;
+    line-height: .92;
     margin: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
   }
 
   ul {
-    font-family: Avenir Next, sans-serif;
+    font-family: var(--font-body);
     font-size: .76rem;
     line-height: 1.45;
     list-style: none;
     margin: 0;
     padding: 0;
     text-align: right;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -100,8 +123,9 @@
 .experience,
 .sidebar section {
   h2 {
-    font-family: Avenir Next, sans-serif;
+    font-family: var(--font-body);
     font-size: .78rem;
+    font-weight: var(--cv-weight-heading);
     letter-spacing: .12em;
     margin: 0 0 .45rem;
     text-transform: uppercase;
@@ -112,6 +136,8 @@
   font-size: .86rem;
   line-height: 1.45;
   margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
 }
 
 .experience {
@@ -122,6 +148,7 @@
   article {
     break-inside: avoid;
     border-top: 1px solid #1112;
+    min-width: 0;
     padding-top: .45rem;
   }
 
@@ -132,24 +159,30 @@
   }
 
   h3 {
+    font-family: var(--font-display);
     font-size: 1rem;
+    font-weight: var(--cv-weight-heading);
+    letter-spacing: -0.035em;
     margin: 0;
+    overflow-wrap: anywhere;
   }
 
   span,
   p {
-    font-family: Avenir Next, sans-serif;
+    font-family: var(--font-body);
   }
 
   span {
     font-size: .74rem;
+    flex: 0 0 auto;
     white-space: nowrap;
   }
 
   p {
     font-size: .78rem;
-    font-weight: 700;
+    font-weight: var(--cv-weight-strong);
     margin: .12rem 0 .25rem;
+    white-space: pre-line;
   }
 
   ul {
@@ -161,6 +194,8 @@
     font-size: .75rem;
     line-height: 1.36;
     margin: .08rem 0;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
   }
 }
 
@@ -182,35 +217,53 @@
   li {
     border: 1px solid currentColor;
     border-radius: 999px;
-    font: 700 .68rem Avenir Next, sans-serif;
+    font: var(--cv-weight-chip) .68rem var(--font-body);
+    max-width: 100%;
+    overflow-wrap: anywhere;
     padding: .16rem .34rem;
   }
 }
 
 .sidebar article {
+  min-width: 0;
+
   h3 {
+    font-family: var(--font-display);
     font-size: .88rem;
+    font-weight: var(--cv-weight-heading);
+    letter-spacing: -0.025em;
     margin: 0;
+    overflow-wrap: anywhere;
   }
 
   p,
   span {
     display: block;
-    font: .74rem Avenir Next, sans-serif;
+    font: .74rem var(--font-body);
     margin: .15rem 0 0;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
   }
+}
+
+.page[data-format="a2"] .sheet {
+  aspect-ratio: 1 / 1.4142;
 }
 
 .themed {
   background:
+    radial-gradient(circle at 10% 6%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 24rem),
+    radial-gradient(circle at 94% 16%, color-mix(in srgb, var(--accent-alt) 34%, transparent), transparent 26rem),
     radial-gradient(circle at 10% 8%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 28rem),
+    linear-gradient(145deg, color-mix(in srgb, var(--background) 92%, black), color-mix(in srgb, var(--accent) 14%, var(--background))),
     var(--background);
 
   .sheet {
     background:
-      linear-gradient(145deg, color-mix(in srgb, var(--background) 88%, black), color-mix(in srgb, var(--background) 42%, transparent)),
+      radial-gradient(circle at 78% 44%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 28%),
+      linear-gradient(120deg, color-mix(in srgb, var(--background) 88%, black), color-mix(in srgb, var(--background) 54%, transparent)),
       var(--cv-wallpaper),
-      var(--background);
+      linear-gradient(140deg, color-mix(in srgb, var(--panel-strong) 82%, transparent), color-mix(in srgb, var(--panel) 74%, transparent));
     background-position: center;
     background-size: cover;
     color: var(--foreground);
@@ -221,7 +274,8 @@
     inset: 0;
     background:
       radial-gradient(circle at 82% 10%, color-mix(in srgb, var(--accent-alt) 28%, transparent), transparent 34%),
-      linear-gradient(90deg, color-mix(in srgb, var(--background) 88%, black), color-mix(in srgb, var(--background) 54%, transparent));
+      linear-gradient(90deg, color-mix(in srgb, var(--background) 90%, black), color-mix(in srgb, var(--background) 48%, transparent) 58%, transparent 100%),
+      linear-gradient(0deg, color-mix(in srgb, var(--accent) 12%, transparent), color-mix(in srgb, var(--background) 14%, transparent));
     content: "";
     pointer-events: none;
   }
@@ -239,22 +293,25 @@
 
 .themed[data-mode="light"] {
   background:
-    radial-gradient(circle at 10% 8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 28rem),
-    radial-gradient(circle at 92% 84%, color-mix(in srgb, var(--accent-alt) 14%, transparent), transparent 24rem),
+    radial-gradient(circle at 10% 6%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 24rem),
+    radial-gradient(circle at 94% 16%, color-mix(in srgb, var(--accent-alt) 18%, transparent), transparent 26rem),
+    linear-gradient(145deg, color-mix(in srgb, var(--background) 96%, white), color-mix(in srgb, var(--accent) 10%, var(--background))),
     var(--background);
 
   .sheet {
     background:
-      linear-gradient(145deg, color-mix(in srgb, var(--background) 92%, white), color-mix(in srgb, var(--background) 68%, transparent)),
+      radial-gradient(circle at 78% 44%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 28%),
+      linear-gradient(120deg, color-mix(in srgb, var(--background) 94%, white), color-mix(in srgb, var(--background) 58%, transparent)),
       var(--cv-wallpaper),
-      var(--background);
+      linear-gradient(140deg, color-mix(in srgb, var(--panel-strong) 82%, transparent), color-mix(in srgb, var(--panel) 74%, transparent));
     color: var(--foreground);
   }
 
   .sheet::before {
     background:
-      radial-gradient(circle at 82% 10%, color-mix(in srgb, var(--accent-alt) 14%, transparent), transparent 34%),
-      linear-gradient(90deg, color-mix(in srgb, var(--background) 88%, white), color-mix(in srgb, var(--background) 58%, transparent));
+      radial-gradient(circle at 82% 10%, color-mix(in srgb, var(--accent-alt) 12%, transparent), transparent 34%),
+      linear-gradient(90deg, color-mix(in srgb, var(--background) 88%, white), color-mix(in srgb, var(--background) 44%, transparent) 58%, transparent 100%),
+      linear-gradient(0deg, color-mix(in srgb, var(--accent) 8%, transparent), color-mix(in srgb, var(--background) 10%, transparent));
   }
 
   .skills li {
@@ -263,17 +320,107 @@
   }
 }
 
+.themed[data-capturing="true"] {
+  background:
+    radial-gradient(circle at 10% 6%, rgba(var(--accent-rgb), .24), transparent 24rem),
+    radial-gradient(circle at 94% 16%, rgba(var(--accent-alt-rgb), .2), transparent 26rem),
+    linear-gradient(145deg, rgba(var(--background-rgb), .96), rgba(var(--background-rgb), 1)),
+    var(--background);
+
+  .sheet {
+    background:
+      radial-gradient(circle at 78% 44%, rgba(var(--accent-rgb), .18), transparent 28%),
+      linear-gradient(120deg, rgba(var(--background-rgb), .96), rgba(var(--background-rgb), .72)),
+      var(--cv-wallpaper),
+      var(--background);
+    background-position: center;
+    background-size: cover;
+  }
+
+  .sheet::before {
+    display: none;
+  }
+
+  .experience article {
+    border-color: rgba(var(--background-rgb), .22);
+  }
+
+  .skills li {
+    background: rgba(var(--accent-rgb), .07);
+    border-color: rgba(var(--accent-alt-rgb), .16);
+    box-shadow: inset 0 0 0 .5px rgba(var(--background-rgb), .18);
+    font-weight: var(--cv-weight-chip);
+    opacity: .82;
+  }
+}
+
+.themed[data-capturing="true"][data-mode="light"] {
+  background:
+    radial-gradient(circle at 10% 6%, rgba(var(--accent-rgb), .16), transparent 24rem),
+    radial-gradient(circle at 94% 16%, rgba(var(--accent-alt-rgb), .12), transparent 26rem),
+    linear-gradient(145deg, rgba(var(--background-rgb), .98), rgba(var(--background-rgb), 1)),
+    var(--background);
+
+  .sheet {
+    background:
+      radial-gradient(circle at 78% 44%, rgba(var(--accent-rgb), .08), transparent 28%),
+      linear-gradient(120deg, rgba(var(--background-rgb), .985), rgba(var(--background-rgb), .86)),
+      var(--cv-wallpaper),
+      var(--background);
+  }
+
+  .skills li {
+    background: rgba(var(--accent-rgb), .045);
+    border-color: rgba(var(--accent-alt-rgb), .14);
+    box-shadow: inset 0 0 0 .5px rgba(var(--background-rgb), .2);
+    opacity: .78;
+  }
+}
+
 .executive {
   .sheet {
+    align-content: start;
+    gap: .9rem 1.15rem;
+    padding: 14mm 16mm 13mm;
     color: #111;
   }
 
   .header {
     border-color: #111;
+    padding-bottom: .65rem;
+  }
+
+  .summary p {
+    line-height: 1.38;
+  }
+
+  .experience {
+    gap: .62rem;
+  }
+
+  .experience article {
+    padding-top: .52rem;
+  }
+
+  .experience li {
+    line-height: 1.32;
+    margin: .05rem 0;
+  }
+
+  .sidebar {
+    align-content: start;
+    gap: .75rem;
   }
 
   .skills li {
     border-color: #999;
+    font-size: .62rem;
+    line-height: 1.1;
+    padding: .13rem .32rem;
+  }
+
+  .continuationSheet {
+    padding-top: 16mm;
   }
 }
 
@@ -283,9 +430,20 @@
     size: A4;
   }
 
+  @page a2Theme {
+    margin: 0;
+    size: A2;
+  }
+
   .page {
-    background: transparent !important;
+    background: transparent;
     padding: 0;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .page[data-format="a2"] {
+    page: a2Theme;
   }
 
   .toolbar {
@@ -296,6 +454,120 @@
     box-shadow: none;
     margin: 0;
     min-height: 297mm;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
     width: 210mm;
+  }
+
+  .sheet + .sheet {
+    margin-top: 0;
+  }
+
+  .themed {
+    background:
+      radial-gradient(circle at 10% 6%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 24rem),
+      radial-gradient(circle at 94% 16%, color-mix(in srgb, var(--accent-alt) 34%, transparent), transparent 26rem),
+      linear-gradient(145deg, color-mix(in srgb, var(--background) 92%, black), color-mix(in srgb, var(--accent) 14%, var(--background))),
+      var(--background);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .themed[data-mode="light"] {
+    background:
+      radial-gradient(circle at 10% 6%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 24rem),
+      radial-gradient(circle at 94% 16%, color-mix(in srgb, var(--accent-alt) 18%, transparent), transparent 26rem),
+      linear-gradient(145deg, color-mix(in srgb, var(--background) 96%, white), color-mix(in srgb, var(--accent) 10%, var(--background))),
+      var(--background);
+  }
+
+  .page[data-format="a2"] .sheet {
+    aspect-ratio: auto;
+    gap: 2.2rem 2rem;
+    min-height: 594mm;
+    padding: 30mm 34mm;
+    width: 420mm;
+
+    .header {
+      gap: 1.5rem;
+      padding-bottom: 1.15rem;
+
+      p {
+        font-size: 1.1rem;
+      }
+
+      h1 {
+        font-size: 4.2rem;
+      }
+
+      ul {
+        font-size: 1rem;
+      }
+    }
+
+    .summary,
+    .experience,
+    .sidebar section {
+      h2 {
+        font-size: 1rem;
+        margin-bottom: .8rem;
+      }
+    }
+
+    .summary p {
+      font-size: 1.15rem;
+      line-height: 1.5;
+    }
+
+    .experience {
+      gap: 1.15rem;
+
+      h3 {
+        font-size: 1.42rem;
+      }
+
+      span {
+        font-size: .95rem;
+      }
+
+      p {
+        font-size: 1.03rem;
+      }
+
+      li {
+        font-size: .98rem;
+        line-height: 1.42;
+      }
+    }
+
+    .skills {
+      gap: .42rem;
+
+      li {
+        font-size: .86rem;
+        padding: .24rem .5rem;
+      }
+    }
+
+    .sidebar {
+      gap: 1.25rem;
+    }
+
+    .sidebar article {
+      h3 {
+        font-size: 1.18rem;
+      }
+
+      p,
+      span {
+        font-size: .96rem;
+      }
+    }
+  }
+
+  .themed,
+  .themed * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 }

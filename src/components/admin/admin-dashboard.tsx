@@ -1,15 +1,16 @@
 "use client";
 
-import { useActionState, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useActionState, useEffect, useMemo, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  extractThemeFromImageAction,
+  removeCvPdfAction,
   saveCvContentAction,
   saveThemeSettingsAction,
   uploadCvAction,
   type SaveState
 } from "@/app/actions/site-content";
+import { applyThemeVariables } from "@/lib/apply-theme-variables";
 import type { CvEducationItem, CvExperienceItem, SiteContent } from "@/lib/types";
 import { contrastGrade, contrastRatio, normalizeSiteTheme, readableTextColor } from "@/lib/theme-contrast";
 import styles from "./admin-dashboard.module.scss";
@@ -59,11 +60,10 @@ type PaletteVariantSet = {
 
 export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProps) {
   const router = useRouter();
-  const paletteFormRef = useRef<HTMLFormElement>(null);
   const [uploadState, uploadAction, uploading] = useActionState(uploadCvAction, initialState);
+  const [removePdfState, removePdfAction, removingPdf] = useActionState(removeCvPdfAction, initialState);
   const [cvState, cvAction, savingCv] = useActionState(saveCvContentAction, initialState);
   const [themeState, themeAction, savingTheme] = useActionState(saveThemeSettingsAction, initialState);
-  const [extractState, extractAction, extracting] = useActionState(extractThemeFromImageAction, initialState);
   const [themeDraft, setThemeDraft] = useState(initialContent.theme);
   const [experienceItems, setExperienceItems] = useState(initialContent.cv.experience);
   const [educationItems, setEducationItems] = useState(initialContent.cv.education);
@@ -75,36 +75,14 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
   const previewWallpaper = palettePreview || themeDraft.backgroundImage || themeDraft.light.backgroundImage;
 
   useEffect(() => {
-    const root = document.documentElement;
-    const variables = {
-      "--accent": normalizedTheme.accent,
-      "--accent-alt": normalizedTheme.accentAlt,
-      "--background": normalizedTheme.background,
-      "--foreground": normalizedTheme.foreground,
-      "--muted": normalizedTheme.muted,
-      "--line": normalizedTheme.line,
-      "--panel": normalizedTheme.panel,
-      "--panel-strong": normalizedTheme.panelStrong,
-      "--ink": normalizedTheme.ink,
-      "--light-accent": normalizedTheme.light.accent,
-      "--light-accent-alt": normalizedTheme.light.accentAlt,
-      "--light-background": normalizedTheme.light.background,
-      "--light-foreground": normalizedTheme.light.foreground,
-      "--light-muted": normalizedTheme.light.muted,
-      "--light-line": normalizedTheme.light.line,
-      "--light-panel": normalizedTheme.light.panel,
-      "--light-panel-strong": normalizedTheme.light.panelStrong,
-      "--light-ink": normalizedTheme.light.ink
-    };
-
-    Object.entries(variables).forEach(([property, value]) => root.style.setProperty(property, value));
+    applyThemeVariables(normalizedTheme);
   }, [normalizedTheme]);
 
   useEffect(() => {
-    if (extractState.ok || themeState.ok) {
+    if (themeState.ok || uploadState.ok || removePdfState.ok) {
       router.refresh();
     }
-  }, [extractState.ok, router, themeState.ok]);
+  }, [removePdfState.ok, router, themeState.ok, uploadState.ok]);
 
   useEffect(() => {
     return () => {
@@ -171,7 +149,6 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
         background: variants.light[0]?.tokens.background ?? current.light.background
       }
     }));
-    window.setTimeout(() => paletteFormRef.current?.requestSubmit(), 60);
   }
 
   function addExperienceItem() {
@@ -260,43 +237,36 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
           <aside className={styles.themeColumn}>
             <section className={styles.card}>
               <h2>Extract Theme From Image</h2>
-              <form ref={paletteFormRef} action={extractAction} className={styles.form}>
-                <input type="hidden" name="suggestedAccent" value={themeDraft.accent} />
-                <input type="hidden" name="suggestedAccentAlt" value={themeDraft.accentAlt} />
-                <input type="hidden" name="suggestedBackground" value={themeDraft.background} />
-                <input type="hidden" name="suggestedLightAccent" value={themeDraft.light.accent} />
-                <input type="hidden" name="suggestedLightAccentAlt" value={themeDraft.light.accentAlt} />
-                <input type="hidden" name="suggestedLightBackground" value={themeDraft.light.background} />
+              <div className={styles.form}>
                 <label htmlFor="themeImage">Upload image</label>
                 <input
                   id="themeImage"
                   name="themeImage"
                   type="file"
                   accept="image/*"
-                  required
+                  form="themeSettingsForm"
                   onChange={(event) => handlePaletteFile(event.target.files?.[0] ?? null)}
                 />
                 {palettePreview ? (
                   <span className={styles.imagePreview}>
                     <i style={{ backgroundImage: `url(${palettePreview})` }} />
-                    <strong>{extracting ? "Extracting palette..." : paletteFileName}</strong>
+                    <strong>{paletteFileName}</strong>
                   </span>
                 ) : (
-                  <span className={styles.imageHint}>Palette applies automatically after image selection.</span>
+                  <span className={styles.imageHint}>Preview updates immediately. Click Save Theme to persist the image and colors.</span>
                 )}
-              </form>
+              </div>
               {paletteVariants.dark.length > 0 ? (
                 <div className={styles.paletteOptions}>
                   <PaletteOptions title="Dark palettes" mode="dark" variants={paletteVariants.dark} selected={selectedPalette.dark} onSelect={applyPaletteVariant} />
                   <PaletteOptions title="Light palettes" mode="light" variants={paletteVariants.light} selected={selectedPalette.light} onSelect={applyPaletteVariant} />
                 </div>
               ) : null}
-              {extractState.message ? <p className={extractState.ok ? styles.success : styles.error}>{extractState.message}</p> : null}
             </section>
 
             <section className={styles.card}>
               <h2>Manual Theme Settings</h2>
-              <form action={themeAction} className={styles.compactThemeForm}>
+              <form id="themeSettingsForm" action={themeAction} className={styles.compactThemeForm}>
                 <input type="hidden" name="backgroundImage" value={themeDraft.backgroundImage} />
                 <input type="hidden" name="lightBackgroundImage" value={themeDraft.light.backgroundImage} />
                 <input type="hidden" name="bannerStyle" value={themeDraft.bannerStyle ?? "editorial"} />
@@ -354,6 +324,21 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
                 <button type="submit" disabled={uploading}>{uploading ? "Storing PDF..." : "Upload and Store PDF"}</button>
               </form>
               {uploadState.message ? <p className={uploadState.ok ? styles.success : styles.error}>{uploadState.message}</p> : null}
+              {initialContent.cvFileUrl ? (
+                <form action={removePdfAction} className={styles.attachedPdf}>
+                  <div>
+                    <span>Attached PDF</span>
+                    <strong>{initialContent.sourceFileName ?? "Stored CV PDF"}</strong>
+                    <a href={initialContent.cvFileUrl}>Open current file</a>
+                  </div>
+                  <button type="submit" disabled={removingPdf}>
+                    {removingPdf ? "Removing..." : "Remove attached PDF"}
+                  </button>
+                </form>
+              ) : (
+                <p className={styles.imageHint}>No CV PDF is currently attached, so the homepage download button stays hidden.</p>
+              )}
+              {removePdfState.message ? <p className={removePdfState.ok ? styles.success : styles.error}>{removePdfState.message}</p> : null}
             </section>
 
             <form action={cvAction} className={styles.sectionStack}>

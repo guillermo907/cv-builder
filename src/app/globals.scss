@@ -9,8 +9,12 @@
   --accent: #76f005;
   --accent-alt: #47f556;
   --ink: #10200c;
-  --font-display: "Georgia", "Times New Roman", serif;
-  --font-body: "Avenir Next", "Helvetica Neue", sans-serif;
+  --font-display: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+  --font-body: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+  --cv-weight-display: 760;
+  --cv-weight-heading: 680;
+  --cv-weight-strong: 620;
+  --cv-weight-chip: 560;
 }
 
 * {

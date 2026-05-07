@@ -1,6 +1,6 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { put } from "@vercel/blob";
+import { del, put } from "@vercel/blob";
 
 export function hasBlobStorage() {
   return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
@@ -27,6 +27,21 @@ function versionedUrl(url: string) {
 
 function blobProxyUrl(pathname: string) {
   return versionedUrl(`/api/blob/${pathname.split("/").map(encodeURIComponent).join("/")}`);
+}
+
+function blobPathFromProxyUrl(url: string) {
+  const [pathOnly] = url.split("?");
+  const prefix = "/api/blob/";
+
+  if (!pathOnly.startsWith(prefix)) {
+    return "";
+  }
+
+  return pathOnly
+    .slice(prefix.length)
+    .split("/")
+    .map(decodeURIComponent)
+    .join("/");
 }
 
 export async function savePublicAsset({
@@ -58,4 +73,28 @@ export async function savePublicAsset({
   await fs.writeFile(filePath, body);
 
   return versionedUrl(`/${localPath}`);
+}
+
+export async function deletePublicAsset(url?: string) {
+  if (!url) {
+    return;
+  }
+
+  if (shouldUseBlobStorage()) {
+    const pathname = blobPathFromProxyUrl(url);
+
+    if (pathname) {
+      await del(pathname);
+    }
+
+    return;
+  }
+
+  const [localUrl] = url.split("?");
+
+  if (!localUrl.startsWith("/uploads/")) {
+    return;
+  }
+
+  await fs.rm(path.join(process.cwd(), "public", localUrl), { force: true });
 }

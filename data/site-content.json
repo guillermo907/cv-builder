@@ -7,7 +7,7 @@
     "address": "Zapopan, Jalisco, Mexico",
     "email": "guillermolopezdev@gmail.com",
     "phone": "+52 33 1211 6601",
-    "summary": "Application Engineer and Frontend Developer with 5+ years of experience building and maintaining enterprise web applications using React, Next.js, Angular, and modern frontend technologies. Experienced collaborating with international teams in Agile environments, developing scalable UI solutions, accessibility improvements, API integrations, and high-quality user experiences for enterprise applications. Strong focus on modern UI architecture, performance, usability, and problem solving. Experienced leveraging AI-assisted development tools to improve productivity, accelerate workflows, debugging, prototyping, and software delivery.",
+    "summary": "Application Engineer and Frontend Developer with 5+ years of experience building and maintaining enterprise web applications using React, Next.js, Angular, and modern frontend technologies. \r\n\r\nExperienced collaborating with international teams in Agile environments, developing scalable UI solutions, accessibility improvements, API integrations, and high-quality user experiences for enterprise applications. Strong focus on modern UI architecture, performance, usability, and problem solving. Experienced leveraging AI-assisted development tools to improve productivity, accelerate workflows, debugging, prototyping, and software delivery.",
     "skills": [
       "React",
       "Next.js",
@@ -43,8 +43,8 @@
     ],
     "experience": [
       {
-        "company": "Oracle",
         "role": "Application Engineer",
+        "company": "Oracle",
         "period": "2024 - Present",
         "highlights": [
           "Develop and maintain enterprise web applications and internal platforms.",
@@ -57,8 +57,8 @@
         ]
       },
       {
-        "company": "Making Sense / NDS Cognitive Labs",
         "role": "Frontend Software Developer",
+        "company": "Making Sense / NDS Cognitive Labs",
         "period": "Jan 2022 - 2024",
         "highlights": [
           "Developed and maintained frontend applications across multiple international projects.",
@@ -70,8 +70,8 @@
         ]
       },
       {
-        "company": "Persistent Systems",
         "role": "Software Developer",
+        "company": "Persistent Systems",
         "period": "Dec 2020 - Jan 2022",
         "highlights": [
           "Worked on enterprise-level frontend projects for Fortune 500 companies.",
@@ -82,8 +82,8 @@
         ]
       },
       {
-        "company": "EC GPS",
         "role": "Software Developer / Project Administrator",
+        "company": "EC GPS",
         "period": "May 2019 - Dec 2020",
         "highlights": [
           "Provided support and maintenance for a GPS vehicle tracking web platform.",
@@ -94,8 +94,8 @@
         ]
       },
       {
-        "company": "Galex / Kronosoft",
         "role": "Software Developer",
+        "company": "Galex / Kronosoft",
         "period": "Apr 2018 - May 2019",
         "highlights": [
           "Developed and maintained software solutions including ERP and transaction systems.",
@@ -107,8 +107,8 @@
     ],
     "education": [
       {
-        "institution": "Universidad de Guadalajara",
         "title": "Bachelor’s Degree in Information Technologies",
+        "institution": "Universidad de Guadalajara",
         "period": "2016 - 2020"
       }
     ]
@@ -117,14 +117,14 @@
     "accent": "#30e5b2",
     "accentAlt": "#89c379",
     "background": "#15383c",
-    "backgroundImage": "/uploads/cv-wallpaper.jpg?v=1778118494846",
+    "backgroundImage": "/uploads/cv-wallpaper-edc9a158-5e9a-4c21-b89f-c8ad012d7b95.jpg?v=1778187987802",
     "contrast": "soft",
-    "bannerStyle": "split",
+    "bannerStyle": "floating",
     "light": {
       "accent": "#378a94",
       "accentAlt": "#394c74",
       "background": "#f4f6f6",
-      "backgroundImage": "/uploads/cv-wallpaper.jpg?v=1778118494846",
+      "backgroundImage": "/uploads/cv-wallpaper-edc9a158-5e9a-4c21-b89f-c8ad012d7b95.jpg?v=1778187987802",
       "contrast": "editorial"
     }
   },
@@ -355,8 +355,5 @@
     "instagram": "https://instagram.com/",
     "youtube": "https://www.youtube.com/@comando9072",
     "spotify": "https://spotify.com/"
-  },
-  "sourceFileName": "CV.pdf",
-  "cvUploadedAt": "2026-05-07T13:05:08.680Z",
-  "cvFileUrl": "/api/blob/cv/guillermo-lopez-garcia-cv.pdf?v=1778159108680"
+  }
 }

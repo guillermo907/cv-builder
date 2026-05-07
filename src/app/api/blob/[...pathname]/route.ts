@@ -11,7 +11,7 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
     return new Response("Not found", { status: 404 });
   }
 
-  const result = await get(blobPath, { access: "private", useCache: true });
+  const result = await get(blobPath, { access: "private", useCache: false });
 
   if (!result || result.statusCode !== 200) {
     return new Response("Not found", { status: 404 });
@@ -20,7 +20,7 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
   return new Response(result.stream, {
     headers: {
       "Cache-Control": blobPath.startsWith("assets/")
-        ? "public, max-age=3600, stale-while-revalidate=86400"
+        ? "private, max-age=0, no-cache, no-store, must-revalidate"
         : "private, max-age=0, no-store",
       "Content-Disposition": blobPath.startsWith("cv/")
         ? `attachment; filename="${blobPath.split("/").at(-1) ?? "cv.pdf"}"`
