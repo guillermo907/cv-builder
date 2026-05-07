@@ -1,0 +1,362 @@
+{
+  "siteTitle": "Guillermo López García CV",
+  "cv": {
+    "fullName": "Guillermo López García",
+    "headline": "Application Engineer | Frontend Engineer",
+    "location": "Zapopan, Jalisco, Mexico",
+    "address": "Zapopan, Jalisco, Mexico",
+    "email": "guillermolopezdev@gmail.com",
+    "phone": "+52 33 1211 6601",
+    "summary": "Application Engineer and Frontend Developer with 5+ years of experience building and maintaining enterprise web applications using React, Next.js, Angular, and modern frontend technologies. Experienced collaborating with international teams in Agile environments, developing scalable UI solutions, accessibility improvements, API integrations, and high-quality user experiences for enterprise applications. Strong focus on modern UI architecture, performance, usability, and problem solving. Experienced leveraging AI-assisted development tools to improve productivity, accelerate workflows, debugging, prototyping, and software delivery.",
+    "skills": [
+      "React",
+      "Next.js",
+      "Angular",
+      "TypeScript",
+      "JavaScript",
+      "HTML5",
+      "CSS3",
+      "Redux",
+      "Material UI",
+      "Styled Components",
+      "Sass",
+      "Astro.js",
+      "Vue.js",
+      "Node.js",
+      "Express.js",
+      "REST APIs",
+      "SQL",
+      "MySQL",
+      "MongoDB",
+      "Prisma",
+      "Git",
+      "GitHub",
+      "GitLab",
+      "Jira",
+      "Cypress",
+      "Postman",
+      "Agile / Scrum",
+      "Accessibility (a11y)",
+      "Responsive Design",
+      "AI-assisted Development",
+      "AI-enhanced Workflow Optimization"
+    ],
+    "experience": [
+      {
+        "company": "Oracle",
+        "role": "Application Engineer",
+        "period": "2024 - Present",
+        "highlights": [
+          "Develop and maintain enterprise web applications and internal platforms.",
+          "Build scalable UI components and frontend features using modern web technologies.",
+          "Collaborate with cross-functional global teams following Agile/Scrum methodologies.",
+          "Leverage AI-assisted development tools to improve workflow efficiency, debugging, documentation, and implementation speed.",
+          "Work on issue remediation, debugging, feature implementation, and application support.",
+          "Contribute to usability, accessibility, and user experience improvements.",
+          "Participate in API integration workflows and enterprise software processes."
+        ]
+      },
+      {
+        "company": "Making Sense / NDS Cognitive Labs",
+        "role": "Frontend Software Developer",
+        "period": "Jan 2022 - 2024",
+        "highlights": [
+          "Developed and maintained frontend applications across multiple international projects.",
+          "Implemented accessibility improvements and new application features.",
+          "Built responsive UI components based on mockups and wireframes.",
+          "Worked extensively with React, Angular, Material UI, JavaScript, HTML, and CSS.",
+          "Collaborated with distributed teams using Git, Jira, Scrum, and Agile methodologies.",
+          "Participated in frontend architecture decisions, issue resolution, and UI enhancements."
+        ]
+      },
+      {
+        "company": "Persistent Systems",
+        "role": "Software Developer",
+        "period": "Dec 2020 - Jan 2022",
+        "highlights": [
+          "Worked on enterprise-level frontend projects for Fortune 500 companies.",
+          "Developed and modified UI components using React, Redux, Vue.js, JavaScript, HTML, and CSS.",
+          "Contributed to accessibility, performance optimization, and frontend enhancements.",
+          "Implemented automated end-to-end testing using Cypress and Nightwatch.",
+          "Collaborated with development teams in Agile environments."
+        ]
+      },
+      {
+        "company": "EC GPS",
+        "role": "Software Developer / Project Administrator",
+        "period": "May 2019 - Dec 2020",
+        "highlights": [
+          "Provided support and maintenance for a GPS vehicle tracking web platform.",
+          "Developed frontend and backend features using JavaScript, PHP, HTML, CSS, and MySQL.",
+          "Integrated APIs and handled database queries and application support tasks.",
+          "Participated in server maintenance, customer support, and internal operations.",
+          "Assisted technicians and users with platform-related issues and deployments."
+        ]
+      },
+      {
+        "company": "Galex / Kronosoft",
+        "role": "Software Developer",
+        "period": "Apr 2018 - May 2019",
+        "highlights": [
+          "Developed and maintained software solutions including ERP and transaction systems.",
+          "Participated in client meetings, requirement gathering, development, testing, and deployment.",
+          "Worked with C#, PHP, MySQL, JavaScript, HTML, and Bootstrap technologies.",
+          "Assisted with project coordination and technical documentation."
+        ]
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universidad de Guadalajara",
+        "title": "Bachelor’s Degree in Information Technologies",
+        "period": "2016 - 2020"
+      }
+    ]
+  },
+  "theme": {
+    "accent": "#30e5b2",
+    "accentAlt": "#89c379",
+    "background": "#15383c",
+    "backgroundImage": "/uploads/cv-wallpaper.jpg?v=1778118494846",
+    "contrast": "soft",
+    "bannerStyle": "split",
+    "light": {
+      "accent": "#378a94",
+      "accentAlt": "#394c74",
+      "background": "#f4f6f6",
+      "backgroundImage": "/uploads/cv-wallpaper.jpg?v=1778118494846",
+      "contrast": "editorial"
+    }
+  },
+  "locales": {
+    "es": {
+      "siteTitle": "Guillermo López García CV",
+      "cv": {
+        "headline": "Application Engineer | Frontend Engineer",
+        "summary": "Application Engineer and Frontend Developer with 5+ years of experience building and maintaining enterprise web applications using React, Next.js, Angular, and modern frontend technologies. Experienced collaborating with international teams in Agile environments, developing scalable UI solutions, accessibility improvements, API integrations, and high-quality user experiences for enterprise applications. Strong focus on modern UI architecture, performance, usability, and problem solving. Experienced leveraging AI-assisted development tools to improve productivity, accelerate workflows, debugging, prototyping, and software delivery.",
+        "fullName": "Guillermo López García"
+      },
+      "subtitle": "Lenguaje jazz. Fuego blues-rock. Claridad de formación musical.",
+      "heroText": "Un estudio de guitarra y propuesta de performance premium para estudiantes, venues y producciones que buscan profundidad musical con presencia eléctrica.",
+      "primaryCta": "Reservar presentación",
+      "secondaryCta": "Ver clases",
+      "bioTitle": "Un guitarrista formado entre estudio formal e instinto en vivo",
+      "bioText": "Guillermo combina educación musical formal con el vocabulario del jazz, la energía del blues rock y la versatilidad que exigen los escenarios modernos.",
+      "credentials": [
+        "Formación musical formal en armonía, entrenamiento auditivo, arreglos y ensamble",
+        "Fluidez en jazz, blues, rock, latín, pop, worship y guitarra acústica",
+        "Planes de clase para principiantes serios, improvisadores intermedios y músicos avanzados"
+      ],
+      "servicesIntro": "Diseñado para estudiantes, artistas, venues y equipos creativos que necesitan más que guitarra genérica.",
+      "services": [
+        {
+          "eyebrow": "Estudio privado",
+          "title": "Clases de guitarra",
+          "description": "Clases estructuradas de técnica, armonía, improvisación, repertorio, lectura, ritmo, sonido e identidad musical."
+        },
+        {
+          "eyebrow": "Escenario",
+          "title": "Música en vivo",
+          "description": "Guitarra solista elegante, energía de trío jazz, sets blues-rock, cocteles, eventos privados y programación para venues."
+        },
+        {
+          "eyebrow": "Estudio",
+          "title": "Guitarra de sesión",
+          "description": "Partes de guitarra con criterio, líneas lead, texturas rítmicas, apoyo de arreglo y grabación con mentalidad de producción."
+        }
+      ],
+      "lessonIntro": "Un camino inspirado en escuela de música, con calidez de mentor y precisión de guitarrista activo.",
+      "lessonPackages": [
+        {
+          "title": "Fundamentos",
+          "price": "$120",
+          "cadence": "4 clases / mes",
+          "description": "Para nuevos guitarristas que quieren técnica limpia, canciones reales, seguridad rítmica y un sistema de práctica claro.",
+          "features": [
+            "Mapa técnico",
+            "Plan de repertorio",
+            "Rutina de práctica"
+          ]
+        },
+        {
+          "title": "Improvisador",
+          "price": "$180",
+          "cadence": "4 clases / mes",
+          "description": "Para guitarristas listos para escuchar cambios, construir líneas, acompañar con estilo y entender armonía jazz/blues.",
+          "features": [
+            "Fluidez acorde-escala",
+            "Trabajo de transcripción",
+            "Etudes semanales"
+          ]
+        },
+        {
+          "title": "Intensivo artístico",
+          "price": "$320",
+          "cadence": "8 sesiones / mes",
+          "description": "Para músicos preparando audiciones, grabaciones, sets en vivo o un salto serio en musicalidad.",
+          "features": [
+            "Coaching escénico",
+            "Apoyo de arreglos",
+            "Feedback directo"
+          ]
+        }
+      ],
+      "bookingInfo": "Las clases están disponibles online y presencial bajo solicitud. Las presentaciones se cotizan según alcance del evento, ensamble, ubicación y necesidades de producción.",
+      "galleryIntro": "Un lenguaje visual de escenarios nocturnos, educación boutique, sesiones pulidas y brillo de amplificador.",
+      "gallery": [
+        {
+          "title": "Vocabulario Blue Note",
+          "description": "Fraseo jazz moderno, acompañamiento y desarrollo melódico.",
+          "image": "/gallery/jazz-stage.svg"
+        },
+        {
+          "title": "Voltaje blues-rock",
+          "description": "Leads expresivos, toque dinámico y tono listo para banda.",
+          "image": "/gallery/blues-amp.svg"
+        },
+        {
+          "title": "Estudio privado",
+          "description": "Clases enfocadas alrededor de la voz musical del estudiante.",
+          "image": "/gallery/lesson-room.svg"
+        }
+      ],
+      "testimonials": [
+        {
+          "quote": "Las clases conectaron por fin la teoría con el mástil. Dejé de memorizar formas y empecé a escuchar música.",
+          "name": "Mariana R.",
+          "role": "Estudiante de guitarra jazz"
+        },
+        {
+          "quote": "Guillermo trajo exactamente la mezcla de elegancia y filo que necesitaba nuestro evento. Profesional, musical y vivo.",
+          "name": "Daniel C.",
+          "role": "Cliente de evento privado"
+        },
+        {
+          "quote": "Su feedback es preciso sin matar la alegría. Cada sesión me deja algo musical que puedo usar de inmediato.",
+          "name": "Alex M.",
+          "role": "Guitarrista blues-rock"
+        }
+      ],
+      "contactTitle": "Listo para que la guitarra se sienta menos ordinaria?",
+      "contactText": "Escribe para clases, presentaciones, trabajo de grabación o un plan personalizado para tus metas musicales.",
+      "contactEmail": "booking@guillermolopezguitar.com"
+    }
+  },
+  "subtitle": "Jazz language. Blues-rock fire. Conservatory-level clarity.",
+  "heroText": "A premium guitar studio and performance identity for players, venues, and productions that want musical depth with electric-stage presence.",
+  "primaryCta": "Book a performance",
+  "secondaryCta": "Explore lessons",
+  "bioTitle": "A guitarist shaped by formal study and live instinct",
+  "bioText": "Guillermo blends formal music education with the vocabulary of jazz, the grit of blues rock, and the flexibility demanded by modern stages. His work moves easily between refined private instruction, improvisation coaching, session-ready guitar parts, and expressive live performance.",
+  "credentials": [
+    "Formal music education with harmony, ear training, arranging, and ensemble practice",
+    "Jazz, blues, rock, Latin, pop, worship, and acoustic performance fluency",
+    "Lesson plans for serious beginners, intermediate improvisers, and advanced players"
+  ],
+  "servicesIntro": "Designed for students, artists, venues, and creative teams that need more than generic guitar.",
+  "services": [
+    {
+      "eyebrow": "Private Study",
+      "title": "Guitar Lessons",
+      "description": "Structured lessons in technique, harmony, improvisation, repertoire, reading, rhythm, tone, and musical identity."
+    },
+    {
+      "eyebrow": "Stage",
+      "title": "Live Performance",
+      "description": "Elegant solo guitar, jazz trio energy, blues-rock sets, cocktail hours, private events, and venue programming."
+    },
+    {
+      "eyebrow": "Studio",
+      "title": "Session Guitar",
+      "description": "Tasteful guitar parts, lead lines, rhythm textures, arranging support, and production-minded recording."
+    }
+  ],
+  "lessonIntro": "A music-school inspired path with the warmth of a mentor and the precision of a working guitarist.",
+  "lessonPackages": [
+    {
+      "title": "Foundations",
+      "price": "$120",
+      "cadence": "4 lessons / month",
+      "description": "For newer players who want clean technique, real songs, rhythm security, and a confident practice system.",
+      "features": [
+        "Technique map",
+        "Repertoire plan",
+        "Practice dashboard"
+      ]
+    },
+    {
+      "title": "Improviser",
+      "price": "$180",
+      "cadence": "4 lessons / month",
+      "description": "For guitarists ready to hear changes, build lines, comp with style, and understand jazz/blues harmony.",
+      "features": [
+        "Chord-scale fluency",
+        "Transcription work",
+        "Weekly etudes"
+      ]
+    },
+    {
+      "title": "Artist Intensive",
+      "price": "$320",
+      "cadence": "8 sessions / month",
+      "description": "For performers preparing auditions, recordings, live sets, or a serious leap in musicianship.",
+      "features": [
+        "Performance coaching",
+        "Arrangement support",
+        "Direct feedback"
+      ]
+    }
+  ],
+  "bookingInfo": "Lessons are available online and in person by request. Performance bookings are quoted by event scope, ensemble size, location, and production needs.",
+  "galleryIntro": "A visual language of late-night stages, boutique education, polished sessions, and amplifier glow.",
+  "gallery": [
+    {
+      "title": "Blue Note Vocabulary",
+      "description": "Modern jazz phrasing, comping, and melodic development.",
+      "image": "/gallery/jazz-stage.svg"
+    },
+    {
+      "title": "Blues-Rock Voltage",
+      "description": "Expressive leads, dynamic touch, and band-ready tone.",
+      "image": "/gallery/blues-amp.svg"
+    },
+    {
+      "title": "Private Studio",
+      "description": "Focused lessons built around the student's musical voice.",
+      "image": "/gallery/lesson-room.svg"
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "The lessons finally connected theory to the guitar neck. I stopped memorizing shapes and started hearing music.",
+      "name": "Mariana R.",
+      "role": "Jazz guitar student"
+    },
+    {
+      "quote": "Guillermo brought exactly the right blend of elegance and edge to our event. Professional, tasteful, and alive.",
+      "name": "Daniel C.",
+      "role": "Private event client"
+    },
+    {
+      "quote": "His feedback is precise without killing the joy. Every session gives me something musical I can use immediately.",
+      "name": "Alex M.",
+      "role": "Blues-rock guitarist"
+    }
+  ],
+  "contactTitle": "Ready to make the guitar feel less ordinary?",
+  "contactText": "Send a note for lessons, performance bookings, recording work, or a custom plan for your musical goals.",
+  "contactEmail": "booking@guillermolopezguitar.com",
+  "seo": {
+    "title": "Guillermo Lopez Guitar | Lessons, Jazz, Blues & Live Performance",
+    "description": "Professional guitarist offering premium guitar lessons, jazz and blues-rock performance, session work, and musician coaching.",
+    "ogImage": "/opengraph-image"
+  },
+  "socialLinks": {
+    "instagram": "https://instagram.com/",
+    "youtube": "https://www.youtube.com/@comando9072",
+    "spotify": "https://spotify.com/"
+  },
+  "sourceFileName": "CV.pdf",
+  "cvUploadedAt": "2026-05-07T13:05:08.680Z",
+  "cvFileUrl": "/api/blob/cv/guillermo-lopez-garcia-cv.pdf?v=1778159108680"
+}

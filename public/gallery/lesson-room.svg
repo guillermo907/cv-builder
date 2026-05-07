@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 780" role="img" aria-label="Abstract guitar lesson room image">
+  <rect width="900" height="780" fill="#FFFFFF"/>
+  <path d="M0 0 H900 V340 C660 235 425 250 0 430Z" fill="#121212"/>
+  <circle cx="215" cy="192" r="118" fill="#03DAC6" opacity=".42"/>
+  <path d="M450 112 C530 220 542 358 480 520 C450 600 350 635 285 574 C220 512 254 395 325 320 C374 268 410 203 450 112Z" fill="#6200EE" opacity=".75"/>
+  <path d="M512 120 L288 652" stroke="#121212" stroke-width="11" opacity=".52"/>
+  <path d="M560 134 L336 666" stroke="#121212" stroke-width="4" opacity=".42"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 780" role="img" aria-label="Abstract jazz stage guitar image">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#0d1417"/>
+      <stop offset=".55" stop-color="#1a0033"/>
+      <stop offset="1" stop-color="#6200EE"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="780" fill="url(#g)"/>
+  <circle cx="650" cy="130" r="180" fill="#03DAC6" opacity=".22"/>
+  <path d="M160 580 C280 410 325 270 430 205 C490 168 555 172 602 218 C670 286 608 422 475 515 C362 593 238 630 160 580Z" fill="#ffffff" opacity=".13"/>
+  <path d="M210 655 L690 115" stroke="#ffffff" stroke-width="8" opacity=".5"/>
+  <path d="M255 672 L735 132" stroke="#ffffff" stroke-width="3" opacity=".35"/>
+  <path d="M125 695 H810" stroke="#121212" stroke-width="44" opacity=".5"/>
+</svg>

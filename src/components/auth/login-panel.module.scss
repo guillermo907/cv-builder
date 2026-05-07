@@ -1,0 +1,93 @@
+.shell {
+  align-items: center;
+  display: grid;
+  min-height: 100vh;
+  padding: 1rem;
+  place-items: center;
+}
+
+.card {
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--accent) 26%, transparent), transparent 16rem),
+    var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 2rem;
+  box-shadow: 0 2rem 8rem rgba(0, 0, 0, 0.32);
+  max-width: 520px;
+  padding: 2rem;
+  width: 100%;
+}
+
+.kicker {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.card h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 9vw, 5rem);
+  letter-spacing: -0.06em;
+  line-height: 0.92;
+  margin: 0;
+}
+
+.card p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.google,
+.form button {
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 900;
+  padding: 0.95rem 1rem;
+  width: 100%;
+}
+
+.google {
+  background: var(--foreground);
+  color: var(--ink);
+  margin-top: 1rem;
+}
+
+.divider {
+  color: var(--muted);
+  display: grid;
+  margin: 1.2rem 0;
+  place-items: center;
+}
+
+.form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.form label {
+  color: var(--muted);
+}
+
+.form input {
+  background: rgba(255, 247, 234, 0.08);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  color: var(--foreground);
+  padding: 0.95rem 1rem;
+}
+
+.form button {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.notice {
+  background: color-mix(in srgb, var(--accent-alt) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-alt) 45%, transparent);
+  border-radius: 1rem;
+  margin: 1rem 0;
+  padding: 1rem;
+}

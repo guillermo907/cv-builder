@@ -1,0 +1,230 @@
+"use server";
+
+import { randomUUID } from "node:crypto";
+import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/lib/admin";
+import { getSiteContent, saveSiteContent } from "@/lib/content";
+import { savePublicAsset } from "@/lib/storage";
+import { normalizeThemeForStorage } from "@/lib/theme-contrast";
+import { createWallpaperBuffer, extractThemeFromImageBuffer } from "@/lib/theme-image";
+import type { CvEducationItem, CvExperienceItem } from "@/lib/types";
+
+export type SaveState = {
+  ok: boolean;
+  message: string;
+};
+
+function ok(message: string): SaveState {
+  return { ok: true, message };
+}
+
+function fail(message: string): SaveState {
+  return { ok: false, message };
+}
+
+export async function uploadCvAction(_previousState: SaveState, formData: FormData): Promise<SaveState> {
+  await requireAdmin();
+
+  const file = formData.get("cvFile");
+
+  if (!(file instanceof File)) return fail("Please select a PDF file.");
+
+  const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+  if (!isPdf) return fail("Only PDF files are supported in this version.");
+
+  try {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const cvFileUrl = await saveCvPdfAsset(buffer, file.name);
+
+    const current = await getSiteContent();
+    await saveSiteContent({
+      ...current,
+      sourceFileName: file.name,
+      cvFileUrl,
+      cvUploadedAt: new Date().toISOString()
+    });
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    return ok("CV PDF uploaded and stored for homepage download.");
+  } catch (error) {
+    return fail(error instanceof Error ? error.message : "Could not process CV PDF.");
+  }
+}
+
+function getString(formData: FormData, key: string) {
+  return String(formData.get(key) ?? "").trim();
+}
+
+function splitTextarea(value: string) {
+  return value
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function readExperience(formData: FormData): CvExperienceItem[] {
+  const count = Number.parseInt(getString(formData, "experienceCount"), 10);
+  const safeCount = Number.isFinite(count) ? Math.max(0, Math.min(count, 12)) : 0;
+
+  return Array.from({ length: safeCount }, (_, index) => ({
+    role: getString(formData, `experience.${index}.role`),
+    company: getString(formData, `experience.${index}.company`),
+    period: getString(formData, `experience.${index}.period`),
+    highlights: splitTextarea(getString(formData, `experience.${index}.highlights`))
+  })).filter((item) => item.role || item.company || item.period || item.highlights.length > 0);
+}
+
+function readEducation(formData: FormData): CvEducationItem[] {
+  const count = Number.parseInt(getString(formData, "educationCount"), 10);
+  const safeCount = Number.isFinite(count) ? Math.max(0, Math.min(count, 10)) : 0;
+
+  return Array.from({ length: safeCount }, (_, index) => ({
+    title: getString(formData, `education.${index}.title`),
+    institution: getString(formData, `education.${index}.institution`),
+    period: getString(formData, `education.${index}.period`)
+  })).filter((item) => item.title || item.institution || item.period);
+}
+
+async function saveWallpaperAsset(buffer: Buffer) {
+  const wallpaper = await createWallpaperBuffer(buffer);
+
+  return savePublicAsset({
+    body: wallpaper,
+    contentType: "image/jpeg",
+    localPath: "uploads/cv-wallpaper.jpg",
+    pathname: "assets/cv-wallpaper.jpg"
+  });
+}
+
+async function saveCvPdfAsset(buffer: Buffer, fileName: string) {
+  const safeName = fileName
+    .toLowerCase()
+    .replace(/\.pdf$/i, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60) || "uploaded-cv";
+  const assetName = `${safeName}-${randomUUID()}.pdf`;
+
+  return savePublicAsset({
+    body: buffer,
+    contentType: "application/pdf",
+    localPath: `uploads/${assetName}`,
+    pathname: `cv/${assetName}`
+  });
+}
+
+export async function saveCvContentAction(_previousState: SaveState, formData: FormData): Promise<SaveState> {
+  await requireAdmin();
+
+  try {
+    const current = await getSiteContent();
+
+    await saveSiteContent({
+      ...current,
+      cv: {
+        fullName: getString(formData, "fullName"),
+        headline: getString(formData, "headline"),
+        location: getString(formData, "location"),
+        address: getString(formData, "address"),
+        email: getString(formData, "email"),
+        phone: getString(formData, "phone"),
+        summary: getString(formData, "summary"),
+        skills: splitTextarea(getString(formData, "skills")),
+        experience: readExperience(formData),
+        education: readEducation(formData)
+      }
+    });
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    return ok("CV sections saved.");
+  } catch (error) {
+    return fail(error instanceof Error ? error.message : "Could not save CV sections.");
+  }
+}
+
+export async function saveThemeSettingsAction(_previousState: SaveState, formData: FormData): Promise<SaveState> {
+  await requireAdmin();
+
+  try {
+    const current = await getSiteContent();
+
+    const nextTheme = normalizeThemeForStorage({
+      ...current.theme,
+      accent: String(formData.get("accent") ?? current.theme.accent),
+      accentAlt: String(formData.get("accentAlt") ?? current.theme.accentAlt),
+      background: String(formData.get("background") ?? current.theme.background),
+      backgroundImage: String(formData.get("backgroundImage") ?? current.theme.backgroundImage),
+      contrast: (String(formData.get("contrast") ?? current.theme.contrast) as typeof current.theme.contrast),
+      bannerStyle: (String(formData.get("bannerStyle") ?? current.theme.bannerStyle ?? "editorial") as typeof current.theme.bannerStyle),
+      light: {
+        ...current.theme.light,
+        accent: String(formData.get("lightAccent") ?? current.theme.light.accent),
+        accentAlt: String(formData.get("lightAccentAlt") ?? current.theme.light.accentAlt),
+        background: String(formData.get("lightBackground") ?? current.theme.light.background),
+        backgroundImage: String(formData.get("lightBackgroundImage") ?? current.theme.light.backgroundImage),
+        contrast: (String(formData.get("lightContrast") ?? current.theme.light.contrast) as typeof current.theme.light.contrast)
+      }
+    });
+
+    await saveSiteContent({
+      ...current,
+      theme: nextTheme
+    });
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    return ok("Theme settings saved and applied.");
+  } catch (error) {
+    return fail(error instanceof Error ? error.message : "Could not save theme settings.");
+  }
+}
+
+export async function extractThemeFromImageAction(_previousState: SaveState, formData: FormData): Promise<SaveState> {
+  await requireAdmin();
+
+  const file = formData.get("themeImage");
+
+  if (!(file instanceof File)) return fail("Please upload an image file.");
+
+  const isImage = file.type.startsWith("image/");
+  if (!isImage) return fail("Only image files are allowed for palette extraction.");
+
+  try {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const extracted = await extractThemeFromImageBuffer(buffer);
+    const wallpaper = await saveWallpaperAsset(buffer);
+    const current = await getSiteContent();
+    const accent = getString(formData, "suggestedAccent") || extracted.accent;
+    const accentAlt = getString(formData, "suggestedAccentAlt") || extracted.accentAlt;
+    const background = getString(formData, "suggestedBackground") || extracted.background;
+    const lightAccent = getString(formData, "suggestedLightAccent") || accent;
+    const lightAccentAlt = getString(formData, "suggestedLightAccentAlt") || accentAlt;
+    const lightBackground = getString(formData, "suggestedLightBackground") || extracted.lightBackground;
+
+    await saveSiteContent({
+      ...current,
+      theme: normalizeThemeForStorage({
+        ...current.theme,
+        accent,
+        accentAlt,
+        background,
+        backgroundImage: wallpaper,
+        light: {
+          ...current.theme.light,
+          accent: lightAccent,
+          accentAlt: lightAccentAlt,
+          background: lightBackground,
+          backgroundImage: wallpaper
+        }
+      })
+    });
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    return ok("Palette extracted from image and applied to theme.");
+  } catch (error) {
+    return fail(error instanceof Error ? error.message : "Could not extract palette from image.");
+  }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 780" role="img" aria-label="Abstract blues amplifier image">
+  <rect width="900" height="780" fill="#121212"/>
+  <rect x="120" y="220" width="660" height="360" rx="36" fill="#1a1a1a" stroke="#6200EE" stroke-width="8"/>
+  <path d="M160 300 H740 M160 360 H740 M160 420 H740 M160 480 H740" stroke="#FFFFFF" stroke-opacity=".16" stroke-width="14"/>
+  <circle cx="250" cy="180" r="105" fill="#6200EE" opacity=".35"/>
+  <circle cx="690" cy="610" r="150" fill="#03DAC6" opacity=".18"/>
+  <path d="M185 160 C320 280 505 560 735 670" fill="none" stroke="#FFFFFF" stroke-width="10" opacity=".48"/>
+</svg>

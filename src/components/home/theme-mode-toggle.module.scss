@@ -1,0 +1,76 @@
+.toggle {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 247, 234, 0.14), rgba(255, 247, 234, 0.04)),
+    transparent;
+  cursor: pointer;
+  display: inline-grid;
+  height: 2.15rem;
+  padding: 0.18rem;
+  place-items: center;
+  width: 3.85rem;
+  transition: background 200ms ease, border-color 200ms ease;
+}
+
+.track {
+  background: var(--panel);
+  border-radius: inherit;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.sun,
+.moon {
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 180ms ease, opacity 180ms ease;
+  z-index: 2;
+}
+
+.sun {
+  color: var(--foreground);
+  left: 0.58rem;
+  opacity: 0.64;
+}
+
+.moon {
+  color: var(--accent);
+  opacity: 1;
+  right: 0.62rem;
+}
+
+.knob {
+  background: var(--foreground);
+  border-radius: 50%;
+  box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.28);
+  height: 1.45rem;
+  left: 0.18rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: left 180ms ease, background 180ms ease;
+  width: 1.45rem;
+}
+
+.toggle[aria-pressed="true"] .sun {
+  color: var(--foreground);
+  opacity: 1;
+}
+
+.toggle[aria-pressed="true"] .moon {
+  color: var(--foreground);
+  opacity: 0.64;
+}
+
+.toggle[aria-pressed="true"] .knob {
+  left: calc(100% - 1.63rem);
+  background: var(--accent);
+}
