@@ -1,0 +1,301 @@
+.page {
+  min-height: 100vh;
+  padding: 1rem;
+  background: #d8d8d8;
+  color: #151515;
+  color-scheme: light;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.page[data-mode="dark"] {
+  color-scheme: dark;
+}
+
+.page[data-mode="light"] {
+  --accent: var(--light-accent);
+  --accent-alt: var(--light-accent-alt);
+  --background: var(--light-background);
+  --foreground: var(--light-foreground);
+  --muted: var(--light-muted);
+  --line: var(--light-line);
+  --panel: var(--light-panel);
+  --panel-strong: var(--light-panel-strong);
+  --ink: var(--light-ink);
+  color-scheme: light;
+}
+
+.toolbar {
+  align-items: center;
+  display: flex;
+  gap: .7rem;
+  justify-content: center;
+  margin: 0 auto 1rem;
+
+  button,
+  a {
+    border: 1px solid #1f1f1f22;
+    border-radius: 999px;
+    background: #fff;
+    color: #111;
+    cursor: pointer;
+    font: 700 .86rem Avenir Next, sans-serif;
+    padding: .55rem .85rem;
+    text-decoration: none;
+  }
+}
+
+.sheet {
+  background: #fff;
+  box-shadow: 0 18px 70px rgb(0 0 0 / .2);
+  display: grid;
+  gap: 1.1rem 1rem;
+  grid-template-columns: 1.48fr .72fr;
+  margin: 0 auto;
+  min-height: 297mm;
+  overflow: hidden;
+  padding: 16mm;
+  position: relative;
+  width: 210mm;
+}
+
+.header,
+.summary {
+  grid-column: 1 / -1;
+}
+
+.header {
+  align-items: end;
+  border-bottom: 2px solid currentColor;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr auto;
+  padding-bottom: .8rem;
+
+  p {
+    font-family: Avenir Next, sans-serif;
+    font-size: .85rem;
+    letter-spacing: .08em;
+    margin: 0 0 .2rem;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: 2.35rem;
+    line-height: .95;
+    margin: 0;
+  }
+
+  ul {
+    font-family: Avenir Next, sans-serif;
+    font-size: .76rem;
+    line-height: 1.45;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+  }
+}
+
+.summary,
+.experience,
+.sidebar section {
+  h2 {
+    font-family: Avenir Next, sans-serif;
+    font-size: .78rem;
+    letter-spacing: .12em;
+    margin: 0 0 .45rem;
+    text-transform: uppercase;
+  }
+}
+
+.summary p {
+  font-size: .86rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.experience {
+  display: grid;
+  gap: .75rem;
+  grid-column: 1;
+
+  article {
+    break-inside: avoid;
+    border-top: 1px solid #1112;
+    padding-top: .45rem;
+  }
+
+  div {
+    display: flex;
+    gap: .5rem;
+    justify-content: space-between;
+  }
+
+  h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  span,
+  p {
+    font-family: Avenir Next, sans-serif;
+  }
+
+  span {
+    font-size: .74rem;
+    white-space: nowrap;
+  }
+
+  p {
+    font-size: .78rem;
+    font-weight: 700;
+    margin: .12rem 0 .25rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: .95rem;
+  }
+
+  li {
+    font-size: .75rem;
+    line-height: 1.36;
+    margin: .08rem 0;
+  }
+}
+
+.sidebar {
+  display: grid;
+  gap: .9rem;
+  grid-column: 2;
+  grid-row: 3 / span 2;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font: 700 .68rem Avenir Next, sans-serif;
+    padding: .16rem .34rem;
+  }
+}
+
+.sidebar article {
+  h3 {
+    font-size: .88rem;
+    margin: 0;
+  }
+
+  p,
+  span {
+    display: block;
+    font: .74rem Avenir Next, sans-serif;
+    margin: .15rem 0 0;
+  }
+}
+
+.themed {
+  background:
+    radial-gradient(circle at 10% 8%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 28rem),
+    var(--background);
+
+  .sheet {
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--background) 88%, black), color-mix(in srgb, var(--background) 42%, transparent)),
+      var(--cv-wallpaper),
+      var(--background);
+    background-position: center;
+    background-size: cover;
+    color: var(--foreground);
+  }
+
+  .sheet::before {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 82% 10%, color-mix(in srgb, var(--accent-alt) 28%, transparent), transparent 34%),
+      linear-gradient(90deg, color-mix(in srgb, var(--background) 88%, black), color-mix(in srgb, var(--background) 54%, transparent));
+    content: "";
+    pointer-events: none;
+  }
+
+  .sheet > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .skills li {
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
+    border-color: color-mix(in srgb, var(--foreground) 24%, transparent);
+  }
+}
+
+.themed[data-mode="light"] {
+  background:
+    radial-gradient(circle at 10% 8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 28rem),
+    radial-gradient(circle at 92% 84%, color-mix(in srgb, var(--accent-alt) 14%, transparent), transparent 24rem),
+    var(--background);
+
+  .sheet {
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--background) 92%, white), color-mix(in srgb, var(--background) 68%, transparent)),
+      var(--cv-wallpaper),
+      var(--background);
+    color: var(--foreground);
+  }
+
+  .sheet::before {
+    background:
+      radial-gradient(circle at 82% 10%, color-mix(in srgb, var(--accent-alt) 14%, transparent), transparent 34%),
+      linear-gradient(90deg, color-mix(in srgb, var(--background) 88%, white), color-mix(in srgb, var(--background) 58%, transparent));
+  }
+
+  .skills li {
+    background: color-mix(in srgb, var(--accent) 11%, white);
+    border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
+  }
+}
+
+.executive {
+  .sheet {
+    color: #111;
+  }
+
+  .header {
+    border-color: #111;
+  }
+
+  .skills li {
+    border-color: #999;
+  }
+}
+
+@media print {
+  @page {
+    margin: 0;
+    size: A4;
+  }
+
+  .page {
+    background: transparent !important;
+    padding: 0;
+  }
+
+  .toolbar {
+    display: none;
+  }
+
+  .sheet {
+    box-shadow: none;
+    margin: 0;
+    min-height: 297mm;
+    width: 210mm;
+  }
+}

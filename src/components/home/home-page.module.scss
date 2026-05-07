@@ -486,3 +486,35 @@
   background: var(--accent);
   box-shadow: 0 12px 28px color-mix(in srgb, var(--accent) 18%, transparent);
 }
+
+.generatedDownloads {
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-top: .9rem;
+  padding-top: .9rem;
+
+  span {
+    color: var(--text-soft);
+    flex-basis: 100%;
+    font-size: .78rem;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+
+  a {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text-strong);
+    font-size: .8rem;
+    font-weight: 750;
+    padding: .42rem .68rem;
+    text-decoration: none;
+  }
+
+  a:first-of-type {
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  }
+}
