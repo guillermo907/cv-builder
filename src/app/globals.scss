@@ -1,16 +1,21 @@
+@use "../../styles/variables";
+
 :root {
-  color-scheme: dark;
-  --background: #192211;
-  --foreground: #f8fff2;
-  --muted: #c9d9bf;
-  --line: rgba(255, 255, 255, 0.12);
-  --panel: rgba(255, 255, 255, 0.08);
-  --panel-strong: rgba(255, 255, 255, 0.12);
-  --accent: #76f005;
-  --accent-alt: #47f556;
-  --ink: #10200c;
-  --font-display: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
-  --font-body: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+  --background: var(--color-bg-canvas);
+  --foreground: var(--color-text-base);
+  --muted: var(--color-text-muted);
+  --line: var(--color-border-subtle);
+  --panel: color-mix(in srgb, var(--color-bg-surface) 82%, transparent);
+  --panel-strong: color-mix(in srgb, var(--color-bg-surface-strong) 88%, transparent);
+  --accent: var(--color-primary-base);
+  --accent-alt: var(--color-secondary-base);
+  --ink: var(--color-text-inverse);
+  --font-display: var(--font-family-display);
+  --font-body: var(--font-family-body);
+  --theme-card-chroma: 0;
+  --theme-card-chroma-soft: calc(var(--theme-card-chroma) * 1%);
+  --theme-card-chroma-strong: calc(var(--theme-card-chroma) * 1.6%);
+  --theme-card-border-chroma: calc(var(--theme-card-chroma) * 2.4%);
   --cv-weight-display: 680;
   --cv-weight-heading: 640;
   --cv-weight-strong: 620;
@@ -29,8 +34,8 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 28%, transparent), transparent 34rem),
-    radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--accent-alt) 22%, transparent), transparent 30rem),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--color-primary-base) 28%, transparent), transparent 34rem),
+    radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--color-secondary-base) 22%, transparent), transparent 30rem),
     var(--background);
   color: var(--foreground);
   font-family: var(--font-body);
@@ -48,8 +53,8 @@ body[data-theme="light"] {
   --panel-strong: var(--light-panel-strong);
   --ink: var(--light-ink);
   background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 8%, transparent), transparent 32rem),
-    radial-gradient(circle at 80% 12%, color-mix(in srgb, var(--accent-alt) 6%, transparent), transparent 28rem),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--color-primary-base) 8%, transparent), transparent 32rem),
+    radial-gradient(circle at 80% 12%, color-mix(in srgb, var(--color-secondary-base) 6%, transparent), transparent 28rem),
     var(--light-background);
 }
 

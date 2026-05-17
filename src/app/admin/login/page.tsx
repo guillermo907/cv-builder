@@ -13,7 +13,9 @@ type LoginPageProps = {
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const params = await searchParams;
 
-  if (process.env.NODE_ENV !== "production" && process.env.LOCAL_ADMIN_PREVIEW === "true") {
+  const localAdminPreview = process.env.LOCAL_ADMIN_PREVIEW === "true" && process.env.VERCEL !== "1";
+
+  if (localAdminPreview) {
     redirect("/admin");
   }
 

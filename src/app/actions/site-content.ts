@@ -87,6 +87,11 @@ export async function removeCvPdfAction(_previousState: SaveState): Promise<Save
 function getString(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
 }
+function getNumber(formData: FormData, key: string, fallback: number, min: number, max: number) {
+  const value = Number(formData.get(key));
+  if (!Number.isFinite(value)) return fallback;
+  return Math.max(min, Math.min(max, value));
+}
 
 function splitTextarea(value: string) {
   return value
@@ -178,6 +183,20 @@ export async function saveCvContentAction(_previousState: SaveState, formData: F
 
     await saveSiteContent({
       ...current,
+      siteTitle: getString(formData, "siteTitle") || current.siteTitle,
+      homeText: {
+        ...current.homeText,
+        builtByLabel: getString(formData, "builtByLabel") || current.homeText?.builtByLabel || "Built by",
+        downloadCvLabel: getString(formData, "downloadCvLabel") || current.homeText?.downloadCvLabel || "Download CV",
+        generatePdfLabel: getString(formData, "generatePdfLabel") || current.homeText?.generatePdfLabel || "Generate PDF from this page",
+        generatePdfButtonLabel: getString(formData, "generatePdfButtonLabel") || current.homeText?.generatePdfButtonLabel || "Generate PDF file",
+        experienceTitle: getString(formData, "experienceTitle") || current.homeText?.experienceTitle || "Experience",
+        skillsTitle: getString(formData, "skillsTitle") || current.homeText?.skillsTitle || "Skills",
+        educationTitle: getString(formData, "educationTitle") || current.homeText?.educationTitle || "Education",
+        projectsTitle: getString(formData, "projectsTitle") || current.homeText?.projectsTitle || "Projects",
+        locationLabel: getString(formData, "locationLabel") || current.homeText?.locationLabel || "Location",
+        contactLabel: getString(formData, "contactLabel") || current.homeText?.contactLabel || "Contact"
+      },
       cv: {
         fullName: getString(formData, "fullName"),
         headline: getString(formData, "headline"),
@@ -185,7 +204,7 @@ export async function saveCvContentAction(_previousState: SaveState, formData: F
         address: getString(formData, "address"),
         email: getString(formData, "email"),
         phone: getString(formData, "phone"),
-        summary: String(formData.get("summary") ?? "").trim(),
+        summary: String(formData.get("summary") ?? "").replace(/\r\n/g, "\n"),
         skills: splitTextarea(getString(formData, "skills")),
         experience: readExperience(formData),
         education: readEducation(formData),
@@ -223,6 +242,15 @@ export async function saveThemeSettingsAction(_previousState: SaveState, formDat
       backgroundImage: wallpaper || String(formData.get("backgroundImage") ?? current.theme.backgroundImage),
       contrast: (String(formData.get("contrast") ?? current.theme.contrast) as typeof current.theme.contrast),
       bannerStyle: (String(formData.get("bannerStyle") ?? current.theme.bannerStyle ?? "editorial") as typeof current.theme.bannerStyle),
+      surface: {
+        wallpaperVisibility: getNumber(formData, "surface.wallpaperVisibility", current.theme.surface?.wallpaperVisibility ?? 30, 0, 100),
+        surfaceVisibility: getNumber(formData, "surface.surfaceVisibility", current.theme.surface?.surfaceVisibility ?? 30, 0, 100),
+        strongScrim: getNumber(formData, "surface.strongScrim", current.theme.surface?.strongScrim ?? 88, 0, 100),
+        mediumScrim: getNumber(formData, "surface.mediumScrim", current.theme.surface?.mediumScrim ?? 56, 0, 100),
+        borderRadius: getNumber(formData, "surface.borderRadius", current.theme.surface?.borderRadius ?? 16, 0, 40),
+        borderWidth: getNumber(formData, "surface.borderWidth", current.theme.surface?.borderWidth ?? 1, 0, 6),
+        blurStrength: getNumber(formData, "surface.blurStrength", current.theme.surface?.blurStrength ?? 10, 0, 40)
+      },
       light: {
         ...current.theme.light,
         accent: String(formData.get("lightAccent") ?? current.theme.light.accent),

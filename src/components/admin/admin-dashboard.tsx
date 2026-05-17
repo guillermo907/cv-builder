@@ -3,15 +3,9 @@
 import { useActionState, useEffect, useMemo, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  removeCvPdfAction,
-  saveCvContentAction,
-  saveThemeSettingsAction,
-  uploadCvAction,
-  type SaveState
-} from "@/app/actions/site-content";
+import { saveThemeSettingsAction, type SaveState } from "@/app/actions/site-content";
 import { applyThemeVariables } from "@/lib/apply-theme-variables";
-import type { CvEducationItem, CvExperienceItem, CvProjectItem, SiteContent } from "@/lib/types";
+import type { SiteContent } from "@/lib/types";
 import { contrastGrade, contrastRatio, normalizeSiteTheme, readableTextColor } from "@/lib/theme-contrast";
 import styles from "./admin-dashboard.module.scss";
 
@@ -21,6 +15,15 @@ type AdminDashboardProps = {
 };
 
 const initialState: SaveState = { ok: false, message: "" };
+const defaultSurface = {
+  wallpaperVisibility: 30,
+  surfaceVisibility: 30,
+  strongScrim: 88,
+  mediumScrim: 56,
+  borderRadius: 16,
+  borderWidth: 1,
+  blurStrength: 10
+};
 const bannerStyles = [
   {
     value: "editorial",
@@ -30,7 +33,7 @@ const bannerStyles = [
   {
     value: "blurred",
     title: "Blurred Atmosphere",
-    description: "Mostly blurred wallpaper, minimal image frame, softer CV presence."
+    description: "Mostly blurred wallpaper, minimal image frame, and a softer overall presence."
   },
   {
     value: "split",
@@ -60,18 +63,13 @@ type PaletteVariantSet = {
 
 export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProps) {
   const router = useRouter();
-  const [uploadState, uploadAction, uploading] = useActionState(uploadCvAction, initialState);
-  const [removePdfState, removePdfAction, removingPdf] = useActionState(removeCvPdfAction, initialState);
-  const [cvState, cvAction, savingCv] = useActionState(saveCvContentAction, initialState);
   const [themeState, themeAction, savingTheme] = useActionState(saveThemeSettingsAction, initialState);
   const [themeDraft, setThemeDraft] = useState(initialContent.theme);
-  const [experienceItems, setExperienceItems] = useState(initialContent.cv.experience);
-  const [educationItems, setEducationItems] = useState(initialContent.cv.education);
-  const [projectItems, setProjectItems] = useState(initialContent.cv.projects);
   const [paletteFileName, setPaletteFileName] = useState("");
   const [palettePreview, setPalettePreview] = useState("");
   const [paletteVariants, setPaletteVariants] = useState<PaletteVariantSet>({ dark: [], light: [] });
   const [selectedPalette, setSelectedPalette] = useState({ dark: 0, light: 0 });
+  const surface = { ...defaultSurface, ...themeDraft.surface };
   const normalizedTheme = useMemo(() => normalizeSiteTheme(themeDraft), [themeDraft]);
   const previewWallpaper = palettePreview || themeDraft.backgroundImage || themeDraft.light.backgroundImage;
 
@@ -80,10 +78,10 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
   }, [normalizedTheme]);
 
   useEffect(() => {
-    if (themeState.ok || uploadState.ok || removePdfState.ok) {
+    if (themeState.ok) {
       router.refresh();
     }
-  }, [removePdfState.ok, router, themeState.ok, uploadState.ok]);
+  }, [router, themeState.ok]);
 
   useEffect(() => {
     return () => {
@@ -152,70 +150,6 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
     }));
   }
 
-  function addExperienceItem() {
-    setExperienceItems((items) => [
-      ...items,
-      {
-        role: "New role",
-        company: "",
-        period: "",
-        highlights: [""]
-      }
-    ]);
-  }
-
-  function updateExperienceItem(index: number, patch: Partial<CvExperienceItem>) {
-    setExperienceItems((items) =>
-      items.map((item, itemIndex) => (itemIndex === index ? { ...item, ...patch } : item))
-    );
-  }
-
-  function removeExperienceItem(index: number) {
-    setExperienceItems((items) => items.filter((_, itemIndex) => itemIndex !== index));
-  }
-
-  function addEducationItem() {
-    setEducationItems((items) => [
-      ...items,
-      {
-        title: "New education",
-        institution: "",
-        period: ""
-      }
-    ]);
-  }
-
-  function updateEducationItem(index: number, patch: Partial<CvEducationItem>) {
-    setEducationItems((items) =>
-      items.map((item, itemIndex) => (itemIndex === index ? { ...item, ...patch } : item))
-    );
-  }
-
-  function removeEducationItem(index: number) {
-    setEducationItems((items) => items.filter((_, itemIndex) => itemIndex !== index));
-  }
-
-  function addProjectItem() {
-    setProjectItems((items) => [
-      ...items,
-      {
-        title: "New project",
-        url: "",
-        description: ""
-      }
-    ]);
-  }
-
-  function updateProjectItem(index: number, patch: Partial<CvProjectItem>) {
-    setProjectItems((items) =>
-      items.map((item, itemIndex) => (itemIndex === index ? { ...item, ...patch } : item))
-    );
-  }
-
-  function removeProjectItem(index: number) {
-    setProjectItems((items) => items.filter((_, itemIndex) => itemIndex !== index));
-  }
-
   return (
     <main
       className={styles.page}
@@ -241,7 +175,7 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
         <header className={styles.header}>
           <div>
             <p>Admin Panel</p>
-            <h1>CV + Theme Controls</h1>
+            <h1>Theme Controls</h1>
             <span>{userEmail}</span>
           </div>
           <Link href="/" className={styles.homeLink}>
@@ -257,230 +191,111 @@ export function AdminDashboard({ initialContent, userEmail }: AdminDashboardProp
 
         <div className={styles.workspaceGrid}>
           <aside className={styles.themeColumn}>
-            <section className={styles.card}>
-              <h2>Extract Theme From Image</h2>
-              <div className={styles.form}>
-                <label htmlFor="themeImage">Upload image</label>
-                <input
-                  id="themeImage"
-                  name="themeImage"
-                  type="file"
-                  accept="image/*"
-                  form="themeSettingsForm"
-                  onChange={(event) => handlePaletteFile(event.target.files?.[0] ?? null)}
-                />
-                {palettePreview ? (
-                  <span className={styles.imagePreview}>
-                    <i style={{ backgroundImage: `url(${palettePreview})` }} />
-                    <strong>{paletteFileName}</strong>
-                  </span>
-                ) : (
-                  <span className={styles.imageHint}>Preview updates immediately. Click Save Theme to persist the image and colors.</span>
-                )}
+            <details className={styles.card} open>
+              <summary>Extract Theme From Image</summary>
+              <div className={styles.cardBody}>
+                <div className={styles.form}>
+                  <label htmlFor="themeImage">Upload image</label>
+                  <input
+                    id="themeImage"
+                    name="themeImage"
+                    type="file"
+                    accept="image/*"
+                    form="themeSettingsForm"
+                    onChange={(event) => handlePaletteFile(event.target.files?.[0] ?? null)}
+                  />
+                  {palettePreview ? (
+                    <span className={styles.imagePreview}>
+                      <i style={{ backgroundImage: `url(${palettePreview})` }} />
+                      <strong>{paletteFileName}</strong>
+                    </span>
+                  ) : (
+                    <span className={styles.imageHint}>Preview updates immediately. Click Save Theme to persist the image and colors.</span>
+                  )}
+                </div>
+                {paletteVariants.dark.length > 0 ? (
+                  <div className={styles.paletteOptions}>
+                    <PaletteOptions title="Dark palettes" mode="dark" variants={paletteVariants.dark} selected={selectedPalette.dark} onSelect={applyPaletteVariant} />
+                    <PaletteOptions title="Light palettes" mode="light" variants={paletteVariants.light} selected={selectedPalette.light} onSelect={applyPaletteVariant} />
+                  </div>
+                ) : null}
               </div>
-              {paletteVariants.dark.length > 0 ? (
-                <div className={styles.paletteOptions}>
-                  <PaletteOptions title="Dark palettes" mode="dark" variants={paletteVariants.dark} selected={selectedPalette.dark} onSelect={applyPaletteVariant} />
-                  <PaletteOptions title="Light palettes" mode="light" variants={paletteVariants.light} selected={selectedPalette.light} onSelect={applyPaletteVariant} />
-                </div>
-              ) : null}
-            </section>
+            </details>
 
-            <section className={styles.card}>
-              <h2>Manual Theme Settings</h2>
-              <form id="themeSettingsForm" action={themeAction} className={styles.compactThemeForm}>
-                <input type="hidden" name="backgroundImage" value={themeDraft.backgroundImage} />
-                <input type="hidden" name="lightBackgroundImage" value={themeDraft.light.backgroundImage} />
-                <input type="hidden" name="bannerStyle" value={themeDraft.bannerStyle ?? "editorial"} />
-                <div className={styles.bannerStylePicker}>
-                  <span>Homepage banner format</span>
-                  <div>
-                    {bannerStyles.map((option) => (
-                      <button
-                        key={option.value}
-                        type="button"
-                        className={(themeDraft.bannerStyle ?? "editorial") === option.value ? styles.activeBannerStyle : undefined}
-                        onClick={() => setThemeDraft((theme) => ({ ...theme, bannerStyle: option.value }))}
-                      >
-                        <i data-banner-preview={option.value} style={{ "--preview-wallpaper": previewWallpaper ? `url(${previewWallpaper})` : "none" } as CSSProperties} />
-                        <strong>{option.title}</strong>
-                        <small>{option.description}</small>
-                      </button>
-                    ))}
+            <details className={styles.card} open>
+              <summary>Manual Theme Settings</summary>
+              <div className={styles.cardBody}>
+                <form id="themeSettingsForm" action={themeAction} className={styles.compactThemeForm}>
+                  <input type="hidden" name="backgroundImage" value={themeDraft.backgroundImage} />
+                  <input type="hidden" name="lightBackgroundImage" value={themeDraft.light.backgroundImage} />
+                  <input type="hidden" name="bannerStyle" value={themeDraft.bannerStyle ?? "editorial"} />
+                  <div className={styles.bannerStylePicker}>
+                    <span>Homepage banner format</span>
+                    <div>
+                      {bannerStyles.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          className={(themeDraft.bannerStyle ?? "editorial") === option.value ? styles.activeBannerStyle : undefined}
+                          onClick={() => setThemeDraft((theme) => ({ ...theme, bannerStyle: option.value }))}
+                        >
+                          <i data-banner-preview={option.value} style={{ "--preview-wallpaper": previewWallpaper ? `url(${previewWallpaper})` : "none" } as CSSProperties} />
+                          <strong>{option.title}</strong>
+                          <small>{option.description}</small>
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <ColorField label="Accent" name="accent" value={themeDraft.accent} adjusted={normalizedTheme.accent} background={normalizedTheme.background} onChange={(value) => setThemeDraft((theme) => ({ ...theme, accent: value }))} />
-                <ColorField label="Accent Alt" name="accentAlt" value={themeDraft.accentAlt} adjusted={normalizedTheme.accentAlt} background={normalizedTheme.background} onChange={(value) => setThemeDraft((theme) => ({ ...theme, accentAlt: value }))} />
-                <ColorField label="Background" name="background" value={themeDraft.background} adjusted={normalizedTheme.background} background={normalizedTheme.foreground} onChange={(value) => setThemeDraft((theme) => ({ ...theme, background: value }))} />
-                <label>Contrast
-                  <select name="contrast" value={themeDraft.contrast} onChange={(event) => setThemeDraft((theme) => ({ ...theme, contrast: event.target.value as typeof theme.contrast }))}>
-                    <option value="soft">soft</option>
-                    <option value="balanced">balanced</option>
-                    <option value="high">high</option>
-                    <option value="editorial">editorial</option>
-                  </select>
-                </label>
-                <ColorField label="Light Accent" name="lightAccent" value={themeDraft.light.accent} adjusted={normalizedTheme.light.accent} background={normalizedTheme.light.background} onChange={(value) => setThemeDraft((theme) => ({ ...theme, light: { ...theme.light, accent: value } }))} />
-                <ColorField label="Light Accent Alt" name="lightAccentAlt" value={themeDraft.light.accentAlt} adjusted={normalizedTheme.light.accentAlt} background={normalizedTheme.light.background} onChange={(value) => setThemeDraft((theme) => ({ ...theme, light: { ...theme.light, accentAlt: value } }))} />
-                <ColorField label="Light Background" name="lightBackground" value={themeDraft.light.background} adjusted={normalizedTheme.light.background} background={normalizedTheme.light.foreground} onChange={(value) => setThemeDraft((theme) => ({ ...theme, light: { ...theme.light, background: value } }))} />
-                <label>Light Contrast
-                  <select name="lightContrast" value={themeDraft.light.contrast} onChange={(event) => setThemeDraft((theme) => ({ ...theme, light: { ...theme.light, contrast: event.target.value as typeof theme.light.contrast } }))}>
-                    <option value="soft">soft</option>
-                    <option value="balanced">balanced</option>
-                    <option value="high">high</option>
-                    <option value="editorial">editorial</option>
-                  </select>
-                </label>
-                <div className={styles.actions}><button type="submit" disabled={savingTheme}>{savingTheme ? "Saving..." : "Save Theme"}</button></div>
-              </form>
-              {themeState.message ? <p className={themeState.ok ? styles.success : styles.error}>{themeState.message}</p> : null}
-            </section>
-          </aside>
-
-          <section className={styles.cvColumn}>
-            <section className={styles.card}>
-              <h2>Store CV PDF</h2>
-              <form action={uploadAction} className={styles.form}>
-                <label htmlFor="cvFile">Upload CV</label>
-                <input id="cvFile" name="cvFile" type="file" accept="application/pdf,.pdf" required />
-                <button type="submit" disabled={uploading}>{uploading ? "Storing PDF..." : "Upload and Store PDF"}</button>
-              </form>
-              {uploadState.message ? <p className={uploadState.ok ? styles.success : styles.error}>{uploadState.message}</p> : null}
-              {initialContent.cvFileUrl ? (
-                <form action={removePdfAction} className={styles.attachedPdf}>
-                  <div>
-                    <span>Attached PDF</span>
-                    <strong>{initialContent.sourceFileName ?? "Stored CV PDF"}</strong>
-                    <a href={initialContent.cvFileUrl}>Open current file</a>
-                  </div>
-                  <button type="submit" disabled={removingPdf}>
-                    {removingPdf ? "Removing..." : "Remove attached PDF"}
-                  </button>
+                  <ColorField label="Accent" name="accent" value={themeDraft.accent} adjusted={normalizedTheme.accent} background={normalizedTheme.background} onChange={(value) => setThemeDraft((theme) => ({ ...theme, accent: value }))} />
+                  <ColorField label="Accent Alt" name="accentAlt" value={themeDraft.accentAlt} adjusted={normalizedTheme.accentAlt} background={normalizedTheme.background} onChange={(value) => setThemeDraft((theme) => ({ ...theme, accentAlt: value }))} />
+                  <ColorField label="Background" name="background" value={themeDraft.background} adjusted={normalizedTheme.background} background={normalizedTheme.foreground} onChange={(value) => setThemeDraft((theme) => ({ ...theme, background: value }))} />
+                  <label>Contrast
+                    <select name="contrast" value={themeDraft.contrast} onChange={(event) => setThemeDraft((theme) => ({ ...theme, contrast: event.target.value as typeof theme.contrast }))}>
+                      <option value="soft">soft</option>
+                      <option value="balanced">balanced</option>
+                      <option value="high">high</option>
+                      <option value="editorial">editorial</option>
+                    </select>
+                  </label>
+                  <ColorField label="Light Accent" name="lightAccent" value={themeDraft.light.accent} adjusted={normalizedTheme.light.accent} background={normalizedTheme.light.background} onChange={(value) => setThemeDraft((theme) => ({ ...theme, light: { ...theme.light, accent: value } }))} />
+                  <ColorField label="Light Accent Alt" name="lightAccentAlt" value={themeDraft.light.accentAlt} adjusted={normalizedTheme.light.accentAlt} background={normalizedTheme.light.background} onChange={(value) => setThemeDraft((theme) => ({ ...theme, light: { ...theme.light, accentAlt: value } }))} />
+                  <ColorField label="Light Background" name="lightBackground" value={themeDraft.light.background} adjusted={normalizedTheme.light.background} background={normalizedTheme.light.foreground} onChange={(value) => setThemeDraft((theme) => ({ ...theme, light: { ...theme.light, background: value } }))} />
+                  <label>Light Contrast
+                    <select name="lightContrast" value={themeDraft.light.contrast} onChange={(event) => setThemeDraft((theme) => ({ ...theme, light: { ...theme.light, contrast: event.target.value as typeof theme.light.contrast } }))}>
+                      <option value="soft">soft</option>
+                      <option value="balanced">balanced</option>
+                      <option value="high">high</option>
+                      <option value="editorial">editorial</option>
+                    </select>
+                  </label>
+                  <label>Wallpaper visibility ({surface.wallpaperVisibility}%)
+                    <input type="range" name="surface.wallpaperVisibility" min={0} max={100} value={surface.wallpaperVisibility} onChange={(event) => setThemeDraft((theme) => ({ ...theme, surface: { ...defaultSurface, ...theme.surface, wallpaperVisibility: Number(event.target.value) } }))} />
+                  </label>
+                  <label>Surface visibility ({surface.surfaceVisibility}%)
+                    <input type="range" name="surface.surfaceVisibility" min={0} max={100} value={surface.surfaceVisibility} onChange={(event) => setThemeDraft((theme) => ({ ...theme, surface: { ...defaultSurface, ...theme.surface, surfaceVisibility: Number(event.target.value) } }))} />
+                  </label>
+                  <label>Strong scrim ({surface.strongScrim}%)
+                    <input type="range" name="surface.strongScrim" min={0} max={100} value={surface.strongScrim} onChange={(event) => setThemeDraft((theme) => ({ ...theme, surface: { ...defaultSurface, ...theme.surface, strongScrim: Number(event.target.value) } }))} />
+                  </label>
+                  <label>Medium scrim ({surface.mediumScrim}%)
+                    <input type="range" name="surface.mediumScrim" min={0} max={100} value={surface.mediumScrim} onChange={(event) => setThemeDraft((theme) => ({ ...theme, surface: { ...defaultSurface, ...theme.surface, mediumScrim: Number(event.target.value) } }))} />
+                  </label>
+                  <label>Border radius ({surface.borderRadius}px)
+                    <input type="range" name="surface.borderRadius" min={0} max={40} value={surface.borderRadius} onChange={(event) => setThemeDraft((theme) => ({ ...theme, surface: { ...defaultSurface, ...theme.surface, borderRadius: Number(event.target.value) } }))} />
+                  </label>
+                  <label>Border width ({surface.borderWidth}px)
+                    <input type="range" name="surface.borderWidth" min={0} max={6} value={surface.borderWidth} onChange={(event) => setThemeDraft((theme) => ({ ...theme, surface: { ...defaultSurface, ...theme.surface, borderWidth: Number(event.target.value) } }))} />
+                  </label>
+                  <label>Blur strength ({surface.blurStrength}px)
+                    <input type="range" name="surface.blurStrength" min={0} max={40} value={surface.blurStrength} onChange={(event) => setThemeDraft((theme) => ({ ...theme, surface: { ...defaultSurface, ...theme.surface, blurStrength: Number(event.target.value) } }))} />
+                  </label>
+                  <div className={styles.actions}><button type="submit" disabled={savingTheme}>{savingTheme ? "Saving..." : "Save Theme"}</button></div>
                 </form>
-              ) : (
-                <p className={styles.imageHint}>No CV PDF is currently attached, so the homepage download button stays hidden.</p>
-              )}
-              {removePdfState.message ? <p className={removePdfState.ok ? styles.success : styles.error}>{removePdfState.message}</p> : null}
-            </section>
-
-            <form action={cvAction} className={styles.sectionStack}>
-          <details className={styles.card} open>
-            <summary>Identity</summary>
-            <div className={styles.formGrid}>
-              <label>Full name<input name="fullName" defaultValue={initialContent.cv.fullName} /></label>
-              <label>Headline<input name="headline" defaultValue={initialContent.cv.headline} /></label>
-              <label>Location<input name="location" defaultValue={initialContent.cv.location} /></label>
-              <label>Address<input name="address" defaultValue={initialContent.cv.address} /></label>
-            </div>
-          </details>
-
-          <details className={styles.card}>
-            <summary>Contact</summary>
-            <div className={styles.formGrid}>
-              <label>Email<input name="email" type="email" defaultValue={initialContent.cv.email} /></label>
-              <label>Phone<input name="phone" defaultValue={initialContent.cv.phone} /></label>
-            </div>
-          </details>
-
-          <details className={styles.card}>
-            <summary>Profile Summary</summary>
-            <label className={styles.fullField}>Summary<textarea name="summary" rows={6} defaultValue={initialContent.cv.summary} /></label>
-          </details>
-
-          <details className={styles.card}>
-            <summary>Skills</summary>
-            <label className={styles.fullField}>One skill per line<textarea name="skills" rows={7} defaultValue={initialContent.cv.skills.join("\n")} /></label>
-          </details>
-
-          <details className={styles.card}>
-            <summary>Employment History</summary>
-            <input type="hidden" name="experienceCount" value={experienceItems.length} />
-            <div className={styles.itemStack}>
-              {experienceItems.map((item, index) => (
-                <details key={`${item.role}-${index}`} className={styles.nestedCard} open={index === 0}>
-                  <summary>{item.role || `Experience ${index + 1}`}</summary>
-                  <div className={styles.formGrid}>
-                    <label>Role<input name={`experience.${index}.role`} value={item.role} onChange={(event) => updateExperienceItem(index, { role: event.target.value })} /></label>
-                    <label>Company<input name={`experience.${index}.company`} value={item.company} onChange={(event) => updateExperienceItem(index, { company: event.target.value })} /></label>
-                    <label>Period<input name={`experience.${index}.period`} value={item.period} onChange={(event) => updateExperienceItem(index, { period: event.target.value })} /></label>
-                    <label className={styles.fullField}>Highlights<textarea name={`experience.${index}.highlights`} rows={5} value={item.highlights.join("\n")} onChange={(event) => updateExperienceItem(index, { highlights: event.target.value.split("\n") })} /></label>
-                    <div className={styles.dangerActions}>
-                      <button type="button" onClick={() => removeExperienceItem(index)}>Remove employment</button>
-                    </div>
-                  </div>
-                </details>
-              ))}
-            </div>
-            <div className={styles.inlineActions}>
-              <button type="button" onClick={addExperienceItem}>Add employment</button>
-            </div>
-          </details>
-
-          <details className={styles.card}>
-            <summary>Education</summary>
-            <input type="hidden" name="educationCount" value={educationItems.length} />
-            <div className={styles.itemStack}>
-              {educationItems.map((item, index) => (
-                <details key={`${item.title}-${index}`} className={styles.nestedCard} open={index === 0}>
-                  <summary>{item.title || `Education ${index + 1}`}</summary>
-                  <div className={styles.formGrid}>
-                    <label>Title<input name={`education.${index}.title`} value={item.title} onChange={(event) => updateEducationItem(index, { title: event.target.value })} /></label>
-                    <label>Institution<input name={`education.${index}.institution`} value={item.institution} onChange={(event) => updateEducationItem(index, { institution: event.target.value })} /></label>
-                    <label>Period<input name={`education.${index}.period`} value={item.period} onChange={(event) => updateEducationItem(index, { period: event.target.value })} /></label>
-                    <div className={styles.dangerActions}>
-                      <button type="button" onClick={() => removeEducationItem(index)}>Remove education</button>
-                    </div>
-                  </div>
-                </details>
-              ))}
-            </div>
-            <div className={styles.inlineActions}>
-              <button type="button" onClick={addEducationItem}>Add education</button>
-            </div>
-          </details>
-
-          <details className={styles.card}>
-            <summary>Projects</summary>
-            <input type="hidden" name="projectCount" value={projectItems.length} />
-            <label className={styles.toggleField}>
-              <input name="showProjects" type="checkbox" defaultChecked={initialContent.cv.showProjects ?? false} />
-              <span>Show Projects section on homepage and generated PDF</span>
-            </label>
-            <div className={styles.itemStack}>
-              {projectItems.map((item, index) => (
-                <details key={`${item.title}-${index}`} className={styles.nestedCard} open={index === 0}>
-                  <summary>{item.title || `Project ${index + 1}`}</summary>
-                  <div className={styles.formGrid}>
-                    <label>Project name<input name={`project.${index}.title`} value={item.title} onChange={(event) => updateProjectItem(index, { title: event.target.value })} /></label>
-                    <label>Website URL<input name={`project.${index}.url`} value={item.url} onChange={(event) => updateProjectItem(index, { url: event.target.value })} /></label>
-                    <label className={styles.fullField}>Description<textarea name={`project.${index}.description`} rows={4} value={item.description} onChange={(event) => updateProjectItem(index, { description: event.target.value })} /></label>
-                    <div className={styles.dangerActions}>
-                      <button type="button" onClick={() => removeProjectItem(index)}>Remove project</button>
-                    </div>
-                  </div>
-                </details>
-              ))}
-            </div>
-            <div className={styles.inlineActions}>
-              <button type="button" onClick={addProjectItem}>Add project</button>
-            </div>
-          </details>
-
-          <div className={styles.actions}><button type="submit" disabled={savingCv}>{savingCv ? "Saving..." : "Save CV Sections"}</button></div>
-          {cvState.message ? <p className={cvState.ok ? styles.success : styles.error}>{cvState.message}</p> : null}
-            </form>
-          </section>
+                {themeState.message ? <p className={themeState.ok ? styles.success : styles.error}>{themeState.message}</p> : null}
+              </div>
+            </details>
+          </aside>
         </div>
-
-        <section className={styles.preview}>
-          <h2>Current CV data</h2>
-          <p><strong>Name:</strong> {initialContent.cv.fullName}</p>
-          <p><strong>Email:</strong> {initialContent.cv.email}</p>
-          <p><strong>Phone:</strong> {initialContent.cv.phone}</p>
-          <p><strong>Address:</strong> {initialContent.cv.address}</p>
-          <p><strong>Source:</strong> {initialContent.sourceFileName ?? "Mock CV"}</p>
-          {initialContent.cvFileUrl ? <p><strong>Stored PDF:</strong> <a href={initialContent.cvFileUrl}>Persistent upload</a></p> : null}
-        </section>
       </section>
     </main>
   );
@@ -538,13 +353,13 @@ function ThemePreview({
   return (
     <section className={styles.themePreview} style={style}>
       <div className={styles.previewHero}>
-        <span>{content.cv.headline}</span>
-        <strong>{content.cv.fullName}</strong>
-        <p>{content.cv.summary}</p>
+        <span>Live Theme Preview</span>
+        <strong>{content.siteTitle}</strong>
+        <p>Prueba paleta, contraste, wallpaper y estructura visual del home sin mezclar contenido heredado de otras apps.</p>
       </div>
       <div className={styles.previewSidebar}>
-        {content.cv.skills.slice(0, 5).map((skill) => (
-          <i key={skill}>{skill}</i>
+        {["Theme", "Contrast", "Wallpaper", "Surface", "Accent"].map((item) => (
+          <i key={item}>{item}</i>
         ))}
       </div>
     </section>

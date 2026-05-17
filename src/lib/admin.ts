@@ -1,9 +1,10 @@
 import { auth } from "@/auth";
-import { isAdminEmail } from "@/lib/admin-emails";
 import type { Session } from "next-auth";
 
 export async function requireAdmin(): Promise<Session> {
-  if (process.env.NODE_ENV !== "production" && process.env.LOCAL_ADMIN_PREVIEW === "true") {
+  const localAdminPreview = process.env.LOCAL_ADMIN_PREVIEW === "true" && process.env.VERCEL !== "1";
+
+  if (localAdminPreview) {
     return {
       expires: new Date(Date.now() + 1000 * 60 * 60).toISOString(),
       user: {
@@ -15,7 +16,7 @@ export async function requireAdmin(): Promise<Session> {
 
   const session = await auth();
 
-  if (!session || !isAdminEmail(session.user?.email)) {
+  if (!session || session.user?.role !== "ADMIN") {
     throw new Error("Unauthorized admin action.");
   }
 

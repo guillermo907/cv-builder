@@ -1,0 +1,228 @@
+.page {
+  min-height: 100dvh;
+  padding: 1.25rem;
+  background:
+    radial-gradient(circle at 8% 10%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 22rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--background) 90%, black), var(--background));
+  color: var(--foreground);
+}
+
+.shell {
+  width: min(1140px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.hero,
+.stageCard,
+.card,
+.safeguardCard {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  box-shadow: var(--shadow-panel);
+}
+
+.hero {
+  padding: 1.25rem;
+  display: grid;
+  gap: 0.8rem;
+
+  p {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.74rem;
+    color: var(--muted);
+  }
+
+  h1 {
+    margin: 0;
+    max-width: 14ch;
+    font-family: var(--font-family-display);
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    line-height: 0.9;
+  }
+
+  span {
+    max-width: 64ch;
+    line-height: 1.7;
+    color: color-mix(in srgb, var(--foreground) 88%, transparent);
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.primary,
+.secondary {
+  min-height: 2.9rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary {
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent-alt) 84%, white));
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.secondary {
+  border: 1px solid var(--line);
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--panel-strong) 72%, transparent);
+}
+
+.section {
+  display: grid;
+  gap: 1rem;
+}
+
+.sectionHeading {
+  p {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  h2 {
+    margin: 0.35rem 0 0;
+    font-family: var(--font-family-display);
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 0.95;
+  }
+}
+
+.stageGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.stageCard,
+.card {
+  padding: 1.1rem;
+}
+
+.stageCard {
+  display: grid;
+  gap: 0.7rem;
+
+  span {
+    color: var(--accent);
+    font-family: var(--font-family-mono);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.08;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.65;
+    color: color-mix(in srgb, var(--foreground) 88%, transparent);
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+}
+
+.dualGrid {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 1rem;
+}
+
+.card > p {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.card > h2 {
+  margin: 0.45rem 0 0.95rem;
+  font-family: var(--font-family-display);
+  font-size: 1.8rem;
+}
+
+.roleStack,
+.moneyBox,
+.safeguardList {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.roleItem,
+.moneyBox div,
+.safeguardCard {
+  padding: 0.9rem;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--panel-strong) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+.roleItem,
+.moneyBox div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.roleItem span,
+.moneyBox span {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.safeguardList {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.safeguardCard {
+  line-height: 1.65;
+}
+
+@media (max-width: 980px) {
+  .stageGrid,
+  .dualGrid,
+  .safeguardList {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .page {
+    padding: 1rem;
+  }
+
+  .stageGrid,
+  .dualGrid,
+  .safeguardList {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .primary,
+  .secondary {
+    width: 100%;
+  }
+}

@@ -1,13 +1,25 @@
 {
-  "siteTitle": "Guillermo López García CV",
+  "siteTitle": "Foro GDL",
+  "homeText": {
+    "builtByLabel": "Built by",
+    "downloadCvLabel": "Download venue brief",
+    "generatePdfLabel": "Generate venue brief from this page",
+    "generatePdfButtonLabel": "Generate PDF file",
+    "experienceTitle": "Operations",
+    "skillsTitle": "Capabilities",
+    "educationTitle": "Infrastructure",
+    "projectsTitle": "Use cases",
+    "locationLabel": "Base",
+    "contactLabel": "Contact"
+  },
   "cv": {
-    "fullName": "Guillermo López García",
-    "headline": "Application Engineer | Frontend Engineer",
+    "fullName": "Foro GDL",
+    "headline": "Live music venue operations and transactional ticketing",
     "location": "Zapopan, Jalisco, Mexico",
     "address": "Zapopan, Jalisco, Mexico",
-    "email": "guillermolopezdev@gmail.com",
-    "phone": "+52 33 1211 6601",
-    "summary": "Application Engineer and Frontend Developer with 5+ years of experience building and maintaining enterprise web applications using React, Next.js, Angular, and modern frontend technologies. \r\n\r\nExperienced collaborating with international teams in Agile environments, developing scalable UI solutions, accessibility improvements, API integrations, and high-quality user experiences for enterprise applications. Strong focus on modern UI architecture, performance, usability, and problem solving. Experienced leveraging AI-assisted development tools to improve productivity, accelerate workflows, debugging, prototyping, and software delivery.",
+    "email": "operaciones@foro-gdl.mx",
+    "phone": "+52 33 0000 0000",
+    "summary": "Platform for live music venues that need event publishing, secure ticketing, split payouts, and fast night-of-show operations.",
     "skills": [
       "React",
       "Next.js",
@@ -43,143 +55,185 @@
     ],
     "experience": [
       {
-        "role": "Application Engineer",
-        "company": "Oracle",
-        "period": "2024 - Present",
+        "role": "Venue operations dashboard",
+        "company": "Foro GDL Platform",
+        "period": "Phase 1",
         "highlights": [
-          "Develop and maintain enterprise web applications and internal platforms.",
-          "Build scalable UI components and frontend features using modern web technologies.",
-          "Collaborate with cross-functional global teams following Agile/Scrum methodologies.",
-          "Leverage AI-assisted development tools to improve workflow efficiency, debugging, documentation, and implementation speed.",
-          "Work on issue remediation, debugging, feature implementation, and application support.",
-          "Contribute to usability, accessibility, and user experience improvements.",
-          "Participate in API integration workflows and enterprise software processes."
+          "Publish events with door times, soundchecks, and inventory controls.",
+          "Manage payouts, routing, and performer access from one admin surface.",
+          "Keep brand presentation editable through venue-driven theme tokens."
         ]
       },
       {
-        "role": "Frontend Software Developer",
-        "company": "Making Sense / NDS Cognitive Labs",
-        "period": "Jan 2022 - 2024",
+        "role": "Transactional ticketing engine",
+        "company": "Foro GDL Platform",
+        "period": "Phase 2",
         "highlights": [
-          "Developed and maintained frontend applications across multiple international projects.",
-          "Implemented accessibility improvements and new application features.",
-          "Built responsive UI components based on mockups and wireframes.",
-          "Worked extensively with React, Angular, Material UI, JavaScript, HTML, and CSS.",
-          "Collaborated with distributed teams using Git, Jira, Scrum, and Agile methodologies.",
-          "Participated in frontend architecture decisions, issue resolution, and UI enhancements."
-        ]
-      },
-      {
-        "role": "Software Developer",
-        "company": "Persistent Systems",
-        "period": "Dec 2020 - Jan 2022",
-        "highlights": [
-          "Worked on enterprise-level frontend projects for Fortune 500 companies.",
-          "Developed and modified UI components using React, Redux, Vue.js, JavaScript, HTML, and CSS.",
-          "Contributed to accessibility, performance optimization, and frontend enhancements.",
-          "Implemented automated end-to-end testing using Cypress and Nightwatch.",
-          "Collaborated with development teams in Agile environments."
-        ]
-      },
-      {
-        "role": "Software Developer / Project Administrator",
-        "company": "EC GPS",
-        "period": "May 2019 - Dec 2020",
-        "highlights": [
-          "Provided support and maintenance for a GPS vehicle tracking web platform.",
-          "Developed frontend and backend features using JavaScript, PHP, HTML, CSS, and MySQL.",
-          "Integrated APIs and handled database queries and application support tasks.",
-          "Participated in server maintenance, customer support, and internal operations.",
-          "Assisted technicians and users with platform-related issues and deployments."
-        ]
-      },
-      {
-        "role": "Software Developer",
-        "company": "Galex / Kronosoft",
-        "period": "Apr 2018 - May 2019",
-        "highlights": [
-          "Developed and maintained software solutions including ERP and transaction systems.",
-          "Participated in client meetings, requirement gathering, development, testing, and deployment.",
-          "Worked with C#, PHP, MySQL, JavaScript, HTML, and Bootstrap technologies.",
-          "Assisted with project coordination and technical documentation."
+          "Protect checkout flows with idempotency keys on unreliable mobile networks.",
+          "Split consumer fees, processor fees, venue revenue, and artist payouts automatically."
         ]
       }
     ],
     "education": [
       {
-        "title": "Bachelor’s Degree in Information Technologies",
-        "institution": "Universidad de Guadalajara",
-        "period": "2016 - 2020"
+        "title": "Micro-SaaS foundation",
+        "institution": "Next.js, Prisma, Auth.js, PostgreSQL",
+        "period": "Current build"
       }
     ],
     "showProjects": false,
     "projects": [
       {
-        "title": "Portfolio Websitea",
-        "url": "https://example.coasdasdasdm",
-        "description": "Modern responsive web experience showcasing selected work, UI architecture, and frontend delivery.asdasd"
+        "title": "Public event landing pages",
+        "url": "https://example.com",
+        "description": "SEO-ready event pages with JSON-LD, Open Graph tags, and local-feed caching for faster consumer booking."
       }
     ]
   },
+  "subtitle": "Night operations, agile ticketing, and clearer settlements.",
+  "heroText": "Platform for independent venues in Guadalajara that need to publish shows, sell tickets, coordinate artists, and close the night with less operational friction.",
+  "primaryCta": "View events",
+  "secondaryCta": "Explore modules",
+  "bioTitle": "Digital infrastructure for venues and promoters",
+  "bioText": "Foro GDL combines event administration, transactional checkout, and settlement control in an interface designed for small teams that need to move fast and avoid operational errors.",
+  "credentials": [
+    "Event, artist, and staff operations from one workflow",
+    "Consumer surcharge plus automated payout-fee monetization",
+    "Mobile experience optimized for audiences on 4G networks"
+  ],
+  "servicesIntro": "Modules for venues, promoters, and artists that need to operate without friction.",
+  "services": [
+    {
+      "eyebrow": "Venue Ops",
+      "title": "Programming and scheduling",
+      "description": "Manage doors, soundchecks, capacity, and Google Calendar sync from a single view."
+    },
+    {
+      "eyebrow": "Ticketing",
+      "title": "Checkout and access control",
+      "description": "Protect inventory with atomic transactions, idempotency, and secure QR admission."
+    },
+    {
+      "eyebrow": "Finance",
+      "title": "Split payouts and ledger",
+      "description": "Track consumer fees, processor costs, venue net, and artist net in an immutable ledger."
+    }
+  ],
+  "bookingInfo": "Each event is quoted according to ensemble size, repertoire, location, and production needs. Arrangements and remote recording can also be booked per project.",
+  "contactTitle": "Bring better operations to your venue",
+  "contactText": "Reach out to implement transactional ticketing, an operations dashboard, artist profiles, or automated settlements.",
+  "contactEmail": "operaciones@foro-gdl.mx",
+  "testimonials": [
+    {
+      "quote": "The cached mobile event feed made the public experience feel much faster on weak signal nights.",
+      "name": "Mariana R.",
+      "role": "Audience member"
+    },
+    {
+      "quote": "The platform finally gave us one place for event setup, ticketing, and settlement visibility.",
+      "name": "Daniel C.",
+      "role": "Venue operator"
+    },
+    {
+      "quote": "We stopped guessing at payout math and could explain every peso in the ledger after the show.",
+      "name": "Alex M.",
+      "role": "Independent promoter"
+    }
+  ],
+  "seo": {
+    "title": "Foro GDL | Venue management and ticketing platform",
+    "description": "Micro-SaaS for live music venues with event administration, transactional ticketing, split payouts, and mobile-first operations.",
+    "ogImage": "/opengraph-image"
+  },
+  "socialLinks": {
+    "instagram": "https://instagram.com/",
+    "youtube": "https://www.youtube.com/@comando9072",
+    "spotify": "https://spotify.com/"
+  },
   "theme": {
-    "accent": "#30e5b2",
-    "accentAlt": "#89c379",
-    "background": "#15383c",
-    "backgroundImage": "/uploads/cv-wallpaper-edc9a158-5e9a-4c21-b89f-c8ad012d7b95.jpg?v=1778187987802",
+    "accent": "#ddae3c",
+    "accentAlt": "#79c37d",
+    "background": "#1b2141",
+    "backgroundImage": "/uploads/cv-wallpaper-20d6bed3-e2e7-4bbd-8463-ca0b7c1a8553.jpg?v=1778965360138",
     "contrast": "soft",
-    "bannerStyle": "floating",
+    "bannerStyle": "blurred",
+    "surface": {
+      "wallpaperVisibility": 30,
+      "surfaceVisibility": 30,
+      "strongScrim": 88,
+      "mediumScrim": 56,
+      "borderRadius": 16,
+      "borderWidth": 1,
+      "blurStrength": 10
+    },
     "light": {
-      "accent": "#378a94",
-      "accentAlt": "#394c74",
-      "background": "#f4f6f6",
-      "backgroundImage": "/uploads/cv-wallpaper-edc9a158-5e9a-4c21-b89f-c8ad012d7b95.jpg?v=1778187987802",
+      "accent": "#0f9d7b",
+      "accentAlt": "#176d97",
+      "background": "#f4f6f5",
+      "backgroundImage": "/uploads/cv-wallpaper-20d6bed3-e2e7-4bbd-8463-ca0b7c1a8553.jpg?v=1778965360138",
       "contrast": "editorial"
     }
   },
   "locales": {
     "es": {
-      "siteTitle": "Guillermo López García CV",
-      "cv": {
-        "headline": "Application Engineer | Frontend Engineer",
-        "summary": "Application Engineer and Frontend Developer with 5+ years of experience building and maintaining enterprise web applications using React, Next.js, Angular, and modern frontend technologies. Experienced collaborating with international teams in Agile environments, developing scalable UI solutions, accessibility improvements, API integrations, and high-quality user experiences for enterprise applications. Strong focus on modern UI architecture, performance, usability, and problem solving. Experienced leveraging AI-assisted development tools to improve productivity, accelerate workflows, debugging, prototyping, and software delivery.",
-        "fullName": "Guillermo López García"
+      "siteTitle": "Foro GDL",
+      "homeText": {
+        "builtByLabel": "Construido por",
+        "downloadCvLabel": "Descargar resumen del venue",
+        "generatePdfLabel": "Generar PDF desde esta pagina",
+        "generatePdfButtonLabel": "Generar archivo PDF",
+        "experienceTitle": "Operacion",
+        "skillsTitle": "Capacidades",
+        "educationTitle": "Infraestructura",
+        "projectsTitle": "Casos de uso",
+        "locationLabel": "Base",
+        "contactLabel": "Contacto"
       },
-      "subtitle": "Lenguaje jazz. Fuego blues-rock. Claridad de formación musical.",
-      "heroText": "Un estudio de guitarra y propuesta de performance premium para estudiantes, venues y producciones que buscan profundidad musical con presencia eléctrica.",
-      "primaryCta": "Reservar presentación",
-      "secondaryCta": "Ver clases",
-      "bioTitle": "Un guitarrista formado entre estudio formal e instinto en vivo",
-      "bioText": "Guillermo combina educación musical formal con el vocabulario del jazz, la energía del blues rock y la versatilidad que exigen los escenarios modernos.",
+      "cv": {
+        "headline": "Operacion de venues y ticketing transaccional",
+        "summary": "Plataforma para venues de musica en vivo con publicacion de eventos, checkout seguro, payouts automatizados y control operativo.",
+        "fullName": "Foro GDL"
+      },
+      "subtitle": "Operacion nocturna, ticketing agil y liquidaciones claras.",
+      "heroText": "Plataforma para venues independientes en Guadalajara que necesitan publicar shows, vender boletos, coordinar artistas y cerrar la noche con menos friccion operativa.",
+      "primaryCta": "Ver eventos",
+      "secondaryCta": "Explorar modulos",
+      "bioTitle": "Infraestructura digital para venues y promotores",
+      "bioText": "Foro GDL combina administracion de eventos, checkout transaccional y control de liquidaciones en una interfaz pensada para equipos pequenos que operan rapido y con poco margen para errores.",
       "credentials": [
-        "Formación musical formal en armonía, entrenamiento auditivo, arreglos y ensamble",
-        "Fluidez en jazz, blues, rock, latín, pop, worship y guitarra acústica",
-        "Planes de clase para principiantes serios, improvisadores intermedios y músicos avanzados"
+        "Operacion de eventos, artistas y staff desde un mismo flujo",
+        "Cobro con sobrecargo al consumidor y fee de payout automatizado",
+        "Experiencia movil optimizada para publico en redes 4G"
       ],
-      "servicesIntro": "Diseñado para estudiantes, artistas, venues y equipos creativos que necesitan más que guitarra genérica.",
+      "servicesIntro": "Modulos pensados para venues, promotores y artistas que necesitan operar sin friccion.",
       "services": [
         {
-          "eyebrow": "Estudio privado",
-          "title": "Clases de guitarra",
-          "description": "Clases estructuradas de técnica, armonía, improvisación, repertorio, lectura, ritmo, sonido e identidad musical."
+          "eyebrow": "Venue Ops",
+          "title": "Programacion y calendarizacion",
+          "description": "Administra aperturas de puertas, soundchecks, cupo total y sincronizacion con Google Calendar desde una sola vista."
         },
         {
-          "eyebrow": "Escenario",
-          "title": "Música en vivo",
-          "description": "Guitarra solista elegante, energía de trío jazz, sets blues-rock, cocteles, eventos privados y programación para venues."
+          "eyebrow": "Ticketing",
+          "title": "Checkout y control de acceso",
+          "description": "Protege inventario con transacciones atomicas, idempotencia y QR seguro para acceso rapido."
         },
         {
-          "eyebrow": "Estudio",
-          "title": "Guitarra de sesión",
-          "description": "Partes de guitarra con criterio, líneas lead, texturas rítmicas, apoyo de arreglo y grabación con mentalidad de producción."
+          "eyebrow": "Finance",
+          "title": "Split payouts y ledger",
+          "description": "Registra fee al consumidor, costo del procesador, neto al venue y neto al artista en un ledger inmutable."
         }
       ],
-      "lessonIntro": "Un camino inspirado en escuela de música, con calidez de mentor y precisión de guitarrista activo.",
+      "bookingInfo": "El modelo base mantiene la plataforma gratuita para venues y monetiza mediante el cargo fijo por boleto y el micro-porcentaje aplicado a payouts automatizados.",
+      "contactTitle": "Llevemos mejor operacion a tu venue",
+      "contactText": "Escribe para implementar ticketing transaccional, dashboard de operacion, perfiles de artistas o automatizacion de liquidaciones.",
+      "contactEmail": "operaciones@foro-gdl.mx",
+      "lessonIntro": "Un flujo de adopcion pensado para venues que necesitan implementar operacion digital sin friccion.",
       "lessonPackages": [
         {
           "title": "Fundamentos",
           "price": "$120",
           "cadence": "4 clases / mes",
-          "description": "Para nuevos guitarristas que quieren técnica limpia, canciones reales, seguridad rítmica y un sistema de práctica claro.",
+          "description": "Para venues que quieren una base clara de operacion, configuracion de eventos y control de accesos.",
           "features": [
             "Mapa técnico",
             "Plan de repertorio",
@@ -190,7 +244,7 @@
           "title": "Improvisador",
           "price": "$180",
           "cadence": "4 clases / mes",
-          "description": "Para guitarristas listos para escuchar cambios, construir líneas, acompañar con estilo y entender armonía jazz/blues.",
+          "description": "Para equipos listos para automatizar aprobaciones, settlement y coordinacion con artistas.",
           "features": [
             "Fluidez acorde-escala",
             "Trabajo de transcripción",
@@ -209,7 +263,6 @@
           ]
         }
       ],
-      "bookingInfo": "Las clases están disponibles online y presencial bajo solicitud. Las presentaciones se cotizan según alcance del evento, ensamble, ubicación y necesidades de producción.",
       "galleryIntro": "Un lenguaje visual de escenarios nocturnos, educación boutique, sesiones pulidas y brillo de amplificador.",
       "gallery": [
         {
@@ -232,54 +285,22 @@
         {
           "quote": "Las clases conectaron por fin la teoría con el mástil. Dejé de memorizar formas y empecé a escuchar música.",
           "name": "Mariana R.",
-          "role": "Estudiante de guitarra jazz"
+          "role": "Asistente frecuente"
         },
         {
-          "quote": "Guillermo trajo exactamente la mezcla de elegancia y filo que necesitaba nuestro evento. Profesional, musical y vivo.",
+          "quote": "El flujo de operacion nos permitio publicar, vender y controlar acceso sin depender de cinco herramientas distintas.",
           "name": "Daniel C.",
-          "role": "Cliente de evento privado"
+          "role": "Operador de venue"
         },
         {
-          "quote": "Su feedback es preciso sin matar la alegría. Cada sesión me deja algo musical que puedo usar de inmediato.",
+          "quote": "La parte de payouts y ledger nos dio claridad real sobre cuanto entra, cuanto se cobra y cuanto recibe cada artista.",
           "name": "Alex M.",
-          "role": "Guitarrista blues-rock"
+          "role": "Promotor independiente"
         }
-      ],
-      "contactTitle": "Listo para que la guitarra se sienta menos ordinaria?",
-      "contactText": "Escribe para clases, presentaciones, trabajo de grabación o un plan personalizado para tus metas musicales.",
-      "contactEmail": "booking@guillermolopezguitar.com"
+      ]
     }
   },
-  "subtitle": "Jazz language. Blues-rock fire. Conservatory-level clarity.",
-  "heroText": "A premium guitar studio and performance identity for players, venues, and productions that want musical depth with electric-stage presence.",
-  "primaryCta": "Book a performance",
-  "secondaryCta": "Explore lessons",
-  "bioTitle": "A guitarist shaped by formal study and live instinct",
-  "bioText": "Guillermo blends formal music education with the vocabulary of jazz, the grit of blues rock, and the flexibility demanded by modern stages. His work moves easily between refined private instruction, improvisation coaching, session-ready guitar parts, and expressive live performance.",
-  "credentials": [
-    "Formal music education with harmony, ear training, arranging, and ensemble practice",
-    "Jazz, blues, rock, Latin, pop, worship, and acoustic performance fluency",
-    "Lesson plans for serious beginners, intermediate improvisers, and advanced players"
-  ],
-  "servicesIntro": "Designed for students, artists, venues, and creative teams that need more than generic guitar.",
-  "services": [
-    {
-      "eyebrow": "Private Study",
-      "title": "Guitar Lessons",
-      "description": "Structured lessons in technique, harmony, improvisation, repertoire, reading, rhythm, tone, and musical identity."
-    },
-    {
-      "eyebrow": "Stage",
-      "title": "Live Performance",
-      "description": "Elegant solo guitar, jazz trio energy, blues-rock sets, cocktail hours, private events, and venue programming."
-    },
-    {
-      "eyebrow": "Studio",
-      "title": "Session Guitar",
-      "description": "Tasteful guitar parts, lead lines, rhythm textures, arranging support, and production-minded recording."
-    }
-  ],
-  "lessonIntro": "A music-school inspired path with the warmth of a mentor and the precision of a working guitarist.",
+  "lessonIntro": "An adoption path designed for venues that need digital operations without added friction.",
   "lessonPackages": [
     {
       "title": "Foundations",
@@ -296,7 +317,7 @@
       "title": "Improviser",
       "price": "$180",
       "cadence": "4 lessons / month",
-      "description": "For guitarists ready to hear changes, build lines, comp with style, and understand jazz/blues harmony.",
+      "description": "For teams ready to automate approvals, settlements, and event coordination with more operational confidence.",
       "features": [
         "Chord-scale fluency",
         "Transcription work",
@@ -307,7 +328,7 @@
       "title": "Artist Intensive",
       "price": "$320",
       "cadence": "8 sessions / month",
-      "description": "For performers preparing auditions, recordings, live sets, or a serious leap in musicianship.",
+      "description": "For venues preparing high-volume nights, recurring bookings, or a serious leap in operational maturity.",
       "features": [
         "Performance coaching",
         "Arrangement support",
@@ -315,53 +336,22 @@
       ]
     }
   ],
-  "bookingInfo": "Lessons are available online and in person by request. Performance bookings are quoted by event scope, ensemble size, location, and production needs.",
   "galleryIntro": "A visual language of late-night stages, boutique education, polished sessions, and amplifier glow.",
   "gallery": [
     {
       "title": "Blue Note Vocabulary",
-      "description": "Modern jazz phrasing, comping, and melodic development.",
+      "description": "Night-of-show visibility, scheduling discipline, and fast updates.",
       "image": "/gallery/jazz-stage.svg"
     },
     {
       "title": "Blues-Rock Voltage",
-      "description": "Expressive leads, dynamic touch, and band-ready tone.",
+      "description": "Faster checkout, protected inventory, and low-friction access control.",
       "image": "/gallery/blues-amp.svg"
     },
     {
       "title": "Private Studio",
-      "description": "Focused lessons built around the student's musical voice.",
+      "description": "Admin controls built around the venue team's real operational flow.",
       "image": "/gallery/lesson-room.svg"
     }
-  ],
-  "testimonials": [
-    {
-      "quote": "The lessons finally connected theory to the guitar neck. I stopped memorizing shapes and started hearing music.",
-      "name": "Mariana R.",
-      "role": "Jazz guitar student"
-    },
-    {
-      "quote": "Guillermo brought exactly the right blend of elegance and edge to our event. Professional, tasteful, and alive.",
-      "name": "Daniel C.",
-      "role": "Private event client"
-    },
-    {
-      "quote": "His feedback is precise without killing the joy. Every session gives me something musical I can use immediately.",
-      "name": "Alex M.",
-      "role": "Blues-rock guitarist"
-    }
-  ],
-  "contactTitle": "Ready to make the guitar feel less ordinary?",
-  "contactText": "Send a note for lessons, performance bookings, recording work, or a custom plan for your musical goals.",
-  "contactEmail": "booking@guillermolopezguitar.com",
-  "seo": {
-    "title": "Guillermo Lopez Guitar | Lessons, Jazz, Blues & Live Performance",
-    "description": "Professional guitarist offering premium guitar lessons, jazz and blues-rock performance, session work, and musician coaching.",
-    "ogImage": "/opengraph-image"
-  },
-  "socialLinks": {
-    "instagram": "https://instagram.com/",
-    "youtube": "https://www.youtube.com/@comando9072",
-    "spotify": "https://spotify.com/"
-  }
+  ]
 }

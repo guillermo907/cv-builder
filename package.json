@@ -12,6 +12,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@prisma/client": "^6.7.0",
     "@vercel/blob": "^2.3.3",
     "html2canvas": "^1.4.1",
     "jimp": "^1.6.1",
@@ -31,6 +32,7 @@
     "@types/react-dom": "^19.2.2",
     "eslint": "^9.38.0",
     "eslint-config-next": "^16.0.0",
+    "prisma": "^6.7.0",
     "typescript": "^5.9.3"
   }
 }

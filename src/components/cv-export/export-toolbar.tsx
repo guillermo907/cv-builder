@@ -59,7 +59,7 @@ async function downloadThemedPdf() {
       pdf.addImage(canvas.toDataURL("image/png", 1), "PNG", 0, 0, pageWidth, pageHeight, undefined, "FAST");
     }
 
-    pdf.save(`Guillermo-Lopez-Garcia-theme-a2-${exportMode}.pdf`);
+    pdf.save(`foro-gdl-platform-${exportMode}.pdf`);
   } finally {
     if (previousTheme === undefined) {
       delete document.documentElement.dataset.theme;
@@ -93,7 +93,7 @@ export function ExportToolbar({ className, format, label = "Save as PDF" }: Expo
       <button type="button" onClick={handleSave} disabled={isSaving}>
         {isSaving ? "Rendering PDF..." : label}
       </button>
-      <Link href="/">Back to CV</Link>
+      <Link href="/">Back to platform</Link>
     </div>
   );
 }

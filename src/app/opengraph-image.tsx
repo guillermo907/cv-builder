@@ -10,6 +10,8 @@ export const contentType = "image/png";
 
 export default async function Image() {
   const content = await getSiteContent();
+  const eyebrow = content.subtitle ?? "Live Music";
+  const description = content.heroText ?? content.cv.headline;
 
   return new ImageResponse(
     (
@@ -26,12 +28,12 @@ export default async function Image() {
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ color: content.theme.accent, fontSize: 30, letterSpacing: 6, textTransform: "uppercase" }}>
-            Curriculum Vitae
+            {eyebrow}
           </div>
           <div style={{ fontSize: 88, fontWeight: 800, letterSpacing: -4, lineHeight: 0.92 }}>
             {content.cv.fullName}
           </div>
-          <div style={{ color: "#c9d7ff", fontSize: 42, maxWidth: 900 }}>{content.cv.headline}</div>
+          <div style={{ color: "#c9d7ff", fontSize: 38, maxWidth: 940 }}>{description}</div>
         </div>
       </div>
     ),

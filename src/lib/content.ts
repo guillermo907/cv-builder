@@ -12,6 +12,10 @@ function mergeContent(raw: Partial<SiteContent>): SiteContent {
   return {
     ...defaultContent,
     ...raw,
+    homeText: {
+      ...defaultContent.homeText!,
+      ...raw.homeText
+    },
     cv: {
       ...defaultContent.cv,
       ...raw.cv,
@@ -35,6 +39,10 @@ function mergeContent(raw: Partial<SiteContent>): SiteContent {
       es: {
         ...defaultContent.locales?.es,
         ...raw.locales?.es,
+        homeText: {
+          ...defaultContent.locales?.es?.homeText,
+          ...raw.locales?.es?.homeText
+        },
         cv: {
           ...defaultContent.locales?.es?.cv,
           ...raw.locales?.es?.cv

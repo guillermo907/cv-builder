@@ -1,0 +1,808 @@
+[
+  {
+    "id": "aefdfffd-fdf5-4100-a737-4383f20531cc",
+    "slug": "blues-gdl-jazz",
+    "title": "Evento Vero 1",
+    "summary": "Jazz rock night",
+    "description": "Descripcion del evento",
+    "startsAt": "2026-05-23T21:00",
+    "endsAt": "2026-05-23T23:45",
+    "timezone": "America/Mexico_City",
+    "venueName": "Foro GDL",
+    "venueAddress": "Av. Chapultepec Sur 180, Americana, Guadalajara, Jalisco",
+    "heroImage": "/events/stage1.jpg",
+    "designVariant": "festival-sunset",
+    "designTemplateId": "paper-cut-stage",
+    "designMotifs": [
+      "paper-cuts",
+      "music-notes",
+      "ticket-stamp",
+      "wave-lines"
+    ],
+    "posterVisibleFields": [
+      "venue",
+      "address",
+      "summary",
+      "schedule",
+      "lineup",
+      "genre",
+      "pricing",
+      "cta",
+      "related",
+      "date",
+      "description"
+    ],
+    "posterArtDirection": "poster colorido para audiencias jovenes, con codigo qr de reservacion e imagen de un tiburon",
+    "posterReferenceUrls": [],
+    "posterAssetMode": "mixed-collage",
+    "doorTime": "2026-05-23T20:00",
+    "soundcheckTime": "2026-05-23T18:30",
+    "ticketPriceMXN": 280,
+    "ticketFeeMXN": 15,
+    "artistPayoutRate": 0.7,
+    "capacity": 320,
+    "soldCount": 0,
+    "lineup": [
+      "Headliner",
+      "Support"
+    ],
+    "genre": [
+      "Live Music",
+      "Nightlife"
+    ],
+    "isPublished": true,
+    "publishedAt": "2026-05-17T17:43:41.999Z",
+    "createdAt": "2026-05-16T15:34:37.643Z",
+    "updatedAt": "2026-05-17T17:43:41.999Z",
+    "draftPoster": {
+      "version": 1,
+      "status": "completed",
+      "generatedAt": "2026-05-17T17:43:41.999Z",
+      "designer": "poster-designer-core",
+      "templateId": "paper-cut-stage",
+      "rendererId": "paper-cut-collage-site",
+      "variant": "festival-sunset",
+      "motifs": [
+        "paper-cuts",
+        "music-notes",
+        "ticket-stamp"
+      ],
+      "narrative": {
+        "inviteLabel": "Festival Sunset",
+        "kicker": "Street poster release",
+        "manifesto": "Una composicion amplia para empujar venta rapida, presencia de lineup y atmosfera celebratoria alrededor de live music / nightlife.",
+        "panelLabel": "Ciudad en vivo",
+        "motionLabel": "Solar drift"
+      },
+      "layout": {
+        "titleRows": [
+          "Evento Vero",
+          "1"
+        ],
+        "monogram": "EV",
+        "density": "balanced",
+        "focusArea": "genre"
+      },
+      "shellTheme": {
+        "background": "#f5ddaf",
+        "foreground": "#18304c",
+        "accent": "#dfad5b",
+        "accentAlt": "#e8862b",
+        "muted": "#5b4c37",
+        "line": "#d8b276",
+        "panel": "#f7ead0",
+        "panelStrong": "#f3dfbc",
+        "ink": "#18304c"
+      },
+      "handoff": {
+        "componentId": "event-poster-page",
+        "summary": "Completed poster direction for Foro GDL using the paper-cut-stage template and paper-cut-collage-site renderer with a Festival Sunset shell ready for programmatic rendering.",
+        "developerNotes": [
+          "Render the Festival Sunset system as the fixed page shell, not as ad-hoc per-component styling.",
+          "Keep the poster hierarchy focused on genre and preserve the title stack exactly as delivered by the designer.",
+          "Use Recortes organicos, Notas flotantes, Sellos de acceso only as supporting layers so the CTA, schedule, and venue facts stay readable."
+        ],
+        "usesPhotography": true,
+        "assetPlan": [
+          {
+            "sourceId": "uploaded-hero",
+            "role": "hero",
+            "query": "Evento Vero 1 Live Music Nightlife live portrait",
+            "notes": "Start from the venue-supplied hero whenever available and push it through duotone, masking, or collage treatment."
+          },
+          {
+            "sourceId": "banana-pro-composite",
+            "role": "background",
+            "query": "poster colorido para audiencias jovenes, con codigo qr de reservacion e imagen de un tiburon",
+            "notes": "Designer can generate an editorial background plate or enhanced figure treatment when local uploads are not enough."
+          },
+          {
+            "sourceId": "local-graphics-pack",
+            "role": "ornament",
+            "query": "paper-cut-stage poster support graphics",
+            "notes": "Renderer should assemble repeatable ornaments, textures, and badges from local assets rather than ad-hoc shapes."
+          }
+        ]
+      }
+    },
+    "publishedPoster": {
+      "version": 1,
+      "status": "completed",
+      "generatedAt": "2026-05-17T17:43:41.999Z",
+      "designer": "poster-designer-core",
+      "templateId": "paper-cut-stage",
+      "rendererId": "paper-cut-collage-site",
+      "variant": "festival-sunset",
+      "motifs": [
+        "paper-cuts",
+        "music-notes",
+        "ticket-stamp"
+      ],
+      "narrative": {
+        "inviteLabel": "Festival Sunset",
+        "kicker": "Street poster release",
+        "manifesto": "Una composicion amplia para empujar venta rapida, presencia de lineup y atmosfera celebratoria alrededor de live music / nightlife.",
+        "panelLabel": "Ciudad en vivo",
+        "motionLabel": "Solar drift"
+      },
+      "layout": {
+        "titleRows": [
+          "Evento Vero",
+          "1"
+        ],
+        "monogram": "EV",
+        "density": "balanced",
+        "focusArea": "genre"
+      },
+      "shellTheme": {
+        "background": "#f5ddaf",
+        "foreground": "#18304c",
+        "accent": "#dfad5b",
+        "accentAlt": "#e8862b",
+        "muted": "#5b4c37",
+        "line": "#d8b276",
+        "panel": "#f7ead0",
+        "panelStrong": "#f3dfbc",
+        "ink": "#18304c"
+      },
+      "handoff": {
+        "componentId": "event-poster-page",
+        "summary": "Completed poster direction for Foro GDL using the paper-cut-stage template and paper-cut-collage-site renderer with a Festival Sunset shell ready for programmatic rendering.",
+        "developerNotes": [
+          "Render the Festival Sunset system as the fixed page shell, not as ad-hoc per-component styling.",
+          "Keep the poster hierarchy focused on genre and preserve the title stack exactly as delivered by the designer.",
+          "Use Recortes organicos, Notas flotantes, Sellos de acceso only as supporting layers so the CTA, schedule, and venue facts stay readable."
+        ],
+        "usesPhotography": true,
+        "assetPlan": [
+          {
+            "sourceId": "uploaded-hero",
+            "role": "hero",
+            "query": "Evento Vero 1 Live Music Nightlife live portrait",
+            "notes": "Start from the venue-supplied hero whenever available and push it through duotone, masking, or collage treatment."
+          },
+          {
+            "sourceId": "banana-pro-composite",
+            "role": "background",
+            "query": "poster colorido para audiencias jovenes, con codigo qr de reservacion e imagen de un tiburon",
+            "notes": "Designer can generate an editorial background plate or enhanced figure treatment when local uploads are not enough."
+          },
+          {
+            "sourceId": "local-graphics-pack",
+            "role": "ornament",
+            "query": "paper-cut-stage poster support graphics",
+            "notes": "Renderer should assemble repeatable ornaments, textures, and badges from local assets rather than ad-hoc shapes."
+          }
+        ]
+      }
+    },
+    "posterDesign": {
+      "version": 1,
+      "status": "completed",
+      "generatedAt": "2026-05-17T17:43:41.999Z",
+      "designer": "poster-designer-core",
+      "templateId": "paper-cut-stage",
+      "rendererId": "paper-cut-collage-site",
+      "variant": "festival-sunset",
+      "motifs": [
+        "paper-cuts",
+        "music-notes",
+        "ticket-stamp"
+      ],
+      "narrative": {
+        "inviteLabel": "Festival Sunset",
+        "kicker": "Street poster release",
+        "manifesto": "Una composicion amplia para empujar venta rapida, presencia de lineup y atmosfera celebratoria alrededor de live music / nightlife.",
+        "panelLabel": "Ciudad en vivo",
+        "motionLabel": "Solar drift"
+      },
+      "layout": {
+        "titleRows": [
+          "Evento Vero",
+          "1"
+        ],
+        "monogram": "EV",
+        "density": "balanced",
+        "focusArea": "genre"
+      },
+      "shellTheme": {
+        "background": "#f5ddaf",
+        "foreground": "#18304c",
+        "accent": "#dfad5b",
+        "accentAlt": "#e8862b",
+        "muted": "#5b4c37",
+        "line": "#d8b276",
+        "panel": "#f7ead0",
+        "panelStrong": "#f3dfbc",
+        "ink": "#18304c"
+      },
+      "handoff": {
+        "componentId": "event-poster-page",
+        "summary": "Completed poster direction for Foro GDL using the paper-cut-stage template and paper-cut-collage-site renderer with a Festival Sunset shell ready for programmatic rendering.",
+        "developerNotes": [
+          "Render the Festival Sunset system as the fixed page shell, not as ad-hoc per-component styling.",
+          "Keep the poster hierarchy focused on genre and preserve the title stack exactly as delivered by the designer.",
+          "Use Recortes organicos, Notas flotantes, Sellos de acceso only as supporting layers so the CTA, schedule, and venue facts stay readable."
+        ],
+        "usesPhotography": true,
+        "assetPlan": [
+          {
+            "sourceId": "uploaded-hero",
+            "role": "hero",
+            "query": "Evento Vero 1 Live Music Nightlife live portrait",
+            "notes": "Start from the venue-supplied hero whenever available and push it through duotone, masking, or collage treatment."
+          },
+          {
+            "sourceId": "banana-pro-composite",
+            "role": "background",
+            "query": "poster colorido para audiencias jovenes, con codigo qr de reservacion e imagen de un tiburon",
+            "notes": "Designer can generate an editorial background plate or enhanced figure treatment when local uploads are not enough."
+          },
+          {
+            "sourceId": "local-graphics-pack",
+            "role": "ornament",
+            "query": "paper-cut-stage poster support graphics",
+            "notes": "Renderer should assemble repeatable ornaments, textures, and badges from local assets rather than ad-hoc shapes."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "seed-midnight-cumbia-systems",
+    "slug": "midnight-cumbia-systems",
+    "title": "Midnight Cumbia Systems",
+    "summary": "Cumbia digital, live brass and a late-night patio set built for Guadalajara weekends.",
+    "description": "A mobile-first ticket drop for Foro GDL featuring a headline cumbia systems act, guest selectors, and rapid-entry QR ticketing.",
+    "startsAt": "2026-06-12T22:00",
+    "endsAt": "2026-06-13T02:30",
+    "timezone": "America/Mexico_City",
+    "venueName": "Foro GDL",
+    "venueAddress": "Av. Chapultepec Sur 180, Americana, Guadalajara, Jalisco",
+    "heroImage": "/events/stage1.jpg",
+    "designVariant": "festival-sunset",
+    "designTemplateId": "paper-cut-stage",
+    "designMotifs": [
+      "paper-cuts",
+      "music-notes",
+      "ticket-stamp"
+    ],
+    "posterVisibleFields": [
+      "venue",
+      "date",
+      "address",
+      "summary",
+      "description",
+      "schedule",
+      "lineup",
+      "genre",
+      "pricing",
+      "cta",
+      "related"
+    ],
+    "posterArtDirection": "",
+    "posterReferenceUrls": [],
+    "posterAssetMode": "auto",
+    "doorTime": "2026-06-12T21:00",
+    "soundcheckTime": "2026-06-12T18:30",
+    "ticketPriceMXN": 280,
+    "ticketFeeMXN": 15,
+    "artistPayoutRate": 0.7,
+    "capacity": 320,
+    "soldCount": 174,
+    "lineup": [
+      "La Sonora Pixel",
+      "DJ Nopal",
+      "Brass After Dark"
+    ],
+    "genre": [
+      "Cumbia",
+      "Tropical Jazz Bass",
+      "Live BrassBBand"
+    ],
+    "isPublished": true,
+    "createdAt": "2026-05-15T00:00:00.000Z",
+    "updatedAt": "2026-05-16T00:31:16.363Z",
+    "draftPoster": {
+      "version": 1,
+      "status": "completed",
+      "generatedAt": "2026-05-16T00:31:16.363Z",
+      "designer": "poster-designer-core",
+      "templateId": "paper-cut-stage",
+      "rendererId": "paper-cut-collage-site",
+      "variant": "festival-sunset",
+      "motifs": [
+        "paper-cuts",
+        "music-notes",
+        "ticket-stamp"
+      ],
+      "narrative": {
+        "inviteLabel": "Festival Sunset",
+        "kicker": "Street poster release",
+        "manifesto": "Una composicion amplia para empujar venta rapida, presencia de lineup y atmosfera celebratoria alrededor de cumbia / tropical jazz bass.",
+        "panelLabel": "Ciudad en vivo",
+        "motionLabel": "Solar drift"
+      },
+      "layout": {
+        "titleRows": [
+          "Midnight Cumbia",
+          "Systems"
+        ],
+        "monogram": "MC",
+        "density": "balanced",
+        "focusArea": "lineup"
+      },
+      "shellTheme": {
+        "background": "#f5ddaf",
+        "foreground": "#18304c",
+        "accent": "#dfad5b",
+        "accentAlt": "#e8862b",
+        "muted": "#5b4c37",
+        "line": "#d8b276",
+        "panel": "#f7ead0",
+        "panelStrong": "#f3dfbc",
+        "ink": "#18304c"
+      },
+      "handoff": {
+        "componentId": "event-poster-page",
+        "summary": "Completed poster direction for Foro GDL using the paper-cut-stage template and paper-cut-collage-site renderer with a Festival Sunset shell ready for programmatic rendering.",
+        "developerNotes": [
+          "Render the Festival Sunset system as the fixed page shell, not as ad-hoc per-component styling.",
+          "Keep the poster hierarchy focused on lineup and preserve the title stack exactly as delivered by the designer.",
+          "Use Recortes organicos, Notas flotantes, Sellos de acceso only as supporting layers so the CTA, schedule, and venue facts stay readable."
+        ],
+        "usesPhotography": false,
+        "assetPlan": [
+          {
+            "sourceId": "uploaded-hero",
+            "role": "hero",
+            "query": "Midnight Cumbia Systems Cumbia Tropical Jazz Bass Live BrassBBand live portrait",
+            "notes": "Start from the venue-supplied hero whenever available and push it through duotone, masking, or collage treatment."
+          },
+          {
+            "sourceId": "banana-pro-composite",
+            "role": "background",
+            "query": "Midnight Cumbia Systems Cumbia Tropical Jazz Bass Live BrassBBand",
+            "notes": "Designer can generate an editorial background plate or enhanced figure treatment when local uploads are not enough."
+          },
+          {
+            "sourceId": "local-graphics-pack",
+            "role": "ornament",
+            "query": "paper-cut-stage poster support graphics",
+            "notes": "Renderer should assemble repeatable ornaments, textures, and badges from local assets rather than ad-hoc shapes."
+          }
+        ]
+      }
+    },
+    "publishedPoster": {
+      "version": 1,
+      "status": "completed",
+      "generatedAt": "2026-05-16T00:31:16.363Z",
+      "designer": "poster-designer-core",
+      "templateId": "paper-cut-stage",
+      "rendererId": "paper-cut-collage-site",
+      "variant": "festival-sunset",
+      "motifs": [
+        "paper-cuts",
+        "music-notes",
+        "ticket-stamp"
+      ],
+      "narrative": {
+        "inviteLabel": "Festival Sunset",
+        "kicker": "Street poster release",
+        "manifesto": "Una composicion amplia para empujar venta rapida, presencia de lineup y atmosfera celebratoria alrededor de cumbia / tropical jazz bass.",
+        "panelLabel": "Ciudad en vivo",
+        "motionLabel": "Solar drift"
+      },
+      "layout": {
+        "titleRows": [
+          "Midnight Cumbia",
+          "Systems"
+        ],
+        "monogram": "MC",
+        "density": "balanced",
+        "focusArea": "lineup"
+      },
+      "shellTheme": {
+        "background": "#f5ddaf",
+        "foreground": "#18304c",
+        "accent": "#dfad5b",
+        "accentAlt": "#e8862b",
+        "muted": "#5b4c37",
+        "line": "#d8b276",
+        "panel": "#f7ead0",
+        "panelStrong": "#f3dfbc",
+        "ink": "#18304c"
+      },
+      "handoff": {
+        "componentId": "event-poster-page",
+        "summary": "Completed poster direction for Foro GDL using the paper-cut-stage template and paper-cut-collage-site renderer with a Festival Sunset shell ready for programmatic rendering.",
+        "developerNotes": [
+          "Render the Festival Sunset system as the fixed page shell, not as ad-hoc per-component styling.",
+          "Keep the poster hierarchy focused on lineup and preserve the title stack exactly as delivered by the designer.",
+          "Use Recortes organicos, Notas flotantes, Sellos de acceso only as supporting layers so the CTA, schedule, and venue facts stay readable."
+        ],
+        "usesPhotography": false,
+        "assetPlan": [
+          {
+            "sourceId": "uploaded-hero",
+            "role": "hero",
+            "query": "Midnight Cumbia Systems Cumbia Tropical Jazz Bass Live BrassBBand live portrait",
+            "notes": "Start from the venue-supplied hero whenever available and push it through duotone, masking, or collage treatment."
+          },
+          {
+            "sourceId": "banana-pro-composite",
+            "role": "background",
+            "query": "Midnight Cumbia Systems Cumbia Tropical Jazz Bass Live BrassBBand",
+            "notes": "Designer can generate an editorial background plate or enhanced figure treatment when local uploads are not enough."
+          },
+          {
+            "sourceId": "local-graphics-pack",
+            "role": "ornament",
+            "query": "paper-cut-stage poster support graphics",
+            "notes": "Renderer should assemble repeatable ornaments, textures, and badges from local assets rather than ad-hoc shapes."
+          }
+        ]
+      }
+    },
+    "posterDesign": {
+      "version": 1,
+      "status": "completed",
+      "generatedAt": "2026-05-16T00:31:16.363Z",
+      "designer": "poster-designer-core",
+      "templateId": "paper-cut-stage",
+      "rendererId": "paper-cut-collage-site",
+      "variant": "festival-sunset",
+      "motifs": [
+        "paper-cuts",
+        "music-notes",
+        "ticket-stamp"
+      ],
+      "narrative": {
+        "inviteLabel": "Festival Sunset",
+        "kicker": "Street poster release",
+        "manifesto": "Una composicion amplia para empujar venta rapida, presencia de lineup y atmosfera celebratoria alrededor de cumbia / tropical jazz bass.",
+        "panelLabel": "Ciudad en vivo",
+        "motionLabel": "Solar drift"
+      },
+      "layout": {
+        "titleRows": [
+          "Midnight Cumbia",
+          "Systems"
+        ],
+        "monogram": "MC",
+        "density": "balanced",
+        "focusArea": "lineup"
+      },
+      "shellTheme": {
+        "background": "#f5ddaf",
+        "foreground": "#18304c",
+        "accent": "#dfad5b",
+        "accentAlt": "#e8862b",
+        "muted": "#5b4c37",
+        "line": "#d8b276",
+        "panel": "#f7ead0",
+        "panelStrong": "#f3dfbc",
+        "ink": "#18304c"
+      },
+      "handoff": {
+        "componentId": "event-poster-page",
+        "summary": "Completed poster direction for Foro GDL using the paper-cut-stage template and paper-cut-collage-site renderer with a Festival Sunset shell ready for programmatic rendering.",
+        "developerNotes": [
+          "Render the Festival Sunset system as the fixed page shell, not as ad-hoc per-component styling.",
+          "Keep the poster hierarchy focused on lineup and preserve the title stack exactly as delivered by the designer.",
+          "Use Recortes organicos, Notas flotantes, Sellos de acceso only as supporting layers so the CTA, schedule, and venue facts stay readable."
+        ],
+        "usesPhotography": false,
+        "assetPlan": [
+          {
+            "sourceId": "uploaded-hero",
+            "role": "hero",
+            "query": "Midnight Cumbia Systems Cumbia Tropical Jazz Bass Live BrassBBand live portrait",
+            "notes": "Start from the venue-supplied hero whenever available and push it through duotone, masking, or collage treatment."
+          },
+          {
+            "sourceId": "banana-pro-composite",
+            "role": "background",
+            "query": "Midnight Cumbia Systems Cumbia Tropical Jazz Bass Live BrassBBand",
+            "notes": "Designer can generate an editorial background plate or enhanced figure treatment when local uploads are not enough."
+          },
+          {
+            "sourceId": "local-graphics-pack",
+            "role": "ornament",
+            "query": "paper-cut-stage poster support graphics",
+            "notes": "Renderer should assemble repeatable ornaments, textures, and badges from local assets rather than ad-hoc shapes."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "seed-neo-jazz-azotea-session",
+    "slug": "neo-jazz-azotea-session",
+    "title": "Neo Jazz Azotea Session",
+    "summary": "A rooftop jazz night with modern harmony, analog synth textures, and fast QR check-in.",
+    "description": "Designed as a premium but lightweight public event page, this session showcases how venues can publish indexed event landing pages without heavy scripts.",
+    "startsAt": "2026-06-19T20:30:00-06:00",
+    "endsAt": "2026-06-19T23:45:00-06:00",
+    "timezone": "America/Mexico_City",
+    "venueName": "Foro GDL",
+    "venueAddress": "Av. Chapultepec Sur 180, Americana, Guadalajara, Jalisco",
+    "heroImage": "/events/gallery1.jpg",
+    "designVariant": "jazz-poster",
+    "designTemplateId": "festival-ticket",
+    "designMotifs": [
+      "constellation-dots",
+      "wave-lines",
+      "ticket-stamp"
+    ],
+    "posterVisibleFields": [
+      "venue",
+      "date",
+      "address",
+      "summary",
+      "description",
+      "schedule",
+      "lineup",
+      "genre",
+      "pricing",
+      "cta",
+      "related"
+    ],
+    "posterArtDirection": "",
+    "posterReferenceUrls": [],
+    "posterAssetMode": "auto",
+    "doorTime": "2026-06-19T19:45:00-06:00",
+    "soundcheckTime": "2026-06-19T17:30:00-06:00",
+    "ticketPriceMXN": 360,
+    "ticketFeeMXN": 15,
+    "artistPayoutRate": 0.72,
+    "capacity": 220,
+    "soldCount": 128,
+    "lineup": [
+      "Marea Azul Quartet",
+      "Guest Voice: Lucía Vega"
+    ],
+    "genre": [
+      "Jazz",
+      "Neo Soul",
+      "Improvised Music"
+    ],
+    "isPublished": true,
+    "createdAt": "2026-05-15T00:00:00.000Z",
+    "updatedAt": "2026-05-15T00:00:00.000Z",
+    "draftPoster": {
+      "version": 1,
+      "status": "completed",
+      "generatedAt": "2026-05-15T00:00:00.000Z",
+      "designer": "poster-designer-core",
+      "templateId": "festival-ticket",
+      "rendererId": "festival-ticket-site",
+      "variant": "jazz-poster",
+      "motifs": [
+        "constellation-dots",
+        "wave-lines",
+        "ticket-stamp"
+      ],
+      "narrative": {
+        "inviteLabel": "Jazz Poster",
+        "kicker": "Listening room invite",
+        "manifesto": "Una pieza editorial mas elegante para presentar jazz / neo soul con tension entre fotografia, tipografia y atmosfera nocturna.",
+        "panelLabel": "Late session",
+        "motionLabel": "Velvet motion"
+      },
+      "layout": {
+        "titleRows": [
+          "Neo Jazz",
+          "Azotea Session"
+        ],
+        "monogram": "NJ",
+        "density": "balanced",
+        "focusArea": "genre"
+      },
+      "shellTheme": {
+        "background": "#143463",
+        "foreground": "#ffd78e",
+        "accent": "#f0c265",
+        "accentAlt": "#e49f33",
+        "muted": "#d9bc86",
+        "line": "#36588e",
+        "panel": "#183865",
+        "panelStrong": "#1d4277",
+        "ink": "#122c58"
+      },
+      "handoff": {
+        "componentId": "event-poster-page",
+        "summary": "Completed poster direction for Foro GDL using the festival-ticket template and festival-ticket-site renderer with a Jazz Poster shell ready for programmatic rendering.",
+        "developerNotes": [
+          "Render the Jazz Poster system as the fixed page shell, not as ad-hoc per-component styling.",
+          "Keep the poster hierarchy focused on genre and preserve the title stack exactly as delivered by the designer.",
+          "Use Constelacion de puntos, Lineas de onda, Sellos de acceso only as supporting layers so the CTA, schedule, and venue facts stay readable."
+        ],
+        "usesPhotography": false,
+        "assetPlan": [
+          {
+            "sourceId": "uploaded-hero",
+            "role": "hero",
+            "query": "Neo Jazz Azotea Session Jazz Neo Soul Improvised Music live portrait",
+            "notes": "Start from the venue-supplied hero whenever available and push it through duotone, masking, or collage treatment."
+          },
+          {
+            "sourceId": "banana-pro-composite",
+            "role": "background",
+            "query": "Neo Jazz Azotea Session Jazz Neo Soul Improvised Music",
+            "notes": "Designer can generate an editorial background plate or enhanced figure treatment when local uploads are not enough."
+          },
+          {
+            "sourceId": "local-graphics-pack",
+            "role": "ornament",
+            "query": "festival-ticket poster support graphics",
+            "notes": "Renderer should assemble repeatable ornaments, textures, and badges from local assets rather than ad-hoc shapes."
+          }
+        ]
+      }
+    },
+    "publishedPoster": {
+      "version": 1,
+      "status": "completed",
+      "generatedAt": "2026-05-15T00:00:00.000Z",
+      "designer": "poster-designer-core",
+      "templateId": "festival-ticket",
+      "rendererId": "festival-ticket-site",
+      "variant": "jazz-poster",
+      "motifs": [
+        "constellation-dots",
+        "wave-lines",
+        "ticket-stamp"
+      ],
+      "narrative": {
+        "inviteLabel": "Jazz Poster",
+        "kicker": "Listening room invite",
+        "manifesto": "Una pieza editorial mas elegante para presentar jazz / neo soul con tension entre fotografia, tipografia y atmosfera nocturna.",
+        "panelLabel": "Late session",
+        "motionLabel": "Velvet motion"
+      },
+      "layout": {
+        "titleRows": [
+          "Neo Jazz",
+          "Azotea Session"
+        ],
+        "monogram": "NJ",
+        "density": "balanced",
+        "focusArea": "genre"
+      },
+      "shellTheme": {
+        "background": "#143463",
+        "foreground": "#ffd78e",
+        "accent": "#f0c265",
+        "accentAlt": "#e49f33",
+        "muted": "#d9bc86",
+        "line": "#36588e",
+        "panel": "#183865",
+        "panelStrong": "#1d4277",
+        "ink": "#122c58"
+      },
+      "handoff": {
+        "componentId": "event-poster-page",
+        "summary": "Completed poster direction for Foro GDL using the festival-ticket template and festival-ticket-site renderer with a Jazz Poster shell ready for programmatic rendering.",
+        "developerNotes": [
+          "Render the Jazz Poster system as the fixed page shell, not as ad-hoc per-component styling.",
+          "Keep the poster hierarchy focused on genre and preserve the title stack exactly as delivered by the designer.",
+          "Use Constelacion de puntos, Lineas de onda, Sellos de acceso only as supporting layers so the CTA, schedule, and venue facts stay readable."
+        ],
+        "usesPhotography": false,
+        "assetPlan": [
+          {
+            "sourceId": "uploaded-hero",
+            "role": "hero",
+            "query": "Neo Jazz Azotea Session Jazz Neo Soul Improvised Music live portrait",
+            "notes": "Start from the venue-supplied hero whenever available and push it through duotone, masking, or collage treatment."
+          },
+          {
+            "sourceId": "banana-pro-composite",
+            "role": "background",
+            "query": "Neo Jazz Azotea Session Jazz Neo Soul Improvised Music",
+            "notes": "Designer can generate an editorial background plate or enhanced figure treatment when local uploads are not enough."
+          },
+          {
+            "sourceId": "local-graphics-pack",
+            "role": "ornament",
+            "query": "festival-ticket poster support graphics",
+            "notes": "Renderer should assemble repeatable ornaments, textures, and badges from local assets rather than ad-hoc shapes."
+          }
+        ]
+      }
+    },
+    "posterDesign": {
+      "version": 1,
+      "status": "completed",
+      "generatedAt": "2026-05-15T00:00:00.000Z",
+      "designer": "poster-designer-core",
+      "templateId": "festival-ticket",
+      "rendererId": "festival-ticket-site",
+      "variant": "jazz-poster",
+      "motifs": [
+        "constellation-dots",
+        "wave-lines",
+        "ticket-stamp"
+      ],
+      "narrative": {
+        "inviteLabel": "Jazz Poster",
+        "kicker": "Listening room invite",
+        "manifesto": "Una pieza editorial mas elegante para presentar jazz / neo soul con tension entre fotografia, tipografia y atmosfera nocturna.",
+        "panelLabel": "Late session",
+        "motionLabel": "Velvet motion"
+      },
+      "layout": {
+        "titleRows": [
+          "Neo Jazz",
+          "Azotea Session"
+        ],
+        "monogram": "NJ",
+        "density": "balanced",
+        "focusArea": "genre"
+      },
+      "shellTheme": {
+        "background": "#143463",
+        "foreground": "#ffd78e",
+        "accent": "#f0c265",
+        "accentAlt": "#e49f33",
+        "muted": "#d9bc86",
+        "line": "#36588e",
+        "panel": "#183865",
+        "panelStrong": "#1d4277",
+        "ink": "#122c58"
+      },
+      "handoff": {
+        "componentId": "event-poster-page",
+        "summary": "Completed poster direction for Foro GDL using the festival-ticket template and festival-ticket-site renderer with a Jazz Poster shell ready for programmatic rendering.",
+        "developerNotes": [
+          "Render the Jazz Poster system as the fixed page shell, not as ad-hoc per-component styling.",
+          "Keep the poster hierarchy focused on genre and preserve the title stack exactly as delivered by the designer.",
+          "Use Constelacion de puntos, Lineas de onda, Sellos de acceso only as supporting layers so the CTA, schedule, and venue facts stay readable."
+        ],
+        "usesPhotography": false,
+        "assetPlan": [
+          {
+            "sourceId": "uploaded-hero",
+            "role": "hero",
+            "query": "Neo Jazz Azotea Session Jazz Neo Soul Improvised Music live portrait",
+            "notes": "Start from the venue-supplied hero whenever available and push it through duotone, masking, or collage treatment."
+          },
+          {
+            "sourceId": "banana-pro-composite",
+            "role": "background",
+            "query": "Neo Jazz Azotea Session Jazz Neo Soul Improvised Music",
+            "notes": "Designer can generate an editorial background plate or enhanced figure treatment when local uploads are not enough."
+          },
+          {
+            "sourceId": "local-graphics-pack",
+            "role": "ornament",
+            "query": "festival-ticket poster support graphics",
+            "notes": "Renderer should assemble repeatable ornaments, textures, and badges from local assets rather than ad-hoc shapes."
+          }
+        ]
+      }
+    }
+  }
+]

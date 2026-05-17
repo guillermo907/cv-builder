@@ -14,6 +14,20 @@ type HomePageProps = {
 
 type Locale = "en" | "es";
 
+type FlowCard = {
+  stage: string;
+  title: string;
+  body: string;
+  points: string[];
+};
+
+type NavItem = {
+  href: string;
+  label: string;
+  tone: "flows" | "modules" | "system" | "venue" | "contact";
+  internal?: boolean;
+};
+
 let localeHydrated = false;
 
 function getStoredLocale(): Locale {
@@ -42,11 +56,7 @@ function setStoredLocale(locale: Locale) {
 }
 
 export function HomePage({ content }: HomePageProps) {
-  const locale = useSyncExternalStore<Locale>(
-    subscribeLocale,
-    getStoredLocale,
-    () => "es",
-  );
+  const locale = useSyncExternalStore<Locale>(subscribeLocale, getStoredLocale, () => "es");
   const normalizedTheme = useMemo(() => normalizeSiteTheme(content.theme), [content.theme]);
 
   useEffect(() => {
@@ -58,43 +68,151 @@ export function HomePage({ content }: HomePageProps) {
   }, [normalizedTheme]);
 
   const localized = useMemo(() => {
-    if (locale !== "es") return content;
+    if (locale !== "es") {
+      return content;
+    }
+
+    const es = content.locales?.es;
 
     return {
       ...content,
-      siteTitle: content.locales?.es?.siteTitle ?? content.siteTitle,
+      siteTitle: es?.siteTitle ?? content.siteTitle,
+      homeText: {
+        ...content.homeText,
+        ...es?.homeText
+      },
       cv: {
         ...content.cv,
-        ...content.locales?.es?.cv,
+        ...es?.cv
       },
+      subtitle: es?.subtitle ?? content.subtitle,
+      heroText: es?.heroText ?? content.heroText,
+      primaryCta: es?.primaryCta ?? content.primaryCta,
+      secondaryCta: es?.secondaryCta ?? content.secondaryCta,
+      bioTitle: es?.bioTitle ?? content.bioTitle,
+      bioText: es?.bioText ?? content.bioText,
+      credentials: es?.credentials ?? content.credentials,
+      servicesIntro: es?.servicesIntro ?? content.servicesIntro,
+      services: es?.services ?? content.services,
+      bookingInfo: es?.bookingInfo ?? content.bookingInfo,
+      contactTitle: es?.contactTitle ?? content.contactTitle,
+      contactText: es?.contactText ?? content.contactText,
+      contactEmail: es?.contactEmail ?? content.contactEmail,
+      testimonials: es?.testimonials ?? content.testimonials
     };
   }, [content, locale]);
 
   const labels =
     locale === "es"
       ? {
-          skills: "Habilidades",
-          experience: "Experiencia",
-          education: "Educación",
-          projects: "Proyectos",
-          location: "Ubicación",
-          contact: "Contacto",
+          builtBy: localized.homeText?.builtByLabel ?? "Construido por",
           languageLabel: "Cambiar idioma",
-          cvBuilder: "Constructor de CV",
+          flows: "Flujos",
+          modules: "Módulos",
+          howItWorks: "Cómo funciona",
+          venueConsole: "Consola del venue",
+          contact: "Contacto",
+          monetization: "Monetización",
+          admin: "Admin",
+          quickView: "Vista rápida",
+          email: "Correo"
         }
       : {
-          skills: "Skills",
-          experience: "Experience",
-          education: "Education",
-          projects: "Projects",
-          location: "Location",
-          contact: "Contact",
+          builtBy: localized.homeText?.builtByLabel ?? "Built by",
           languageLabel: "Change language",
-          cvBuilder: "CV Builder",
+          flows: "Flows",
+          modules: "Modules",
+          howItWorks: "How it works",
+          venueConsole: "Venue console",
+          contact: "Contact",
+          monetization: "Monetization",
+          admin: "Admin",
+          quickView: "Quick view",
+          email: "Email"
         };
 
-  const wallpaper =
-    content.theme.backgroundImage || content.theme.light.backgroundImage;
+  const wallpaper = content.theme.backgroundImage || content.theme.light.backgroundImage;
+  const socialEntries = Object.entries(localized.socialLinks ?? {}).filter(([, value]) => Boolean(value));
+  const primaryCtaHref = locale === "es" ? "/como-funciona" : "/como-funciona";
+  const secondaryCtaHref = "/venue";
+
+  const flowCards: FlowCard[] =
+    locale === "es"
+      ? [
+          {
+            stage: "01",
+            title: "Venue crea el evento",
+            body: "El operador arma fecha, aforo, timeline, precio base y reparto para artista desde una sola consola.",
+            points: ["Doors + soundcheck", "Inventario total", "Tema visual del venue"]
+          },
+          {
+            stage: "02",
+            title: "El sistema publica y vende",
+            body: "Se genera una landing ligera para móvil, se aplica el cargo de $15 MXN y se protege contra doble cobro con idempotencia.",
+            points: ["Página pública", "Checkout defensivo", "QR seguro"]
+          },
+          {
+            stage: "03",
+            title: "Artista y staff se coordinan",
+            body: "El artista ve payout, rider y contexto; el venue mantiene control de accesos, status y disponibilidad en tiempo real.",
+            points: ["Datos bancarios", "Rider técnico", "Estado del show"]
+          },
+          {
+            stage: "04",
+            title: "Se liquida sin hojas sueltas",
+            body: "El ledger registra bruto, fee plataforma, costo procesador, neto al venue y neto al artista en una sola línea contable.",
+            points: ["Ledger inmutable", "Split payout", "Trazabilidad completa"]
+          }
+        ]
+      : [
+          {
+            stage: "01",
+            title: "Venue creates the event",
+            body: "The operator sets date, capacity, timeline, base pricing, and artist split from one control surface.",
+            points: ["Doors + soundcheck", "Total inventory", "Venue branding"]
+          },
+          {
+            stage: "02",
+            title: "The system publishes and sells",
+            body: "A lightweight mobile page goes live, the $15 MXN fee is applied, and double charges are blocked with idempotency.",
+            points: ["Public page", "Defensive checkout", "Secure QR"]
+          },
+          {
+            stage: "03",
+            title: "Artist and staff stay aligned",
+            body: "The artist sees payout and rider context while the venue keeps real-time control over access and availability.",
+            points: ["Bank details", "Technical rider", "Show status"]
+          },
+          {
+            stage: "04",
+            title: "Settlement closes cleanly",
+            body: "The ledger captures gross paid, platform fee, processor cost, venue net, and artist net in one auditable line.",
+            points: ["Immutable ledger", "Split payout", "Full traceability"]
+          }
+        ];
+
+  const orchestrationRail =
+    locale === "es"
+      ? [
+          ["Antes de abrir", "Configuras fecha, lineup, aforo, fee y payout."],
+          ["Durante la venta", "El público compra en móvil y el inventario baja de forma atómica."],
+          ["Durante el acceso", "Cada ticket se valida con QR y estado seguro."],
+          ["Después del show", "Se consolida el ledger y se prepara la liquidación."]
+        ]
+      : [
+          ["Before doors", "Set date, lineup, capacity, fee, and payout."],
+          ["During sales", "Audience buys on mobile and inventory decrements atomically."],
+          ["At check-in", "Each ticket is validated through secure QR state."],
+          ["After the show", "The ledger consolidates and payout preparation begins."]
+        ];
+
+  const navItems: NavItem[] = [
+    { href: "#flows", label: labels.flows, tone: "flows" },
+    { href: "#modules", label: labels.modules, tone: "modules" },
+    { href: "/como-funciona", label: labels.howItWorks, tone: "system", internal: true },
+    { href: "/venue", label: labels.venueConsole, tone: "venue", internal: true },
+    { href: "#contact", label: labels.contact, tone: "contact" },
+  ];
 
   return (
     <main
@@ -103,126 +221,270 @@ export function HomePage({ content }: HomePageProps) {
       data-contrast={content.theme.contrast}
       data-theme-scope
       style={
-        wallpaper
-          ? ({ "--cv-wallpaper": `url(${wallpaper})` } as React.CSSProperties)
-          : undefined
+        {
+          ...(wallpaper ? { "--cv-wallpaper": `url(${wallpaper})` } : {}),
+          "--theme-wallpaper-visibility": `${content.theme.surface?.wallpaperVisibility ?? 30}%`,
+          "--theme-surface-visibility": `${content.theme.surface?.surfaceVisibility ?? 30}%`,
+          "--theme-strong-scrim": `${content.theme.surface?.strongScrim ?? 88}%`,
+          "--theme-medium-scrim": `${content.theme.surface?.mediumScrim ?? 56}%`,
+          "--theme-border-radius": `${content.theme.surface?.borderRadius ?? 16}px`,
+          "--theme-border-width": `${content.theme.surface?.borderWidth ?? 1}px`,
+          "--theme-blur-strength": `${content.theme.surface?.blurStrength ?? 10}px`
+        } as React.CSSProperties
       }
     >
       <nav className={styles.nav}>
-        <div className={styles.brand}>
-          <span>{labels.cvBuilder}</span>
+        <a className={styles.brand} href="#top">
+          <span>{labels.builtBy}</span>
           <strong>{localized.siteTitle}</strong>
-        </div>
+        </a>
         <div className={styles.navLinks}>
-          <LanguageToggle
-            locale={locale}
-            onChange={setStoredLocale}
-            label={labels.languageLabel}
-          />
+          {navItems.map((item) =>
+            item.internal ? (
+              <Link key={item.href} href={item.href} className={styles.navPill} data-tone={item.tone}>
+                {item.label}
+              </Link>
+            ) : (
+              <a key={item.href} href={item.href} className={styles.navPill} data-tone={item.tone}>
+                {item.label}
+              </a>
+            ),
+          )}
+          <LanguageToggle locale={locale} onChange={setStoredLocale} label={labels.languageLabel} />
           <ThemeModeToggle />
           <Link href="/admin" className={styles.adminLink}>
-            Admin
+            {labels.admin}
           </Link>
         </div>
       </nav>
 
-      <section className={styles.hero}>
+      <section className={styles.hero} id="top">
         {wallpaper ? (
           <div className={styles.wallpaperBanner} aria-hidden="true">
-            {/* eslint-disable-next-line @next/next/no-img-element -- Wallpaper can be a locally persisted data URL, so next/image is not reliable here. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={wallpaper} alt="" />
           </div>
         ) : null}
         <div className={styles.heroCopy}>
-          <p className={styles.kicker}>{localized.cv.headline}</p>
+          <p className={styles.kicker}>{localized.subtitle}</p>
           <h1>{localized.cv.fullName}</h1>
-          <p>{localized.cv.summary}</p>
+          <p className={styles.heroHeadline}>{localized.cv.headline}</p>
+          <p className={styles.summaryText}>{localized.heroText ?? localized.cv.summary}</p>
+          <div className={styles.heroActions}>
+            <Link href={primaryCtaHref} className={styles.primaryAction}>
+              {localized.primaryCta ?? labels.howItWorks}
+            </Link>
+            <Link href={secondaryCtaHref} className={styles.secondaryAction}>
+              {localized.secondaryCta ?? labels.venueConsole}
+            </Link>
+          </div>
+        </div>
+
+        <aside className={styles.operatorBoard}>
+          <div className={styles.boardHeader}>
+            <p>{labels.quickView}</p>
+            <strong>Tonight&apos;s operating stack</strong>
+          </div>
+          <div className={styles.boardGrid}>
+            <article>
+              <span>Fee por ticket</span>
+              <strong>$15 MXN</strong>
+              <small>Se suma al checkout del público.</small>
+            </article>
+            <article>
+              <span>Fee payout</span>
+              <strong>1.5%</strong>
+              <small>Se descuenta solo en payout automatizado.</small>
+            </article>
+            <article>
+              <span>Mobile first</span>
+              <strong>4G-ready</strong>
+              <small>Feed cacheado y checkout defensivo.</small>
+            </article>
+            <article>
+              <span>Operación</span>
+              <strong>1 panel</strong>
+              <small>Evento, artista, boletos y settlement juntos.</small>
+            </article>
+          </div>
+          <div className={styles.boardStream}>
+            <div>
+              <b>18:30</b>
+              <span>Soundcheck bloqueado</span>
+            </div>
+            <div>
+              <b>20:00</b>
+              <span>Landing activa + tickets live</span>
+            </div>
+            <div>
+              <b>22:00</b>
+              <span>Check-in QR + ledger corriendo</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section className={styles.flowSection} id="flows">
+        <div className={styles.sectionHeading}>
+          <p>{labels.flows}</p>
+          <h2>{locale === "es" ? "Aquí sí se entiende quién hace qué" : "A clearer system of who does what"}</h2>
+        </div>
+        <div className={styles.flowGrid}>
+          {flowCards.map((card) => (
+            <article key={card.stage} className={styles.flowCard}>
+              <span>{card.stage}</span>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+              <ul>
+                {card.points.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className={styles.cvGrid}>
-        <article className={styles.mainCard}>
-          <div className={styles.metaRow}>
-            <span>
-              {labels.location}: {localized.cv.location || localized.cv.address}
-            </span>
-            <span>
-              {labels.contact}: {localized.cv.email}{" "}
-              {localized.cv.phone ? `· ${localized.cv.phone}` : ""}
-            </span>
-          </div>
-
-          <h2>{labels.experience}</h2>
-          <div className={styles.experienceList}>
-            {localized.cv.experience.map((item, index) => (
-              <article
-                key={`${item.role}-${index}`}
-                className={styles.experienceItem}
-              >
-                <h3>{item.role}</h3>
-                <p>
-                  {item.company} · {item.period}
-                </p>
-                <ul>
-                  {item.highlights.map((highlight) => (
-                    <li key={highlight}>{highlight}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </article>
-
-        <aside className={styles.sideCard}>
-          <h2>{labels.skills}</h2>
-          <ul className={styles.skillList}>
-            {localized.cv.skills.map((skill) => (
-              <li key={skill}>{skill}</li>
-            ))}
-          </ul>
-
-          <h2>{labels.education}</h2>
-          <div className={styles.educationList}>
-            {localized.cv.education.map((item) => (
-              <article key={`${item.title}-${item.institution}`}>
-                <h3>{item.title}</h3>
-                <p>{item.institution}</p>
-                <span>{item.period}</span>
+      <section className={styles.orchestrationSection} id="modules">
+        <div className={styles.sectionHeading}>
+          <p>{labels.modules}</p>
+          <h2>{localized.servicesIntro}</h2>
+        </div>
+        <div className={styles.orchestrationGrid}>
+          <div className={styles.moduleColumn}>
+            {(localized.services ?? []).map((service) => (
+              <article key={`${service.eyebrow}-${service.title}`} className={styles.moduleCard}>
+                <span>{service.eyebrow}</span>
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
               </article>
             ))}
           </div>
 
-          {localized.cv.showProjects && localized.cv.projects.length > 0 ? (
-            <>
-              <h2>{labels.projects}</h2>
-              <div className={styles.projectList}>
-                {localized.cv.projects.map((item) => (
-                  <article key={`${item.title}-${item.url}`}>
-                    <h3>{item.title}</h3>
-                    <p>{item.description}</p>
-                    {item.url ? (
-                      <a href={item.url} target="_blank" rel="noreferrer">
-                        {item.url.replace(/^https?:\/\//, "")}
-                      </a>
-                    ) : null}
-                  </article>
-                ))}
+          <article className={styles.railCard}>
+            <p>{locale === "es" ? "Timeline del sistema" : "System timeline"}</p>
+            <div className={styles.railStack}>
+              {orchestrationRail.map(([title, body]) => (
+                <div key={title} className={styles.railItem}>
+                  <strong>{title}</strong>
+                  <span>{body}</span>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className={styles.monetizationCard}>
+            <p>{labels.monetization}</p>
+            <h3>{locale === "es" ? "Modelo claro para el venue" : "A clear venue business model"}</h3>
+            <div className={styles.moneyRows}>
+              <div>
+                <span>{locale === "es" ? "Venue" : "Venue"}</span>
+                <strong>{locale === "es" ? "No paga suscripción base" : "No base subscription"}</strong>
               </div>
-            </>
-          ) : null}
+              <div>
+                <span>{locale === "es" ? "Consumidor" : "Consumer"}</span>
+                <strong>{locale === "es" ? "+$15 MXN por boleto" : "+$15 MXN per ticket"}</strong>
+              </div>
+              <div>
+                <span>{locale === "es" ? "Payout artista" : "Artist payout"}</span>
+                <strong>{locale === "es" ? "1.5% si es automatizado" : "1.5% when automated"}</strong>
+              </div>
+            </div>
+            <p className={styles.moneyNote}>{localized.bookingInfo}</p>
+          </article>
+        </div>
+      </section>
 
-          {content.cvFileUrl ? (
-            <a href={content.cvFileUrl} className={styles.downloadLink}>
-              Download CV
-            </a>
-          ) : null}
-          <div className={styles.generatedDownloads}>
-            <span>Generate PDF from this page</span>
-            <a href="/cv-export/executive" target="_blank" rel="noreferrer">
-              Generate PDF file
-            </a>
+      <section className={styles.workspaceSection}>
+        <div className={styles.sectionHeading}>
+          <p>{labels.venueConsole}</p>
+          <h2>
+            {locale === "es"
+              ? "La interfaz del creador de eventos ya no está escondida"
+              : "The event creator interface is no longer hidden"}
+          </h2>
+        </div>
+        <div className={styles.workspaceGrid}>
+          <article className={styles.workspaceNarrative}>
+            <p>{localized.bioText}</p>
+            <div className={styles.workspaceActions}>
+              <Link href="/venue" className={styles.primaryAction}>
+                {labels.venueConsole}
+              </Link>
+              <Link href="/como-funciona" className={styles.secondaryAction}>
+                {labels.howItWorks}
+              </Link>
+            </div>
+          </article>
+          <article className={styles.workspacePreview}>
+            <div className={styles.previewTopbar}>
+              <span>Event Composer</span>
+              <i />
+              <i />
+              <i />
+            </div>
+            <div className={styles.previewBody}>
+              <div className={styles.previewColumn}>
+                <strong>{locale === "es" ? "Evento" : "Event"}</strong>
+                <span>Midnight Cumbia Systems</span>
+                <span>{locale === "es" ? "Aforo: 320" : "Capacity: 320"}</span>
+                <span>{locale === "es" ? "Base: $280 MXN" : "Base: $280 MXN"}</span>
+              </div>
+              <div className={styles.previewColumn}>
+                <strong>{locale === "es" ? "Checkout" : "Checkout"}</strong>
+                <span>{locale === "es" ? "Cargo consumidor: $15" : "Consumer fee: $15"}</span>
+                <span>{locale === "es" ? "Estado: published" : "State: published"}</span>
+                <span>{locale === "es" ? "QR: ready" : "QR: ready"}</span>
+              </div>
+              <div className={styles.previewColumn}>
+                <strong>{locale === "es" ? "Settlement" : "Settlement"}</strong>
+                <span>{locale === "es" ? "Venue neto: visible" : "Venue net: visible"}</span>
+                <span>{locale === "es" ? "Artista neto: visible" : "Artist net: visible"}</span>
+                <span>{locale === "es" ? "Ledger: locked" : "Ledger: locked"}</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {localized.testimonials && localized.testimonials.length > 0 ? (
+        <section className={styles.testimonialsSection}>
+          <div className={styles.sectionHeading}>
+            <p>Feedback</p>
+            <h2>{locale === "es" ? "Se siente como producto, no como demo" : "This now reads like a product"}</h2>
           </div>
-        </aside>
+          <div className={styles.testimonialGrid}>
+            {localized.testimonials.map((item) => (
+              <article key={`${item.name}-${item.role}`} className={styles.testimonialCard}>
+                <p>{item.quote}</p>
+                <strong>{item.name}</strong>
+                <span>{item.role}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      <section className={styles.contactSection} id="contact">
+        <div className={styles.sectionHeading}>
+          <p>{labels.contact}</p>
+          <h2>{localized.contactTitle}</h2>
+        </div>
+        <div className={styles.contactCard}>
+          <p>{localized.contactText}</p>
+          <a href={`mailto:${localized.contactEmail ?? localized.cv.email}`} className={styles.contactLink}>
+            {labels.email}: {localized.contactEmail ?? localized.cv.email}
+          </a>
+          {socialEntries.length > 0 ? (
+            <div className={styles.socialLinks}>
+              {socialEntries.map(([name, value]) => (
+                <a key={name} href={value as string} target="_blank" rel="noreferrer">
+                  {name}
+                </a>
+              ))}
+            </div>
+          ) : null}
+        </div>
       </section>
     </main>
   );
@@ -231,7 +493,7 @@ export function HomePage({ content }: HomePageProps) {
 function LanguageToggle({
   locale,
   label,
-  onChange,
+  onChange
 }: {
   locale: Locale;
   label: string;
@@ -244,12 +506,7 @@ function LanguageToggle({
       aria-label={label}
       onClick={() => onChange(locale === "en" ? "es" : "en")}
     >
-      <span className={locale === "en" ? styles.activeLanguage : undefined}>
-        EN
-      </span>
-      <span className={locale === "es" ? styles.activeLanguage : undefined}>
-        ES
-      </span>
+      {locale.toUpperCase()}
     </button>
   );
 }

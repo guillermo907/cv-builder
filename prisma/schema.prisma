@@ -1,0 +1,270 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  ARTIST
+  CUSTOMER
+}
+
+enum EventStatus {
+  DRAFT
+  SCHEDULED
+  LIVE
+  COMPLETED
+  CANCELLED
+  POSTPONED
+}
+
+enum GoogleCalendarSyncStatus {
+  NOT_LINKED
+  PENDING_SYNC
+  SYNCED
+  SYNC_ERROR
+}
+
+enum TicketState {
+  PENDING
+  PAID
+  USED
+  CANCELLED
+  EXPIRED
+  REFUNDED
+}
+
+enum LedgerEntryType {
+  TICKET_CHARGE
+  TICKET_REFUND
+  PLATFORM_FEE
+  PAYMENT_PROCESSOR_FEE
+  BAND_PAYOUT
+  BAND_PAYOUT_FEE
+  TAX_WITHHOLDING
+  CHARGEBACK
+  MANUAL_ADJUSTMENT
+}
+
+enum PaymentProvider {
+  MERCADO_PAGO
+  PAYPAL
+  STRIPE_CONNECT_MX
+}
+
+enum CheckoutStatus {
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+model Venue {
+  id                           String            @id @default(cuid())
+  slug                         String            @unique @db.VarChar(80)
+  legalName                    String            @db.VarChar(160)
+  displayName                  String            @db.VarChar(120)
+  description                  String?           @db.Text
+  timezone                     String            @default("America/Mexico_City") @db.VarChar(64)
+  currencyCode                 String            @default("MXN") @db.Char(3)
+  countryCode                  String            @default("MX") @db.Char(2)
+  taxId                        String?           @db.VarChar(40)
+  taxRegimeCode                String?           @db.VarChar(40)
+  taxWithholdingRate           Decimal?          @db.Decimal(5, 4)
+  vatRate                      Decimal?          @db.Decimal(5, 4)
+  ticketConsumerFeeFixed       Decimal           @default(15.00) @db.Decimal(10, 2)
+  automatedBandPayoutFeeRate   Decimal           @default(0.0150) @db.Decimal(6, 4)
+  themePrimaryBase             String            @default("#7ef169") @db.Char(7)
+  themePrimaryStrong           String            @default("#53d95f") @db.Char(7)
+  themeSecondaryBase           String            @default("#29c7b8") @db.Char(7)
+  themeBackgroundCanvas        String            @default("#09131a") @db.Char(7)
+  themeBackgroundSurface       String            @default("#10202b") @db.Char(7)
+  themeTextBase                String            @default("#f8f6f1") @db.Char(7)
+  themeBorderSubtle            String            @default("rgba(255,255,255,0.08)") @db.VarChar(32)
+  themeOverlayTransparency     Decimal           @default(0.72) @db.Decimal(4, 2)
+  themeRadiusBase              Decimal           @default(0.875) @db.Decimal(5, 3)
+  isActive                     Boolean           @default(true)
+  createdAt                    DateTime          @default(now())
+  updatedAt                    DateTime          @updatedAt
+  users                        User[]
+  events                       Event[]
+  ledgerEntries                FinancialLedger[]
+
+  @@index([isActive, displayName])
+  @@index([timezone, isActive])
+}
+
+model User {
+  id                           String             @id @default(cuid())
+  venueId                      String?
+  role                         Role
+  email                        String             @unique @db.VarChar(190)
+  normalizedEmail              String             @unique @db.VarChar(190)
+  fullName                     String             @db.VarChar(160)
+  phoneE164                    String?            @db.VarChar(20)
+  googleSubject                String?            @unique @db.VarChar(191)
+  googleEmail                  String?            @db.VarChar(190)
+  googleRefreshTokenEncrypted  String?            @db.Text
+  googleAccessTokenEncrypted   String?            @db.Text
+  payoutBankName               String?            @db.VarChar(120)
+  payoutBankAccountHolder      String?            @db.VarChar(160)
+  payoutBankAccountLast4       String?            @db.Char(4)
+  payoutClabeEncrypted         String?            @db.Text
+  payoutTaxId                  String?            @db.VarChar(40)
+  payoutCurrencyCode           String             @default("MXN") @db.Char(3)
+  isActive                     Boolean            @default(true)
+  createdAt                    DateTime           @default(now())
+  updatedAt                    DateTime           @updatedAt
+  venue                        Venue?             @relation(fields: [venueId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  organizedEvents              Event[]            @relation("OrganizerEvents")
+  headlinerEvents              Event[]            @relation("HeadlinerArtistEvents")
+  purchasedTickets             Ticket[]           @relation("CustomerTickets")
+  checkoutRequests             CheckoutRequest[]
+  bandLedgerEntries            FinancialLedger[]  @relation("BandLedgerEntries")
+
+  @@index([venueId, role, isActive])
+  @@index([role, createdAt])
+  @@index([googleEmail])
+}
+
+model Event {
+  id                           String                    @id @default(cuid())
+  venueId                      String
+  organizerUserId              String
+  headlinerArtistUserId        String?
+  slug                         String                    @db.VarChar(120)
+  title                        String                    @db.VarChar(160)
+  description                  String?                   @db.Text
+  status                       EventStatus               @default(DRAFT)
+  startsAt                     DateTime
+  endsAt                       DateTime
+  doorsOpenAt                  DateTime?
+  soundcheckAt                 DateTime?
+  salesStartAt                 DateTime?
+  salesEndAt                   DateTime?
+  timezone                     String                    @default("America/Mexico_City") @db.VarChar(64)
+  totalTicketInventory         Int
+  reservedTicketInventory      Int                       @default(0)
+  soldTicketInventory          Int                       @default(0)
+  inventoryVersion             Int                       @default(1)
+  baseTicketPrice              Decimal                   @db.Decimal(10, 2)
+  consumerProcessingFeeFixed   Decimal?                  @db.Decimal(10, 2)
+  artistPayoutRate             Decimal                   @default(0.7000) @db.Decimal(6, 4)
+  calendarExternalId           String?                   @db.VarChar(191)
+  googleCalendarSyncStatus     GoogleCalendarSyncStatus  @default(NOT_LINKED)
+  lastCalendarSyncedAt         DateTime?
+  isPublished                  Boolean                   @default(false)
+  createdAt                    DateTime                  @default(now())
+  updatedAt                    DateTime                  @updatedAt
+  venue                        Venue                     @relation(fields: [venueId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  organizer                    User                      @relation("OrganizerEvents", fields: [organizerUserId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  headlinerArtist              User?                     @relation("HeadlinerArtistEvents", fields: [headlinerArtistUserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  tickets                      Ticket[]
+  ledgerEntries                FinancialLedger[]
+  checkoutRequests             CheckoutRequest[]
+
+  @@unique([venueId, slug])
+  @@index([venueId, startsAt, status])
+  @@index([venueId, isPublished, startsAt])
+  @@index([headlinerArtistUserId, startsAt])
+  @@index([googleCalendarSyncStatus, startsAt])
+}
+
+model Ticket {
+  id                           String             @id @default(cuid())
+  eventId                      String
+  customerUserId               String?
+  ticketNumber                 Int
+  purchaseReference            String             @db.VarChar(64)
+  secureHash                   String             @unique @db.VarChar(128)
+  state                        TicketState        @default(PENDING)
+  quantity                     Int                @default(1)
+  faceValueAmount              Decimal            @db.Decimal(10, 2)
+  consumerFeeAmount            Decimal            @db.Decimal(10, 2)
+  grossAmount                  Decimal            @db.Decimal(10, 2)
+  purchasedAt                  DateTime?
+  paidAt                       DateTime?
+  usedAt                       DateTime?
+  cancelledAt                  DateTime?
+  version                      Int                @default(1)
+  checkInCount                 Int                @default(0)
+  sourceIpHash                 String?            @db.VarChar(128)
+  createdAt                    DateTime           @default(now())
+  updatedAt                    DateTime           @updatedAt
+  event                        Event              @relation(fields: [eventId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  customer                     User?              @relation("CustomerTickets", fields: [customerUserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  ledgerEntries                FinancialLedger[]
+  checkoutRequests             CheckoutRequest[]
+
+  @@unique([eventId, ticketNumber])
+  @@unique([eventId, purchaseReference])
+  @@index([eventId, state, paidAt])
+  @@index([customerUserId, createdAt])
+  @@index([purchaseReference])
+  @@index([secureHash, state])
+}
+
+model FinancialLedger {
+  id                           String            @id @default(cuid())
+  venueId                      String
+  eventId                      String
+  ticketId                     String?
+  bandUserId                   String?
+  entryType                    LedgerEntryType
+  currencyCode                 String            @default("MXN") @db.Char(3)
+  providerName                 String?           @db.VarChar(80)
+  providerReference            String?           @db.VarChar(128)
+  grossPaidAmount              Decimal           @db.Decimal(12, 2)
+  platformTicketFeeAmount      Decimal           @default(0) @db.Decimal(12, 2)
+  paymentProcessorFeeAmount    Decimal           @default(0) @db.Decimal(12, 2)
+  automatedBandPayoutFeeAmount Decimal           @default(0) @db.Decimal(12, 2)
+  automatedBandPayoutFeeRate   Decimal           @default(0.0150) @db.Decimal(6, 4)
+  taxWithheldAmount            Decimal           @default(0) @db.Decimal(12, 2)
+  netToVenueAmount             Decimal           @default(0) @db.Decimal(12, 2)
+  netToBandAmount              Decimal           @default(0) @db.Decimal(12, 2)
+  occurredAt                   DateTime
+  metadata                     Json?
+  createdAt                    DateTime          @default(now())
+  venue                        Venue             @relation(fields: [venueId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  event                        Event             @relation(fields: [eventId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  ticket                       Ticket?           @relation(fields: [ticketId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  bandUser                     User?             @relation("BandLedgerEntries", fields: [bandUserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@unique([providerName, providerReference])
+  @@index([venueId, occurredAt(sort: Desc)])
+  @@index([eventId, occurredAt(sort: Desc)])
+  @@index([ticketId, occurredAt(sort: Desc)])
+  @@index([bandUserId, occurredAt(sort: Desc)])
+  @@index([entryType, occurredAt(sort: Desc)])
+}
+
+model CheckoutRequest {
+  id                    String          @id @default(cuid())
+  idempotencyKey        String          @unique @db.VarChar(96)
+  requestHash           String          @db.VarChar(128)
+  status                CheckoutStatus  @default(PROCESSING)
+  provider              PaymentProvider
+  eventId               String
+  ticketId              String?
+  customerUserId        String?
+  quantity              Int
+  grossAmount           Decimal         @db.Decimal(12, 2)
+  processorFeeAmount    Decimal         @default(0) @db.Decimal(12, 2)
+  platformFeeAmount     Decimal         @default(0) @db.Decimal(12, 2)
+  providerReference     String?         @db.VarChar(128)
+  failureReason         String?         @db.VarChar(255)
+  responsePayload       Json?
+  lastAttemptedAt       DateTime        @default(now())
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  event                 Event           @relation(fields: [eventId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  ticket                Ticket?         @relation(fields: [ticketId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  customer              User?           @relation(fields: [customerUserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@index([eventId, createdAt(sort: Desc)])
+  @@index([customerUserId, createdAt(sort: Desc)])
+  @@index([status, updatedAt(sort: Desc)])
+}

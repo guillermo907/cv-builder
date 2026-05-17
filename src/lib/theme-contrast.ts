@@ -427,6 +427,15 @@ export function normalizeThemePalette(
 
 export function normalizeThemeForStorage(theme: SiteContent["theme"]): SiteContent["theme"] {
   const normalized = normalizeSiteTheme(theme);
+  const surface = theme.surface ?? {
+    wallpaperVisibility: 30,
+    surfaceVisibility: 30,
+    strongScrim: 88,
+    mediumScrim: 56,
+    borderRadius: 16,
+    borderWidth: 1,
+    blurStrength: 10
+  };
 
   return {
     accent: normalized.accent,
@@ -435,6 +444,15 @@ export function normalizeThemeForStorage(theme: SiteContent["theme"]): SiteConte
     backgroundImage: normalized.backgroundImage,
     contrast: normalized.contrast,
     bannerStyle: normalized.bannerStyle ?? "editorial",
+    surface: {
+      wallpaperVisibility: Math.max(0, Math.min(100, Number(surface.wallpaperVisibility) || 30)),
+      surfaceVisibility: Math.max(0, Math.min(100, Number(surface.surfaceVisibility) || 30)),
+      strongScrim: Math.max(0, Math.min(100, Number(surface.strongScrim) || 88)),
+      mediumScrim: Math.max(0, Math.min(100, Number(surface.mediumScrim) || 56)),
+      borderRadius: Math.max(0, Math.min(40, Number(surface.borderRadius) || 16)),
+      borderWidth: Math.max(0, Math.min(6, Number(surface.borderWidth) || 1)),
+      blurStrength: Math.max(0, Math.min(40, Number(surface.blurStrength) || 10))
+    },
     light: {
       accent: normalized.light.accent,
       accentAlt: normalized.light.accentAlt,
@@ -454,6 +472,15 @@ export function normalizeSiteTheme(theme: SiteContent["theme"]): NormalizedSiteT
 
 export function themeCssVariables(theme: SiteContent["theme"]) {
   const normalized = normalizeSiteTheme(theme);
+  const surface = theme.surface ?? {
+    wallpaperVisibility: 30,
+    surfaceVisibility: 30,
+    strongScrim: 88,
+    mediumScrim: 56,
+    borderRadius: 16,
+    borderWidth: 1,
+    blurStrength: 10
+  };
 
   return {
     "--accent": normalized.accent,
@@ -473,7 +500,14 @@ export function themeCssVariables(theme: SiteContent["theme"]) {
     "--light-line": normalized.light.line,
     "--light-panel": normalized.light.panel,
     "--light-panel-strong": normalized.light.panelStrong,
-    "--light-ink": normalized.light.ink
+    "--light-ink": normalized.light.ink,
+    "--theme-wallpaper-visibility": `${surface.wallpaperVisibility}%`,
+    "--theme-surface-visibility": `${surface.surfaceVisibility}%`,
+    "--theme-strong-scrim": `${surface.strongScrim}%`,
+    "--theme-medium-scrim": `${surface.mediumScrim}%`,
+    "--theme-border-radius": `${surface.borderRadius}px`,
+    "--theme-border-width": `${surface.borderWidth}px`,
+    "--theme-blur-strength": `${surface.blurStrength}px`
   };
 }
 

@@ -8,18 +8,21 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteContent();
+  const seoTitle = content.seo?.title ?? `${content.cv.fullName} | Venue Platform`;
+  const seoDescription = content.seo?.description ?? content.heroText ?? content.cv.headline;
+  const ogImage = content.seo?.ogImage ?? "/opengraph-image";
 
   return {
     metadataBase: new URL(
       process.env.NEXTAUTH_URL ??
         (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000")
     ),
-    title: `${content.cv.fullName} | CV`,
-    description: content.cv.headline,
+    title: seoTitle,
+    description: seoDescription,
     openGraph: {
-      title: `${content.cv.fullName} | CV`,
-      description: content.cv.headline,
-      images: ["/opengraph-image"]
+      title: seoTitle,
+      description: seoDescription,
+      images: [ogImage]
     }
   };
 }
